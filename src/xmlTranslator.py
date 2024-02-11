@@ -509,6 +509,7 @@ def expand_song_structure(song_structure, id = 0):
                 
             elif repeat[repeat_times]['done'] == True and repeat[this_id]['id'] == len(repeat)-1:
                 #repeat_done = True
+                #TODO: check if this section is needed
                 print('All repetitions done')
                 #done = False #close the loop
                 #e = 'None'
