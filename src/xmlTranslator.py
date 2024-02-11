@@ -467,7 +467,7 @@ def expand_song_structure(song_structure, id = 0):
         if e == '|:':
             form_zone['start'] = stepper  
         
-        if e.startswith('Repeat'):
+        if e.startswith('Repeat') and repeat_done == False:
             #find the repeat that is located in that stepper
             for current in repeat:
             # Check if the 'loc' value of the current dictionary matches the stepper value
@@ -476,34 +476,34 @@ def expand_song_structure(song_structure, id = 0):
                     this_repeat = current
                     this_id = current['id']
                     break 
-               
+            #Ask if this repeat is done
             if this_repeat['done'] == False:
-                inner_zone['start'] = stepper                
+                inner_zone['start'] = stepper 
+                id = this_repeat['id']   
+                print('first repeat done', stepper, id)           
                 #move forward
                 stepper += 1
                 e = sequence[stepper]
-                id = this_repeat['id']
                 repeat[id]['done'] = True
-                print('first repeat done', stepper, id)
-            
-            elif this_repeat['done'] == True and repeat[this_id]['id'] < len(repeat)-1:
-                #How to ask which is the next available repeat? 
+                
+                #Ask which is the next available repeat? 
                 for current in repeat:
                     if current['done'] == False:
                         next_repeat = current
+                        print('next repeat:', next_repeat['loc'], next_repeat['id'])
                         break
                 if (next_repeat == None):
-                    
-                    print('All repetitions done')
+                    print('All repetitions done 0')
                     done = False
                     break
+            
+            elif this_repeat['done'] == True and next_repeat['done'] == False and repeat[this_id]['id'] < len(repeat)-1:
                 #jump to the next repeat jumping ':|', '|' and 'Repeat_'
                 next_loc = next_repeat['loc'] + 1
                 stepper = next_loc
                 e = sequence[stepper]
-                id = this_repeat['id']
+                
                 id_next = next_repeat['id']
-                repeat[id]['done'] = True
                 repeat[id_next]['done'] = True
                 print('second repeat done at', 'stepper:', stepper, 'id:', id)
                 
