@@ -5,7 +5,7 @@ from tqdm.auto import tqdm
 
 # some by default declarations
 def getNotes():
-    notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'B-', 'E-', 'A-', 'D-', 'G-', 'C-']
+    notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb']
     return notes
 
 def getFormat():
@@ -13,9 +13,10 @@ def getFormat():
     return format
 
 def listToIgnore():
-    ignore_list = {'<start>', '<end>', '<pad>', '.', '|', 'Repeat_0', 'Repeat_1', 'Repeat_2', 'Repeat_3', 
-                   'Form_A', 'Form_B', 'Form_C', 'Form_D', 
-                    'Form_verse', 'Form_intro', 'Form_Coda', 'Form_Segno', '|:', ':|'}
+    ignore_list = {'<start>', '<end>', '<pad>', '.', '|', 'Repeat_0', 'Repeat_1', 'Repeat_2', 'Repeat_3', 'Intro', 
+                    'Form_A', 'Form_B', 'Form_C', 'Form_D', 
+                    'Form_verse', 'Form_intro', 'Form_Coda', 'Form_Head', 
+                    'Form_Segno', '|:', ':|'}
     return ignore_list
 
 #----------------------------------------------------------------------
@@ -35,15 +36,15 @@ def splitChordTokens(chord):
                     
     #fix the shifted error when sharp and flat appears   
          
-    if '###' in nature or '---' in nature:
+    if '###' in nature or 'bbb' in nature:
         base = section[0][:4]
         nature = section[0][4:]
     
-    elif '##' in nature or '--' in nature:
+    elif '##' in nature or 'bb' in nature:
         base = section[0][:3]
         nature = section[0][3:]
     
-    elif '#' in nature or '-' in nature:
+    elif '#' in nature or 'b' in nature:
         base = section[0][:2]
         nature = section[0][2:]
         

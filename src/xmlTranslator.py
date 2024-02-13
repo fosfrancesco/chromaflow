@@ -1,143 +1,127 @@
 from utils import *
-from formats import *
 import xml.etree.ElementTree as ET
 
+#----------------------------------------------------------------------------------
 def repleaceTheseChords(mySequence, verbose = False):
     sequence = []
-    correct_this = {
-        "9sus4 add 4 subtract 3 add b9 add 4 subtract 3 add b9 alter #5": "sus add b2 add 8",
-        "7 add 4 subtract 3 add b9 add 4 subtract 3 add b9 alter #5": "sus add b2 add 8",
-        "7 add b9 add 4 subtract 3 add b9 add 4 subtract 3": "sus add b2 add 8",
-        "13sus4 add 4 subtract 3 add b9 add 4 subtract 3": "sus add b2 add 8 add 6",
-        "9sus4 add 4 subtract 3 add b9 add 4 subtract 3": "sus add b2 add 8",
-        "7 add 4 subtract 3 add b9 add 4 subtract 3": "sus add b2 add 8",
-        "13sus4 add 4 subtract 3 add 4 subtract 3": "sus add b2 add 6 add 8",
-        "9sus4 add 4 subtract 3 add 4 subtract 3": "sus add 9",
-        "9sus4 add 4 subtract 3 add #9 alter #5": "sus add b2 add 8",
-        "9sus4 add 4 subtract 3 add b9 alter #5": "7 sus add b9",
-        "9sus4 alter #5 add b9 add 4 subtract 3": "7 sus add 9",
-        "7sus4 add 7 add b9 add 4 subtract 3": "7 sus",
-        "13sus4 add 4 subtract 3 alter #11": "7 sus add 6",
-        "13sus4 add 4 subtract 3 alter b9": "7 sus add 6",
-        "13sus4 add 4 subtract 3 alter #5": "7 sus add 6",
-        "9sus4 add 4 subtract 3 alter #5": "7 sus add 6 add 9",
-        "13sus4 add 4 subtract 3 add #11": "7 sus add 6",
-        "9sus4 alter b5 add 4 subtract 3": "7 sus add 6",
-        "13sus4 add #11 add 4 subtract 3": "7 sus add 6",
-        "13sus4 add 4 subtract 3 add b13": "7 sus add 6",
-        "9sus4 alter #5 add 4 subtract 3": "7 sus add 9",
-        "9sus4 add 4 subtract 3 alter b5": "7 sus add 9",
-        "13sus4 add 4 subtract 3 add #9": "7 sus add 6 add 9",
-        "9sus4 add 4 subtract 3 add #11": "7 sus add 9",
-        "13sus4 add 4 subtract 3 add b9": "7 sus add b2 add 8 add 6",
-        "9sus4 add 4 subtract 3 add b9": "7 sus add b2 add 8",
-        "13sus4 add 4 subtract 3 add 7": "7 sus add 6",
-        "9sus4 add 4 subtract 3 add 9": "7 sus add 9",
-        "7sus4 add 4 subtract 3 add 7": "7 sus",
-        "m69 add 4 subtract 3 add 9": "7 sus add 6 add 9",
-        "7 add #11 add b9 alter #11": "7 add #11 add b9",
-        "13sus4 add 4 subtract 3": "7 sus add 6",
-        "m69 add 9 add #7 add 9": "m7 add 9 alter #7",
-        "9sus4 add 4 subtract 3": "7 sus add 9",
-        "alter #5 add b9 sus": "7 sus alter #5 add b9",
-        "add b9 sus add b9": "7 sus add b9",
-        "add 4 subtract 3": "sus",
-        "m69 add 9 add 9 add 9": "m7 add 6 add 9",
-        "7alt alter b5 add #9": "7 alter b5 add #9",
-        "7sus4 add 7 alter b9": "sus add b2 add 8",
-        "m7 alter b5 alter b9": "m7 alter b5 add b9",
-        "7 alter b9 alter #5": "7 alter b5 add b9",
-        "maj9 add #11 add b9": "maj7 add 9 add #11",
-        "m69 add 9 alter #5": "m6 add 9",
-        "maj9 add #11 add 7": "maj7 add 9 add #11",
-        "m69 add 9 alter b5": "m6 add 9",
-        "7 alter b9 add b13": "7 add b9 add b13",
-        "7 alter #11 add b9": "7 add b9 add #11",
-        "69 add 9 alter b5": "6 add 9 alter b5",
-        "69 alter b5 add 9": "6 add 9 alter b5",
-        "69 add 9 alter #5": "6 add 9 alter b5",
-        "maj9 add #11": "maj7 add 9 add #11",
-        "7sus4 add 9 add 7": "7 sus add 9",
-        "7sus4 add #11 add 7": "7 sus add #11",
-        "7sus4 alter #5 add 7": "7 sus alter #5",
-        "sus4 alter b5 add 7": "sus alter b5",
-        "7sus4 add b13 add 7": "7 sus add b13",
-        "add #11 add #9 add #11 add #9": "add #9 add #11",
-        "add #11 add #11" : "add #11",
-        "77 sus add 9": "7 sus add 9",
-        "7sus4 add 7 add 7": "7 sus",
-        "7sus4 add 7": '7 sus',
-        "7susadd3": '7 sus',
-        "9 sus alter #5": "7 sus",
-        "add b9 add b9 add 9": "add b9",
-        "7 sus add 7": '7 sus',
-        "7 sus alter b5": "7 sus",
-        "7 7 sus add b13": "7 add b13",
-        "maj7 7 sus alter #5": "maj7",
-        "maj7 sus add #11": "maj7 add #11",
-        "*..........*": "",
-        "13 sus alter #11": "sus add #11",
-        "13 sus alter b9": "sus add b9",
-        "9 7 sus add #11": "7 sus add #11",
-        "alter b5 add b9 alter #5": "alter b5 add b9 add b13",
-        "alter b5 alter b5 alter b5": "alter b5",
-        "alter b5 add #9 alter #5": "alter b5 add #9 add b13",
-        "dim(maj7)": "m7 alter #7",
-        "add 9 add 9 add 9": "add 9",
-        "add b9 add b9 add b9": "add b9",
-        "add b9 add b9 alter #5": "add b9 alter #5",
-        "add b9 add b9": "add b9",
-        "add 9 add 9": "add 9",
-        "alter b5 alter b5": "alter b5",
-        "add #7 add #7": "add #7",
-        "add #9 add #9": "add #9",
-        "add b9 sus add b9 alter #5": "sus add b9 alter #5",
-        "add b9 sus add b9": "sus add b9",
-        "alter b5 sus": "sus alter b5",
-        "add 7 add b9 sus": "7 sus add b9",
-        "add b9 add 9": "add b9",
-        "m69 add 9": "m6 add 9",
-        " m(add9)": "m add 9",
-        " *-add9*": "m add 9",
-        "*7b5#5*": "7 alter b5",
-        "alter #5 alter #5": "alter #5",
-        "alter #5 alter b5": "alter b5",
-        "alter b5 alter #5": "alter b5",
-        "alter #5 sus": "7 sus alter #5",
-        "alter #5 add b9 sus": "7 sus add b9 alter #5",
-        "alter b5 add #9 add b9": "alter b5 add b9",
-        "*sus4*": "7 sus",
-        "maj13": "maj7 add 13",
-        "*6#9*": "6 add #9",
-        "*ø11*": "m7 alter b5",
-        "*dim*": "dim7",
-        "*mb9*": "m add b9",
-        "*-add9*": "m add 9",
-        "*mM7*": "m7 alter #7",
-        "*-b5*": "m7 alter b5",
-        "*6b5*": "6 add 9 alter b5",
-        "7alt": "7 add #11 add b9",
-        "7#5#9": "7 add #5 add #9",
-        "m(add9)": "m add 9",
-        "add b13 sus": "7 sus add b13",
-        "add #11 sus": "7 sus add #11",
-        "add b9 sus": "sus add b9",
-        "add b9 sus add #9 alter #5": "sus add b9 alter #5",
-        "7 7 sus add b9": "7 sus add b9",
-        "*7+*": "maj7",
-        "*m7*": "m7",
-        "*-3*": "m",
-        "maj9": "maj7 add 9",
-        "-N3": "m",
-        "*m*": "m",
-        "*O*": "dim7",
-        "-7s": "m7",
-        "77": "7",
-        "m7 sus": "m7",
-        "**": "",
-        "N.C.": ""
-    }
-    
+    correct_this = {'add 4 subtract 3 add b9 add 4 subtract 3 add b9 alter #5': 'sus7 add b9',
+                    'add b9 add 4 subtract 3 add b9 add 4 subtract 3': 'sus7 add b9',
+                    'add 4 subtract 3 add b9 add 4 subtract 3': 'sus7 add b9',
+                    'add b9 add 4 subtract 3 add #9 alter #5': 'sus7 add b9',
+                    'add b9 add 4 subtract 3 add b9 alter #5': 'sus7 add b9',
+                    'add 4 subtract 3 add 4 subtract 3': 'sus7 add b9',
+                    'add 4 subtract 3 add b9 alter #5': 'sus7 add b9',
+                    'alter #5 add b9 add 4 subtract 3': 'sus7 add b9',
+                    'add 4 subtract 3 add #9 alter #5': 'sus7 add b9',
+                    'add #9 alter b5 add #9 alter b5': 'add #9 alter b5',
+                    'add b9 alter b5 add b9 alter b5': 'add b9 alter b5',
+                    'add #11 add #11 add #11 add #11': 'add #11',
+                    'add #9 alter #5 add b9 alter #5': 'add b9 alter #5',
+                    'add b9 add 4 subtract 3 add b9': 'sus7 add b9',
+                    'add #11 add #9 add #11 add #9': 'add #11 add #9',
+                    'add 7 add b9 add 4 subtract 3': 'sus7 add b9',
+                    'add 4 subtract 3 alter #11': 'sus7 add #11',
+                    'alter b5 alter b5 alter b5': 'alter b5',
+                    'add 4 subtract 3 alter #5': 'sus7 add b9',
+                    'alter b5 add 4 subtract 3': 'sus4 add b9',
+                    'alter #5 add 4 subtract 3': 'sus4',
+                    'add 4 subtract 3 alter b5': 'sus4 add b9',
+                    'add 4 subtract 3 alter b9': 'sus4 add b9',
+                    'add 4 subtract 3 add #11': 'sus4 add #11',
+                    'add #11 add b9 alter #11': 'sus7 add b9',
+                    'add 4 subtract 3 add b13': 'sus4 add b9',
+                    'alter #5 add #9 alter #5': 'alter #5 add #9',
+                    'alter b5 add b9 alter b5': 'alter b5 add b9',
+                    'add b13 add 4 subtract 3': 'sus7 add b9',
+                    'add #11 add 4 subtract 3': 'sus7',
+                    'add 4 subtract 3 add #9': 'sus7 add b9',
+                    'add 4 subtract 3 add b9': 'sus7 add b9',
+                    'add b9 add 4 subtract 3': 'sus7 add b9',
+                    'add #11 add #11 add #11': 'add #11',
+                    'add #11 add b9 add #11': 'add b9 add #11',
+                    'add b9 add b9 alter #5': 'add b9 alter #5',
+                    'add 4 subtract 3 add 9': 'sus4 add 9',
+                    'add 4 subtract 3 add 7': 'sus7',
+                    'add #9 alter #5 add #9': 'alter #5 add #9',
+                    'add b9 alter #5 add b9': 'alter #5 add b9',
+                    'add b9 alter #5 add #9': 'alter #5 add #9',
+                    'add b13 add b9 add b9': 'add b9 add b13',
+                    'add 9 add #11 add b9': 'add 9 add #11',
+                    'add b9 add b9 add b9': 'add b9',
+                    'alter #11 alter #11': 'alter #11',
+                    'add b9 add b9 add 9': 'add b9',
+                    'add 9 add b9 add b9': 'add b9',
+                    'add 9 add #7 add 9': 'add #7 add 9',
+                    'add 9 add 9 add 9': 'add 9',
+                    'alter b5 alter b5': 'alter b5',
+                    'alter #5 alter #5': 'alter #5',
+                    'alter b5 alter #5': 'alter b5',
+                    'alter #5 alter b5': 'alter b5',
+                    'alter b9 alter b9': 'alter b9',
+                    'add 7 add 7 add 7': 'add 7',
+                    'add 4 subtract 3': 'sus4',
+                    'add b13 add b13': 'add b13',
+                    'add #11 add #11': 'add #11',
+                    'add b9 add b9': 'add b9',
+                    'add b9 add #9': 'add b9',
+                    'add #7 add #7': 'add #7',
+                    'add #9 add #9': 'add #9',
+                    'add b6 add b6': 'add b6',
+                    'add #9 add b9': 'add b9',
+                    'add 9 add #9': 'add #9',
+                    '*..........*': '',
+                    'add b9 add 9': 'add b9',
+                    'add 9 add b9': 'add b9',
+                    'add 9 add 9': 'add 9',
+                    'add 2 add 2': 'add 9',
+                    'add 7 add 2': 'add 7 add 9',
+                    'add 7 add 7': 'add 7',
+                    'dim(maj7)': 'o7 alter #7',
+                    '7susadd3': 'sus7',
+                    'm(add9)': 'm7 add 9',
+                    '*-add9*': 'm7 add9',
+                    '7b5#5*': 'dom7 add b5',
+                    '13sus4': 'sus7 add 13',
+                    '*sus4*': 'sus4',
+                    '7sus4': 'sus7',
+                    '*mb9*': 'm7 add b9',
+                    '9sus4': 'sus7 add 9',
+                    '*dim*': 'o',
+                    'maj13': 'maj7 add 13',
+                    '*mM7*': 'm_maj7',
+                    '*ø11*': 'ø7 add 11',
+                    '*7+*': 'aug7', #7+
+                    '*m7*': 'm7',
+                    '*-3*': 'm7',
+                    '6b5*': 'G dom7',
+                    '7alt': '7 add b9',
+                    'maj9': 'maj7 add 9',
+                    '-b5*': 'm add b5',
+                    '6#9*': 'maj add 6 add 9',
+                    '#5#9': 'add #5 add b9',
+                    '*m*': 'm7',
+                    'm69': 'm Add 6 add 9',
+                    'm11': 'm add 11',
+                    '*O*': 'o',
+                    '-7s': 'm_maj7',
+                    '**': 'maj', #be careful to fix maj and also include itself in the list
+                    'G7': 'G dom7', #think how to fix this one
+                    '69': 'maj add 6 add 9',
+                    'E*': 'E',
+                    'm9': 'm7 add 9',
+                    '11': 'dom7 add 77',
+                    'A*': 'A',
+                    'G*': 'G',
+                    '13': 'dom7 add 13',
+                    '+7': 'dom7',
+                    'C*': 'C',
+                    '6': 'maj add 6',
+                    '9': 'dom7 add 9',
+                    '7': 'dom7',
+                    '+': 'aug',
+                    '5': 'power'
+                    }
+
     #for key, value in correct_this.items():
     #    print('translating', key, 'to', value)
     #    mySequence = np.vectorize(lambda x: x.replace(key, value))(mySequence)
@@ -149,29 +133,37 @@ def repleaceTheseChords(mySequence, verbose = False):
         tmp = []  
         for element in song:            
             for key, value in correct_this.items():
-                if key in element:
+                if key == element:
                     if (verbose):
                         print(element, '-->', value)
                     element = element.replace(key, value)
                     break
             tmp.append(element)
+        
+        #check the case of 'G dom7' and split it into two
+        if 'G dom7' in tmp:
+            for i, n in enumerate(tmp):
+                if n == 'G dom7':
+                    tmp[i] = 'G'
+                    tmp.insert(i+1, 'dom7')
         sequence.append(tmp)
     sequence = np.array(sequence, dtype=object) 
     
+    #clean repeated ones
     x = 0
     for song in sequence:
         y = 0
         for chord in song:
             s = chord.split(' ')
             if len(s) >= 5:
-                #print(x)
+                #print(s)
                 if s[1]+s[2] == s[3]+s[4]:
                     #print(x, y, chord)
                     sequence[x][y]=s[0]+' '+s[1]+' '+s[2]
                     #print(sequence[x][y])
             y+=1
         x+=1
-             
+
     return sequence
 
 #------------------------------------------------------------------
@@ -371,7 +363,7 @@ def parse_info_from_XML(path):
 
         offset_format = the_offset_sequence[0:2].tolist()
 
-        the_sequence, the_offset = getArrayOfElementsInChord(the_sequence, the_offset)
+        the_sequence, the_offset = fmt.getArrayOfElementsInChord(the_sequence, the_offset)
         the_offset = offset_format + the_offset
         the_sequence = format + the_sequence
 
@@ -392,18 +384,19 @@ def parse_info_from_XML(path):
 
 #----------------------------------------------------------------------------------
 #expand the song form
-def expand_song_structure(song_structure, id = 0):
+def expand_song_structure(song_structure, id = 0, verbose = False):
     status = True
     
     if '|:' not in song_structure:
-        print('No repetition data found')
-        print("-----------------------------\n")    
+        if verbose: 
+            print('No repetition data found')
+            print("-----------------------------\n")    
         return song_structure, status
     
     #convert numpy into array
     song_structure = song_structure.tolist()
     
-    print('Length of sequence:', len(song_structure))
+    if verbose: print('Length of sequence:', len(song_structure))
     #identify the location of the repetition symbols
     
     form_zone = {'start': 0, 'end': 0, id: 0}
@@ -480,7 +473,7 @@ def expand_song_structure(song_structure, id = 0):
             if this_repeat['done'] == False:
                 inner_zone['start'] = stepper 
                 id = this_repeat['id']   
-                print('first repeat done', stepper, id)           
+                if verbose: print('first repeat done', stepper, id)           
                 #move forward
                 stepper += 1
                 e = sequence[stepper]
@@ -490,10 +483,10 @@ def expand_song_structure(song_structure, id = 0):
                 for current in repeat:
                     if current['done'] == False:
                         next_repeat = current
-                        print('next repeat:', next_repeat['loc'], next_repeat['id'])
+                        if verbose: print('next repeat:', next_repeat['loc'], next_repeat['id'])
                         break
                 if (next_repeat == None):
-                    print('All repetitions done 0')
+                    if verbose: print('All repetitions done 0')
                     done = False
                     break
             
@@ -505,12 +498,12 @@ def expand_song_structure(song_structure, id = 0):
                 
                 id_next = next_repeat['id']
                 repeat[id_next]['done'] = True
-                print('second repeat done at', 'stepper:', stepper, 'id:', id)
+                if verbose: print('second repeat done at', 'stepper:', stepper, 'id:', id)
                 
             elif repeat[repeat_times]['done'] == True and repeat[this_id]['id'] == len(repeat)-1:
                 #repeat_done = True
                 #TODO: check if this section is needed
-                print('All repetitions done')
+                if verbose: print('All repetitions done')
                 #done = False #close the loop
                 #e = 'None'
             
@@ -554,8 +547,9 @@ def expand_song_structure(song_structure, id = 0):
     copy_section = [x.replace(':|', '|') for x in copy_section]
     copy_section = [x.replace('|:', '|') for x in copy_section]
     
-    print('Process completed successfully..', 'New form length:', len(copy_section))
-    print("-----------------------------\n")
+    if verbose: 
+        print('Process completed successfully..', 'New form length:', len(copy_section))
+        print("-----------------------------\n")
     return copy_section, status 
 #----------------------------------------------------------------------------------
 def formatChordsVocabulary(theChordsSequence, theOffetsSequence, blockSize):
@@ -597,7 +591,7 @@ def formatChordsVocabulary(theChordsSequence, theOffetsSequence, blockSize):
     print(chord_sequence_list.shape, offset_sequence_list.shape)
     return chord_sequence_list, offset_sequence_list
 
-
+#----------------------------------------------------------------------------------
 def correctDuplicatedExtensions(dataset, offset):
     corrected_datset = []
     corrected_offset = []

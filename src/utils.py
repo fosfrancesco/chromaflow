@@ -5,12 +5,12 @@ import numpy as np
 import xml.etree.ElementTree as ET
 from tqdm.auto import tqdm
 
+import formats as fmt
 import librosa as lib
 import utils_lenghts as lengths
 import random
 import math
 import os
-from formats import *
 
 # some by default declarations
 def getNotes():
@@ -264,8 +264,6 @@ def get_metadata(path):
         title = title_element.find('work-title').text        
     else:
         title = root.find('movement-title').text
-
-    title = root.find('movement-title').text
 
     part = root.find('part')
     #define the metadata elements
