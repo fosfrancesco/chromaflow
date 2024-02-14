@@ -10,7 +10,7 @@ def repleaceTheseChords(mySequence, verbose = False):
                     'add 4 subtract 3 add b9 add 4 subtract 3': 'sus7 add b9',
                     'add b9 add 4 subtract 3 add #9 alter #5': 'sus7 add b9',
                     'add b9 add 4 subtract 3 add b9 alter #5': 'sus7 add b9',
-                    'add 4 subtract 3 add 4 subtract 3': 'sus7 add b9',
+                    'add 4 subtract 3 add 4 subtract 3': '',
                     'add 4 subtract 3 add b9 alter #5': 'sus7 add b9',
                     'alter #5 add b9 add 4 subtract 3': 'sus7 add b9',
                     'add 4 subtract 3 add #9 alter #5': 'sus7 add b9',
@@ -41,7 +41,7 @@ def repleaceTheseChords(mySequence, verbose = False):
                     'add #11 add #11 add #11': 'add #11',
                     'add #11 add b9 add #11': 'add b9 add #11',
                     'add b9 add b9 alter #5': 'alter #5 add b9',
-                    'add 4 subtract 3 add 9': 'sus4 add 9',
+                    'add 4 subtract 3 add 9': '',
                     'add 4 subtract 3 add 7': 'sus7',
                     'add #9 alter #5 add #9': 'alter #5 add #9',
                     'add b9 alter #5 add b9': 'alter #5 add b9',
@@ -60,7 +60,7 @@ def repleaceTheseChords(mySequence, verbose = False):
                     'alter #5 alter b5': 'alter b5',
                     'alter b9 alter b9': 'alter b9',
                     'add 7 add 7 add 7': 'add 7',
-                    'add 4 subtract 3': 'sus4',
+                    'add 4 subtract 3': '',
                     'add b13 add b13': 'add b13',
                     'add #11 add #11': 'add #11',
                     'add b9 add b9': 'add b9',
@@ -140,6 +140,9 @@ def repleaceTheseChords(mySequence, verbose = False):
                 if n == 'G dom7':
                     tmp[i] = 'G'
                     tmp.insert(i+1, 'dom7')
+         
+         #clean the empty element
+        tmp = [x for x in tmp if x != '']
         sequence.append(tmp)
     sequence = np.array(sequence, dtype=object) 
     
@@ -157,6 +160,8 @@ def repleaceTheseChords(mySequence, verbose = False):
                     #print(sequence[x][y])
             y+=1
         x+=1
+    
+   
 
     return sequence
 
@@ -545,6 +550,7 @@ def expand_song_structure(song_structure, id = 0, verbose = False):
         print('Process completed successfully..', 'New form length:', len(copy_section))
         print("-----------------------------\n")
     return copy_section, status 
+
 #----------------------------------------------------------------------------------
 def formatChordsVocabulary(theChordsSequence, theOffetsSequence, blockSize):
     chord_sequence_list = []
@@ -619,7 +625,7 @@ def correctDuplicatedExtensions(dataset, offset):
     return corrected_datset, corrected_offset
 
 #----------------------------------------------------------------------------
-#Chel for all chords that can not be read by music21
+#Check for all chords that can not be read by music21
 def checkIncompatibleChords(data):
     #save all chords not compatible with music21
     incompatible_chords = []
