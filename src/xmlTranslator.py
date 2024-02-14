@@ -1,5 +1,6 @@
 from utils import *
 import xml.etree.ElementTree as ET
+from ipywidgets import FloatProgress
 
 #----------------------------------------------------------------------------------
 def repleaceTheseChords(mySequence, verbose = False):
@@ -13,8 +14,8 @@ def repleaceTheseChords(mySequence, verbose = False):
                     'add 4 subtract 3 add b9 alter #5': 'sus7 add b9',
                     'alter #5 add b9 add 4 subtract 3': 'sus7 add b9',
                     'add 4 subtract 3 add #9 alter #5': 'sus7 add b9',
-                    'add #9 alter b5 add #9 alter b5': 'add #9 alter b5',
-                    'add b9 alter b5 add b9 alter b5': 'add b9 alter b5',
+                    'add #9 alter b5 add #9 alter b5': 'alter b5 add #9',
+                    'add b9 alter b5 add b9 alter b5': 'alter b5 add b9',
                     'add #11 add #11 add #11 add #11': 'add #11',
                     'add #9 alter #5 add b9 alter #5': 'add b9 alter #5',
                     'add b9 add 4 subtract 3 add b9': 'sus7 add b9',
@@ -39,7 +40,7 @@ def repleaceTheseChords(mySequence, verbose = False):
                     'add b9 add 4 subtract 3': 'sus7 add b9',
                     'add #11 add #11 add #11': 'add #11',
                     'add #11 add b9 add #11': 'add b9 add #11',
-                    'add b9 add b9 alter #5': 'add b9 alter #5',
+                    'add b9 add b9 alter #5': 'alter #5 add b9',
                     'add 4 subtract 3 add 9': 'sus4 add 9',
                     'add 4 subtract 3 add 7': 'sus7',
                     'add #9 alter #5 add #9': 'alter #5 add #9',
@@ -100,7 +101,7 @@ def repleaceTheseChords(mySequence, verbose = False):
                     '6#9*': 'maj add 6 add 9',
                     '#5#9': 'add #5 add b9',
                     '*m*': 'm7',
-                    'm69': 'm Add 6 add 9',
+                    'm69': 'm add 6 add 9',
                     'm11': 'm add 11',
                     '*O*': 'o',
                     '-7s': 'm_maj7',
@@ -121,13 +122,6 @@ def repleaceTheseChords(mySequence, verbose = False):
                     '+': 'aug',
                     '5': 'power'
                     }
-
-    #for key, value in correct_this.items():
-    #    print('translating', key, 'to', value)
-    #    mySequence = np.vectorize(lambda x: x.replace(key, value))(mySequence)
-    
-    #keys = list(correct_this.keys())
-    #values = list(correct_this.values())
 
     for song in tqdm(mySequence):
         tmp = []  
