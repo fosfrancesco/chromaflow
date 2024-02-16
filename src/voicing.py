@@ -6,7 +6,7 @@ class Voicing:
     #define the class
     def __init__(self):
         #define the natures of the chords
-        self.natures = {'maj', 'm', 'm6', 'm7', 'dom7', 'maj6', 'maj7', 'o7', 'o', 'sus', 'sus2', 'sus7', 'ø7', 'power', 'm_maj7', 'aug', 'o_maj7'}
+        self.natures = {'maj', 'm', 'm6', 'm7', 'dom7', 'maj6', 'maj7', 'o7', 'o', 'sus', 'sus2', 'sus7', 'sus4', 'ø7', 'power', 'm_maj7', 'aug', 'o_maj7'}
         self.alter = {'add #11', 'add #5', 'add #7', 'add #9', 'add 13', 'add 2', 'add 5', 'add 6', 'add 7', 'add 8', 'add 9', 'add b13', 'add b2', 'add b6', 'add b9', 'alter #11', 'alter #5', 'alter #7', 'alter #9', 'alter b5', 'alter b9'}
         self.structural_elements = {'.', '|', ':|', '|:', '/', 'N.C.'} #to add the maj token 
         self.voicing = ['v_0', 'v_1', 'v_2', 'v_3']
@@ -26,23 +26,22 @@ class Voicing:
         self.m = {'v_0':[0, 12, 15, 19], 'v_1':[0, 15, 19, 24], 'v_2':[0, 19, 24, 27], 'v_3':[0, 12, 19, 24, 27]}
         self.m7 = {'v_0':[0, 10, 15, 19], 'v_1':[0, 7, 10, 15], 'v_2':[0, 10, 14, 15], 'v_3':[0, 10, 14, 15]}
         self.m_maj7 = {'v_0':[0, 11, 15, 19], 'v_1':[0, 7, 11, 12, 15], 'v_2':[0, 7, 11, 14, 15], 'v_3':[0, 11, 15, 19]}
-        
         self.dom7 = {'v_0':[0, 7, 10, 16, 19], 'v_1':[0, 10, 16, 19], 'v_2':[0, 10, 14, 16], 'v_3':[0, 10, 14, 16, 19]}
-        
         self.ø7 =  {'v_0':[0, 15, 18, 22], 'v_1':[0, 10, 15, 18], 'v_2':[0, 15, 18, 22, 24], 'v_3':[0, 6, 10, 15, 18]}
         self.o7 = {'v_0':[0, 15, 18, 21], 'v_1':[0, 15, 18, 21, 24], 'v_2':[0, 18, 21, 24, 27], 'v_3':[0, 12, 15, 18, 21]}
         self.o = {'v_0':[0, 3, 6, 12], 'v_1':[0, 6, 12, 15], 'v_2':[0, 15, 18, 21], 'v_3':[0, 12, 15, 18, 21]}
         self.sus = {'v_0':[0, 12, 17, 19], 'v_1':[0, 17, 19, 24], 'v_2':[0, 19, 24, 29], 'v_3':[0, 12, 19, 24, 29]} 
         self.sus7 = {'v_0':[0, 10, 17, 19], 'v_1':[0, 10, 14, 17, 19], 'v_2':[0, 10, 14, 17], 'v_3':[0, 10, 14, 17, 19]}
         self.sus2 = {'v_0':[0, 14, 19, 24], 'v_1':[0, 12, 19, 24, 26], 'v_2':[0, 19, 24, 26], 'v_3':[0, 12, 19, 24, 26]}
+        self.sus4 = {'v_0':[0, 12, 17, 22], 'v_1':[0, 12, 17, 22], 'v_2':[0, 12, 17, 22], 'v_3':[0, 12, 17, 22]}
         self.aug = {'v_0':[0, 4, 8, 12, 16], 'v_1':[0, 8, 12, 16, 20], 'v_2':[0, 12, 16, 20, 24], 'v_3':[0, 8, 12, 16]}
         self.o_maj7 = {'v_0':[0, 11, 15, 18], 'v_1':[0, 6, 11, 15], 'v_2':[0, 6, 11, 15, 18], 'v_3':[0, 11, 15, 18, 24]}
        
         # Define the voicing dictionaries for the chords
         self.chord_voicing = {'maj': self.maj, 'maj7': self.maj7, 'm': self.m, 'm7': self.m7, 'dom7': self.dom7, 
                               'ø7': self.ø7, 'o7': self.o7, 'o': self.o, 'sus': self.sus, 'sus7': self.sus7, 
-                              'sus2': self.sus2, 'm6': self.m6, 'power': self.power, 'o': self.o, 'm_maj7': self.m_maj7, 
-                              'maj6': self.maj6, 'aug': self.aug, 'o_maj7': self.o_maj7}
+                              'sus2': self.sus2, 'sus4': self.sus4, 'm6': self.m6, 'power': self.power, 'o': self.o, 
+                              'm_maj7': self.m_maj7, 'maj6': self.maj6, 'aug': self.aug, 'o_maj7': self.o_maj7}
     
     #-----------------------------------------------------------------------
     # Add the maj token
@@ -69,7 +68,6 @@ class Voicing:
         v = 0
         mod = 4
         status = True
-
         # Create a dictionary for the alter section
         add_dict = {
             'add b9': 1 + 12,
@@ -120,6 +118,13 @@ class Voicing:
                     status = False
                     print("Error in:", element)
                     return None, status
+            elif element == '/':
+                #check the next element
+                if sequence[v + 1][0] in self.all_notes:
+                    root = self.all_notes[sequence[v + 1][0]]-12
+                    #print(sequence[v + 1], root)
+                    midi.insert(0, root)
+                    
             elif element in add_dict:
                 if element in add_dict:
                     midi.append(root + add_dict[element])
@@ -170,4 +175,10 @@ class Voicing:
         with open(fullname, "wb") as output_file:
             MyMIDI.writeFile(output_file)
 
-        print(fullname, "\nMIDI file created!", )
+        print(filename, "\nMIDI file created!", )
+        
+        
+    #--------------------------------------------------------------------------------
+    def get_chords(self, sequence):
+        strings_array = [item[0] for item in sequence if item[0] != '']
+        return strings_array

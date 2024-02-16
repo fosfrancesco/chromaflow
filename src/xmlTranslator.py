@@ -305,6 +305,9 @@ def parse_info_from_XML(path, verbose = False):
                 root = harmony.find('root')
                 note = root.find('root-step')
                 sharp = root.find('root-alter')
+                kind = harmony.find('kind')
+                bass = harmony.find('bass')
+                
                 if sharp != None:
                     sharp = sharp.text
                     if sharp == '-1': #Remember to check double sharp and double flat
@@ -315,7 +318,6 @@ def parse_info_from_XML(path, verbose = False):
                         tone = ''
                 
                 note = note.text+tone
-                kind = harmony.find('kind')
                 #nature = kind.attrib.get('text')
                 #get the nature from kind
                 nature = kind.text
@@ -347,18 +349,35 @@ def parse_info_from_XML(path, verbose = False):
                 else:
                     extension = ''
                 
-                #get slash chord
-                bass = harmony.find('bass')
+                #----------------------------------------------------------
+                #get slash chord and its alterations
                 if bass != None:
-                    bass_step = bass.find('bass-step')
-                    slash = '/'+bass_step.text
-                else :
+                    bass_step = bass.find('bass-step').text
+                    #print(bass_step)
+                    bass_alter = bass.find('bass-alter')
+                    if bass_alter != None:
+                        bass_alter = int(bass_alter.text)
+                        #print(bass_alter)
+                        if bass_alter == 1:
+                            bass_note = bass_step + '#'
+                        elif bass_alter == -1:
+                            bass_note = bass_step + 'b'
+                        elif bass_alter == 2:
+                            bass_note = bass_step + '##'
+                        elif bass_alter == -2:
+                            bass_note = bass_step + 'bb'
+                        slash = '/'+bass_note
+                    else:
+                        slash = '/'+bass_step
+                else:
                     slash = ''
+                    
                     
                 chord = note + str(nature) + extension + str(slash)
                 #print(chord)
                 the_chord_sequence.append(chord)
-            
+                
+            #----------------------------------------------------------
             #get durations duration
             for note_element in measure.iter('note'):
                 duration = int(note_element.find('duration').text) / division
