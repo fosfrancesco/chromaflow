@@ -121,9 +121,9 @@ class Voicing:
             elif element == '/':
                 #check the next element
                 if sequence[v + 1][0] in self.all_notes:
-                    root = self.all_notes[sequence[v + 1][0]]-12
-                    #print(sequence[v + 1], root)
-                    midi.insert(0, root)
+                    slash_root = self.all_notes[sequence[v + 1][0]]-12
+                    #print(sequence[v + 1], slash_root)
+                    midi.insert(0, slash_root)
                     
             elif element in add_dict:
                 if element in add_dict:
