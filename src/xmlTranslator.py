@@ -3,9 +3,33 @@ import xml.etree.ElementTree as ET
 from ipywidgets import FloatProgress
 
 #----------------------------------------------------------------------------------
-def repleaceTheseChords(mySequence, verbose = False):
-    sequence = []
-    correct_this = {'add 4 subtract 3 add b9 add 4 subtract 3 add b9 alter #5': 'sus7 add b9',
+def replaceTheseChords(mySequence, verbose = False):
+    #natures {'maj', 'm', 'm6', 'm7', 'dom_7', 'maj7', 'maj6', 'o7', 'o', 'sus', 'sus2', 'sus7', 'ø7', 'power', 'm_maj7'}
+
+    correct_this = {
+                    'minor-11th': 'm add 11',
+                    'dominant-ninth': 'dom7 add 9',
+                    'dominant-13th': 'dom7 add 9',
+                    'dominant-11th': 'dom7 add 11',
+                    'diminished': 'o',
+                    'minor-ninth': 'm7 add 9',
+                    'none': 'N.C.',
+                    #'power': 'power',
+                    'major-sixth': 'maj6',
+                    'diminished-seventh': 'o7',
+                    'major-ninth': 'maj7 add 9',
+                    'minor-sixth': 'm6',
+                    'alter b9': 'dom7 add b9',
+                    'minor': 'm',
+                    'major-seventh': 'maj7',
+                    'dominant': 'dom7',
+                    'minor-seventh': 'm7',
+                    'major': 'maj',
+                    'augmented': 'aug',
+                    'diminished-maj-seventh': 'o_maj7',
+                    'suspended-fourth': 'sus4',
+                    'minor-add-ninth': 'm add 9',
+                    'add 4 subtract 3 add b9 add 4 subtract 3 add b9 alter #5': 'sus7 add b9',
                     'add b9 add 4 subtract 3 add b9 add 4 subtract 3': 'sus7 add b9',
                     'add 4 subtract 3 add b9 add 4 subtract 3': 'sus7 add b9',
                     'add b9 add 4 subtract 3 add #9 alter #5': 'sus7 add b9',
@@ -77,7 +101,7 @@ def repleaceTheseChords(mySequence, verbose = False):
                     'add 2 add 2': 'add 9',
                     'add 7 add 2': 'add 7 add 9',
                     'add 7 add 7': 'add 7',
-                    'dim(maj7)': 'o7 alter #7',
+                    'dim(maj7)': 'o_maj7',
                     '7susadd3': 'sus7',
                     'm(add9)': 'm7 add 9',
                     '*-add9*': 'm7 add9',
@@ -122,10 +146,15 @@ def repleaceTheseChords(mySequence, verbose = False):
                     '+': 'aug',
                     '5': 'power'
                     }
-
+    sequence = []
+    durations = []
+    
     for song in tqdm(mySequence):
-        tmp = []  
-        for element in song:            
+        tmp = []
+        tmp_d = []  
+        for item in song:
+            element = item[0]  
+            e_duration = item[1]          
             for key, value in correct_this.items():
                 if key == element:
                     if (verbose):
@@ -133,6 +162,7 @@ def repleaceTheseChords(mySequence, verbose = False):
                     element = element.replace(key, value)
                     break
             tmp.append(element)
+            tmp_d.append(e_duration)
         
         #check the case of 'G dom7' and split it into two
         if 'G dom7' in tmp:
@@ -140,42 +170,42 @@ def repleaceTheseChords(mySequence, verbose = False):
                 if n == 'G dom7':
                     tmp[i] = 'G'
                     tmp.insert(i+1, 'dom7')
+                    tmp_d.insert(i+1, tmp_d[i])
          
-         #clean the empty element
-        tmp = [x for x in tmp if x != '']
         sequence.append(tmp)
-    sequence = np.array(sequence, dtype=object) 
+        durations.append(tmp_d)
+        
+    #Unify the dataset again
+    result = []
+    for chords_values, durations_values in zip(sequence, durations):
+        coupled = list(zip(chords_values, durations_values))
+        result.append(coupled)
     
     #clean repeated ones
-    x = 0
-    for song in sequence:
-        y = 0
-        for chord in song:
+    for x, song in enumerate(result):
+        for y, item in enumerate(song):
+            chord = item[0]
             s = chord.split(' ')
             if len(s) >= 5:
                 #print(s)
                 if s[1]+s[2] == s[3]+s[4]:
                     #print(x, y, chord)
-                    sequence[x][y]=s[0]+' '+s[1]+' '+s[2]
+                    result[x][y]=s[0]+' '+s[1]+' '+s[2]
                     #print(sequence[x][y])
-            y+=1
-        x+=1
-    
-   
-
-    return sequence
+                    
+    return result
 
 #------------------------------------------------------------------
-def parse_info_from_XML(path):
+def parse_info_from_XML(path, verbose = False):
     '''
-    Populate a chord sequence and an offset sequence from a XML file
+    Populate a chord sequence and an durations sequence from a XML file
     '''
     chord_sequence_list = []
-    offset_sequence_list = []
+    duration_sequence_list = []
     meta_info_list = []
     
     for file in tqdm(os.listdir(path)):
-    
+        if(verbose): print(file)
         if (file == '.DS_Store'):
             continue
             
@@ -198,9 +228,9 @@ def parse_info_from_XML(path):
         nature = ''
         extension = ''
         slash = ''
-        offset = 0
+        duration = 0
         the_chord_sequence = []
-        the_offset_sequence = []
+        the_duration_sequence = []
 
         #Division is the number of ticks per quarter note
         division = int(root.find('part').find('measure').find('attributes').find('divisions').text)
@@ -210,14 +240,14 @@ def parse_info_from_XML(path):
         #define the Style
         style_token = '<style>'
         the_chord_sequence.append(style_token)
-        the_offset_sequence.append(offset)
+        the_duration_sequence.append(duration)
         the_chord_sequence.append(meta_info['style'])
-        the_offset_sequence.append(offset)
+        the_duration_sequence.append(duration)
 
         for measure in root.iter('measure'):
-            #get the offset reference
+            #get the duration reference
             measure_number = int(measure.attrib.get('number'))
-            #print(measure_number, '->', offset)
+            #print(measure_number, '->', duration)
         
             #get the bars
             bar = '|'
@@ -231,7 +261,7 @@ def parse_info_from_XML(path):
                     
             #print(bar)
             the_chord_sequence.append(bar)
-            the_offset_sequence.append(offset)
+            the_duration_sequence.append(duration)
             #get the Form
             direction = measure.find('direction')
             if direction != None:
@@ -242,21 +272,21 @@ def parse_info_from_XML(path):
                     song_form = 'Form_Segno'
                     #print(song_form)
                     the_chord_sequence.append(song_form)
-                    the_offset_sequence.append(offset)
+                    the_duration_sequence.append(duration)
                 
                 coda = direction_type.find('coda')
                 if coda != None:
                     song_form = 'Form_Coda'
                     #print(song_form)
                     the_chord_sequence.append(song_form)
-                    the_offset_sequence.append(offset)
+                    the_duration_sequence.append(duration)
                     
                 form = direction_type.find('rehearsal')
                 if form != None:
                     song_form = 'Form_'+form.text
                     #print(song_form)
                     the_chord_sequence.append(song_form)
-                    the_offset_sequence.append(offset)
+                    the_duration_sequence.append(duration)
                     
             #get the repetition info
             barline = measure.find('barline')
@@ -268,7 +298,7 @@ def parse_info_from_XML(path):
                         bar = 'Repeat_'+ str(number) #this section defines the bar to be repeated
                         #print(bar)
                         the_chord_sequence.append(bar)
-                        the_offset_sequence.append(offset)
+                        the_duration_sequence.append(duration)
                             
             #get the chords
             for harmony in measure.iter('harmony'):
@@ -286,7 +316,10 @@ def parse_info_from_XML(path):
                 
                 note = note.text+tone
                 kind = harmony.find('kind')
-                nature = kind.attrib.get('text')
+                #nature = kind.attrib.get('text')
+                #get the nature from kind
+                nature = kind.text
+                #print('bar:', measure_number, 'r:', note, 'n:', nature)
                 
                 #get nature of the chord
                 if nature == None:
@@ -326,12 +359,11 @@ def parse_info_from_XML(path):
                 #print(chord)
                 the_chord_sequence.append(chord)
             
-            #get durations offset
+            #get durations duration
             for note_element in measure.iter('note'):
                 duration = int(note_element.find('duration').text) / division
-                the_offset_sequence.append(offset)
-                offset += duration
-                #print(offset)
+                #print(duration)
+                the_duration_sequence.append(duration)
                 
             #this second bar is relevant to close the section
             #Find all barline elements within the measure
@@ -346,51 +378,51 @@ def parse_info_from_XML(path):
                         bar = ':|'
                         #print(bar)
                         the_chord_sequence.append(bar)
-                        the_offset_sequence.append(offset)
+                        the_duration_sequence.append(duration)
 
         the_chord_sequence = np.array(the_chord_sequence, dtype=object)
-        the_offset_sequence = np.array(the_offset_sequence, dtype=float)
+        the_duration_sequence = np.array(the_duration_sequence, dtype=float)
 
-        #print(the_chord_sequence.shape, the_offset_sequence.shape)
+        #print(the_chord_sequence.shape, the_duration_sequence.shape)
 
         #divide the chords into sections base, nature, extension, slash
         #the first two elements are the style 
         the_sequence = the_chord_sequence[2:]
-        the_offset = the_offset_sequence[2:]
+        the_duration = the_duration_sequence[2:]
 
         format = the_chord_sequence[0:2].tolist()
 
-        offset_format = the_offset_sequence[0:2].tolist()
+        duration_format = the_duration_sequence[0:2].tolist()
 
-        the_sequence, the_offset = fmt.getArrayOfElementsInChord(the_sequence, the_offset)
-        the_offset = offset_format + the_offset
+        the_sequence, the_duration = fmt.getArrayOfElementsInChord(the_sequence, the_duration)
+        the_duration = duration_format + the_duration
         the_sequence = format + the_sequence
 
-        #adjust the offset sequence
+        #adjust the duration sequence
         the_sequence = np.array(the_sequence, dtype=object)
-        the_offset = np.array(the_offset, dtype=float)
+        the_duration = np.array(the_duration, dtype=float)
         
         chord_sequence_list.append(the_sequence)
-        offset_sequence_list.append(the_offset)
+        duration_sequence_list.append(the_duration)
         meta_info_list.append(meta_info)
     
     chord_sequence_list = np.array(chord_sequence_list, dtype=object)
-    offset_sequence_list = np.array(offset_sequence_list, dtype=object)
+    duration_sequence_list = np.array(duration_sequence_list, dtype=object)
     meta_info_list = np.array(meta_info_list, dtype=object)
     
-    print(chord_sequence_list.shape, offset_sequence_list.shape)
-    return chord_sequence_list, offset_sequence_list, meta_info_list
+    print(chord_sequence_list.shape, duration_sequence_list.shape)
+    return chord_sequence_list, duration_sequence_list, meta_info_list
 
 #----------------------------------------------------------------------------------
 #expand the song form
-def expand_song_structure(song_structure, id = 0, verbose = False):
+def expand_song_structure(song_structure, duration_structure, id = 0, verbose = False):
     status = True
     
     if '|:' not in song_structure:
         if verbose: 
             print('No repetition data found')
             print("-----------------------------\n")    
-        return song_structure, status
+        return song_structure, duration_structure, status
     
     #convert numpy into array
     song_structure = song_structure.tolist()
@@ -402,10 +434,12 @@ def expand_song_structure(song_structure, id = 0, verbose = False):
     inner_zone = {'start': 0, 'end': 0, id: 0}
     #rest_zone = {'start': 0, 'end': 0, id: 0}
     
-    
     #jump to the third element and save the prior information
     intro_data = song_structure[0:2]
     sequence = song_structure[2:]
+    #do the same with durations
+    intro_duration = duration_structure[0:2]
+    duration_sequence = duration_structure[2:]
     
     #get the location of the repetition symbols
     #find :| and Repeat_
@@ -442,6 +476,7 @@ def expand_song_structure(song_structure, id = 0, verbose = False):
     #Start the process
     stepper = 0
     copy_section = []
+    copy_durations = []
     repeat_times = 0
     control_loop = 0
     repeat_bar = 0
@@ -455,6 +490,7 @@ def expand_song_structure(song_structure, id = 0, verbose = False):
     while done:
         #grab the element 
         e = sequence[stepper]
+        d = duration_sequence[stepper]
         #print(stepper, e)
         if e == '|:':
             form_zone['start'] = stepper  
@@ -476,6 +512,7 @@ def expand_song_structure(song_structure, id = 0, verbose = False):
                 #move forward
                 stepper += 1
                 e = sequence[stepper]
+                d = duration_sequence[stepper]
                 repeat[id]['done'] = True
                 
                 #Ask which is the next available repeat? 
@@ -494,6 +531,7 @@ def expand_song_structure(song_structure, id = 0, verbose = False):
                 next_loc = next_repeat['loc'] + 1
                 stepper = next_loc
                 e = sequence[stepper]
+                d = duration_sequence[stepper]
                 
                 id_next = next_repeat['id']
                 repeat[id_next]['done'] = True
@@ -525,6 +563,7 @@ def expand_song_structure(song_structure, id = 0, verbose = False):
                 #move to the original location
                 stepper = form_zone['start'] + 1
                 e = sequence[stepper]
+                d = duration_sequence[stepper]
                 
                 #update its information
                 close[repeat_bar]['done'] = True  
@@ -533,6 +572,8 @@ def expand_song_structure(song_structure, id = 0, verbose = False):
         
         #copy the information    
         copy_section.append(e)
+        copy_durations.append(d)
+        
         stepper += 1
         control_loop += 1
         if stepper == len(sequence):
@@ -540,21 +581,23 @@ def expand_song_structure(song_structure, id = 0, verbose = False):
         if control_loop > 3000:
             print('ERROR: -----> Control loop break! \nid:', id)
             status = False
-            return 0, status
+            return 0, 0, status
     
     copy_section = intro_data + copy_section
+    copy_durations = np.insert(copy_durations, 0, [0, 0])
+    
     copy_section = [x.replace(':|', '|') for x in copy_section]
     copy_section = [x.replace('|:', '|') for x in copy_section]
     
     if verbose: 
         print('Process completed successfully..', 'New form length:', len(copy_section))
         print("-----------------------------\n")
-    return copy_section, status 
+    return copy_section, copy_durations, status 
 
 #----------------------------------------------------------------------------------
 def formatChordsVocabulary(theChordsSequence, theOffetsSequence, blockSize):
     chord_sequence_list = []
-    offset_sequence_list = []
+    duration_sequence_list = []
     i = 0
     for theChords, theOffets in zip(theChordsSequence, theOffetsSequence):
         theChords = np.array(theChords, dtype=object)
@@ -563,42 +606,42 @@ def formatChordsVocabulary(theChordsSequence, theOffetsSequence, blockSize):
         #divide the chords into sections base, nature, extension, slash
         #the first two elements are the style 
         the_sequence = theChords[2:]
-        the_offset = theOffets[2:]
+        the_duration = theOffets[2:]
 
         format = theChords[0:2].tolist()
-        offset_format = theOffets[0:2].tolist()
+        duration_format = theOffets[0:2].tolist()
 
-        the_sequence, the_offset = getArrayOfElementsInChord(the_sequence, the_offset)
-        the_offset = offset_format + the_offset
+        the_sequence, the_duration = getArrayOfElementsInChord(the_sequence, the_duration)
+        the_duration = duration_format + the_duration
         the_sequence = format + the_sequence
 
         #the final format of the sequence is:
         the_sequence = format_start_end(the_sequence)
-        the_offset = format_start_end(the_offset)
+        the_duration = format_start_end(the_duration)
         
         #if (the_sequence.shape[0] > 768):
-        #    print(i, the_sequence.shape[0], the_offset.shape[0], format)
+        #    print(i, the_sequence.shape[0], the_duration.shape[0], format)
         
         the_sequence = padding(the_sequence, blockSize)
-        the_offset = padding(the_offset, blockSize)
+        the_duration = padding(the_duration, blockSize)
         
         chord_sequence_list.append(the_sequence)
-        offset_sequence_list.append(the_offset)
+        duration_sequence_list.append(the_duration)
         i+=1
             
     chord_sequence_list = np.array(chord_sequence_list, dtype=object)
-    offset_sequence_list = np.array(offset_sequence_list, dtype=object)
-    print(chord_sequence_list.shape, offset_sequence_list.shape)
-    return chord_sequence_list, offset_sequence_list
+    duration_sequence_list = np.array(duration_sequence_list, dtype=object)
+    print(chord_sequence_list.shape, duration_sequence_list.shape)
+    return chord_sequence_list, duration_sequence_list
 
 #----------------------------------------------------------------------------------
-def correctDuplicatedExtensions(dataset, offset):
+def correctDuplicatedExtensions(dataset, duration):
     corrected_datset = []
-    corrected_offset = []
+    corrected_duration = []
     #i = 0
-    for song, off in zip(dataset, offset):
+    for song, off in zip(dataset, duration):
         cleaned_list = []
-        cleanned_offset = []
+        cleanned_duration = []
         for chord, ofNum in zip(song, off):
             new = []
             s = chord.split(' ')
@@ -615,42 +658,12 @@ def correctDuplicatedExtensions(dataset, offset):
             
             new = ' '.join(new)
             cleaned_list.append(new)
-            cleanned_offset.append(ofNum)
+            cleanned_duration.append(ofNum)
         #i+=1
         corrected_datset.append(cleaned_list)
-        corrected_offset.append(cleanned_offset)
+        corrected_duration.append(cleanned_duration)
     corrected_datset = np.array(corrected_datset, dtype=object)
-    corrected_offset = np.array(corrected_offset, dtype=object)
-    print(corrected_datset.shape, corrected_offset.shape)
-    return corrected_datset, corrected_offset
+    corrected_duration = np.array(corrected_duration, dtype=object)
+    print(corrected_datset.shape, corrected_duration.shape)
+    return corrected_datset, corrected_duration
 
-#----------------------------------------------------------------------------
-#Check for all chords that can not be read by music21
-def checkIncompatibleChords(data):
-    #save all chords not compatible with music21
-    incompatible_chords = []
-    s_id = 0
-    for songs in tqdm(data):
-        #let's pass the starting and style elements
-        for i in range(len(songs)):
-            element = songs[i]
-            if element.find('b') > 0 and element[1:2] == 'b':
-                element = element[0:1] + '-' + element[2:]
-            try:
-                tmp = m21.harmony.ChordSymbol(element)
-            except:
-                #erase the first character
-                print(s_id, element)
-                if element[1:2] == '-' or element[1:2] == '#':
-                    element = element[2:]
-                else:
-                    element = element[1:]
-                if element.find('/'):
-                    s = element.split('/')
-                    element = s[0]
-                incompatible_chords.append(element)
-        s_id += 1
-
-    incompatible_chords = list(set(incompatible_chords))
-    print(incompatible_chords)
-    return incompatible_chords
