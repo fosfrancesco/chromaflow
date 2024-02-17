@@ -6,10 +6,9 @@ from ipywidgets import FloatProgress
 def replaceTheseChords(mySequence, verbose = False):
     #natures {'maj', 'm', 'm6', 'm7', 'dom_7', 'maj7', 'maj6', 'o7', 'o', 'sus', 'sus2', 'sus7', 'ø7', 'power', 'm_maj7'}
 
-    correct_this = {
-                    'minor-11th': 'm add 11',
+    correct_this = {'minor-11th': 'm add 11',
                     'dominant-ninth': 'dom7 add 9',
-                    'dominant-13th': 'dom7 add 9',
+                    'dominant-13th': 'dom7 add 13',
                     'dominant-11th': 'dom7 add 11',
                     'diminished': 'o',
                     'minor-ninth': 'm7 add 9',
@@ -29,7 +28,7 @@ def replaceTheseChords(mySequence, verbose = False):
                     'diminished-maj-seventh': 'o_maj7',
                     'suspended-fourth': 'sus4',
                     'minor-add-ninth': 'm add 9',
-                    'add 4 subtract 3 add b9 add 4 subtract 3 add b9 alter #5': 'sus7 add b9',
+                    'add 4 subtract 3 add b9 add 4 subtract 3 add b9 alter #5': 'sus7 add #5 add b9',
                     'add b9 add 4 subtract 3 add b9 add 4 subtract 3': 'sus7 add b9',
                     'add 4 subtract 3 add b9 add 4 subtract 3': 'sus7 add b9',
                     'add b9 add 4 subtract 3 add #9 alter #5': 'sus7 add b9',
@@ -47,7 +46,7 @@ def replaceTheseChords(mySequence, verbose = False):
                     'add 7 add b9 add 4 subtract 3': 'sus7 add b9',
                     'add 4 subtract 3 alter #11': 'sus7 add #11',
                     'alter b5 alter b5 alter b5': 'alter b5',
-                    'add 4 subtract 3 alter #5': 'sus7 add b9',
+                    'add 4 subtract 3 alter #5': 'sus7 add #5 add b9',
                     'alter b5 add 4 subtract 3': 'sus4 add b9',
                     'alter #5 add 4 subtract 3': 'sus4',
                     'add 4 subtract 3 alter b5': 'sus4 add b9',
@@ -81,7 +80,7 @@ def replaceTheseChords(mySequence, verbose = False):
                     'alter b5 alter b5': 'alter b5',
                     'alter #5 alter #5': 'alter #5',
                     'alter b5 alter #5': 'alter b5',
-                    'alter #5 alter b5': 'alter b5',
+                    'alter #5 alter b5': 'alter #5',
                     'alter b9 alter b9': 'alter b9',
                     'add 7 add 7 add 7': 'add 7',
                     'add 4 subtract 3': '',
@@ -105,7 +104,7 @@ def replaceTheseChords(mySequence, verbose = False):
                     '7susadd3': 'sus7',
                     'm(add9)': 'm7 add 9',
                     '*-add9*': 'm7 add9',
-                    '7b5#5*': 'dom7 add b5',
+                    '7b5#5*': 'dom7 add #5',
                     '13sus4': 'sus7 add 13',
                     '*sus4*': 'sus4',
                     '7sus4': 'sus7',
@@ -266,7 +265,12 @@ def parse_info_from_XML(path, verbose = False):
             direction = measure.find('direction')
             if direction != None:
                 direction_type = direction.find('direction-type')
-                
+                #find <coda/> 
+                # Find the <coda> element
+                coda_element = direction_type.find('.//coda')
+                if coda_element != None:
+                    #print("double bar at:", measure_number)
+                    bar = '||'
                 segno = direction_type.find('segno')
                 if segno != None:
                     song_form = 'Form_Segno'
@@ -429,7 +433,7 @@ def parse_info_from_XML(path, verbose = False):
     duration_sequence_list = np.array(duration_sequence_list, dtype=object)
     meta_info_list = np.array(meta_info_list, dtype=object)
     
-    print(chord_sequence_list.shape, duration_sequence_list.shape)
+    print(chord_sequence_list.shape, duration_sequence_list.shape, meta_info_list.shape)
     return chord_sequence_list, duration_sequence_list, meta_info_list
 
 #----------------------------------------------------------------------------------
