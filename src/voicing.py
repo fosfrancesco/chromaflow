@@ -8,7 +8,7 @@ class Voicing:
         #define the natures of the chords
         self.natures = {'maj', 'm', 'm6', 'm7', 'dom7', 'maj6', 'maj7', 'o7', 'o', 'sus', 'sus2', 'sus7', 'sus4', 'ø7', 'power', 'm_maj7', 'aug', 'o_maj7'}
         self.alter = {'add #11', 'add #5', 'add #7', 'add #9', 'add 13', 'add 2', 'add 5', 'add 6', 'add 7', 'add 8', 'add 9', 'add b13', 'add b2', 'add b6', 'add b9', 'alter #11', 'alter #5', 'alter #7', 'alter #9', 'alter b5', 'alter b9'}
-        self.structural_elements = {'.', '|', ':|', '|:', '/', 'N.C.'} #to add the maj token 
+        self.structural_elements = {'.', '|', '||', ':|', '|:', '/', 'N.C.'} #to add the maj token 
         self.voicing = ['v_0', 'v_1', 'v_2', 'v_3']
         self.all_notes = {
             'C': 48, 'C#': 49, 'Db': 49, 'D': 50, 'D#': 51, 'Eb': 51, 'E': 52, 'F': 53, 'F#': 54, 'Gb': 42, 'G': 43, 'G#': 44, 'Ab':44, 'A': 45, 'A#': 46, 'Bb': 46, 'B': 47, 

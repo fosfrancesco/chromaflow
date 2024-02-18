@@ -202,17 +202,14 @@ def parse_info_from_XML(path, verbose = False):
     chord_sequence_list = []
     duration_sequence_list = []
     meta_info_list = []
-    
+    track = 0
     for file in tqdm(os.listdir(path)):
         if(verbose): print(file)
         if (file == '.DS_Store'):
             continue
             
         song_path = path+'/'+file
-        #print(song_path)
-        
         meta_info = get_metadata(song_path)
-        #print(meta_info)
         
         tree = ET.parse(song_path)
         root = tree.getroot()
@@ -233,8 +230,6 @@ def parse_info_from_XML(path, verbose = False):
 
         #Division is the number of ticks per quarter note
         division = int(root.find('part').find('measure').find('attributes').find('divisions').text)
-        #print(division)
-
 
         #define the Style
         style_token = '<style>'
@@ -246,7 +241,6 @@ def parse_info_from_XML(path, verbose = False):
         for measure in root.iter('measure'):
             #get the duration reference
             measure_number = int(measure.attrib.get('number'))
-            #print(measure_number, '->', duration)
         
             #get the bars
             bar = '|'
@@ -259,8 +253,7 @@ def parse_info_from_XML(path, verbose = False):
                         bar = '|:'
                     
             #print(bar)
-            the_chord_sequence.append(bar)
-            the_duration_sequence.append(duration)
+            
             #get the Form
             direction = measure.find('direction')
             if direction != None:
@@ -269,29 +262,33 @@ def parse_info_from_XML(path, verbose = False):
                 # Find the <coda> element
                 coda_element = direction_type.find('.//coda')
                 if coda_element != None:
-                    #print("double bar at:", measure_number)
+                    #print("double bar at:", track, measure_number)
                     bar = '||'
+                    #the_chord_sequence.append(bar)
+                    #the_duration_sequence.append(duration)
+                    
                 segno = direction_type.find('segno')
                 if segno != None:
                     song_form = 'Form_Segno'
-                    #print(song_form)
                     the_chord_sequence.append(song_form)
                     the_duration_sequence.append(duration)
                 
                 coda = direction_type.find('coda')
                 if coda != None:
                     song_form = 'Form_Coda'
-                    #print(song_form)
                     the_chord_sequence.append(song_form)
                     the_duration_sequence.append(duration)
                     
                 form = direction_type.find('rehearsal')
                 if form != None:
                     song_form = 'Form_'+form.text
-                    #print(song_form)
                     the_chord_sequence.append(song_form)
                     the_duration_sequence.append(duration)
-                    
+            
+            #Append bar and duration is here
+            the_chord_sequence.append(bar)
+            the_duration_sequence.append(duration)
+            
             #get the repetition info
             barline = measure.find('barline')
             if barline != None:
@@ -299,9 +296,8 @@ def parse_info_from_XML(path, verbose = False):
                 if ending != None:
                     number = ending.attrib.get('number')
                     if number != None:
-                        bar = 'Repeat_'+ str(number) #this section defines the bar to be repeated
-                        #print(bar)
-                        the_chord_sequence.append(bar)
+                        rep = 'Repeat_'+ str(number) #this section defines the bar to be repeated
+                        the_chord_sequence.append(rep)
                         the_duration_sequence.append(duration)
                             
             #get the chords
@@ -376,11 +372,10 @@ def parse_info_from_XML(path, verbose = False):
                 else:
                     slash = ''
                     
-                    
                 chord = note + str(nature) + extension + str(slash)
                 #print(chord)
                 the_chord_sequence.append(chord)
-                
+                 
             #----------------------------------------------------------
             #get durations duration
             for note_element in measure.iter('note'):
@@ -403,6 +398,7 @@ def parse_info_from_XML(path, verbose = False):
                         the_chord_sequence.append(bar)
                         the_duration_sequence.append(duration)
 
+        track += 1
         the_chord_sequence = np.array(the_chord_sequence, dtype=object)
         the_duration_sequence = np.array(the_duration_sequence, dtype=float)
 

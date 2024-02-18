@@ -13,7 +13,7 @@ def getFormat():
     return format
 
 def listToIgnore():
-    ignore_list = {'<start>', '<end>', '<pad>', '.', '|', 'Repeat_0', 'Repeat_1', 'Repeat_2', 'Repeat_3', 'Intro', 
+    ignore_list = {'<start>', '<end>', '<pad>', '.', '|', '||', 'Repeat_0', 'Repeat_1', 'Repeat_2', 'Repeat_3', 'Intro', 
                     'Form_A', 'Form_B', 'Form_C', 'Form_D', 
                     'Form_verse', 'Form_intro', 'Form_Coda', 'Form_Head', 
                     'Form_Segno', '|:', ':|'}
@@ -29,11 +29,7 @@ def splitChordTokens(chord):
     section = chord.split(' ')
     base = section[0][:1]
     nature = section[0][1:]
-    
-    #fix the bpedal error
-    #if nature == 'bpedal':
-    #    nature = nature.replace('bpedal', '-pedal')
-                    
+                      
     #fix the shifted error when sharp and flat appears   
          
     if '###' in nature or 'bbb' in nature:
@@ -47,11 +43,7 @@ def splitChordTokens(chord):
     elif '#' in nature or 'b' in nature:
         base = section[0][:2]
         nature = section[0][2:]
-        
-    #fix the base error when is b intead of -
-    #if base[1:] == 'b':
-    #    base = base.replace('b', '-')
-        
+                
     ext = ''
     for i in range(1, len(section)):
         ext += section[i]+ ' '
