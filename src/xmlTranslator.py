@@ -238,7 +238,10 @@ def parse_info_from_XML(path, verbose = False):
         the_chord_sequence.append(meta_info['style'])
         the_duration_sequence.append(duration)
 
-        for measure in root.iter('measure'):
+        # Find all measure elements in the root
+        measures = root.findall('.//measure')
+        
+        for measure in measures:
             #get the duration reference
             measure_number = int(measure.attrib.get('number'))
         
@@ -253,19 +256,29 @@ def parse_info_from_XML(path, verbose = False):
                         bar = '|:'
                     
             #print(bar)
+            measure_children = list(measure)
+            for idx, child in enumerate(measure_children):
+                direction = child.find('direction-type')
+                if direction is not None:
+                    coda = direction.find('coda')
+                    if coda is not None:
+                        if idx < len(measure_children) - 2:
+                            if verbose: print("In track:", track, "measure:", measure_number, "coda element is at the beginning.")
+                            bar = 'b||'
+                        elif idx == len(measure_children) - 1:
+                            if verbose: print("In track:", track, "measure:", measure_number, "coda element is at the end.")
+                            bar = 'e||'
             
             #get the Form
             direction = measure.find('direction')
             if direction != None:
                 direction_type = direction.find('direction-type')
-                #find <coda/> 
-                # Find the <coda> element
-                coda_element = direction_type.find('.//coda')
-                if coda_element != None:
-                    #print("double bar at:", track, measure_number)
-                    bar = '||'
-                    #the_chord_sequence.append(bar)
-                    #the_duration_sequence.append(duration)
+               
+                # # Find the <coda> element
+                # coda_element = direction_type.find('.//coda')
+                # if coda_element != None:
+                #     print("double bar at:", track, measure_number)
+                #     bar = '||'
                     
                 segno = direction_type.find('segno')
                 if segno != None:
@@ -432,6 +445,50 @@ def parse_info_from_XML(path, verbose = False):
     print(chord_sequence_list.shape, duration_sequence_list.shape, meta_info_list.shape)
     return chord_sequence_list, duration_sequence_list, meta_info_list
 
+
+#----------------------------------------------------------------------------------
+#This class fix all extensions to avoid redundancy and extra tokens
+def fix_extensions(sequence):
+    for song in tqdm(sequence):
+        for i, item in enumerate(song):
+            element = item[0] #extract the chord information
+            c_duration = item[1] #extract the duration information
+            if 'add' in element or 'alter' in element:
+                #print(element)
+                split = element.split(' ')
+                size = len(split)
+                if size > 2:
+                    if size%2 == 1:
+                        #print('odd', split)
+                        nature = split[0]
+                        #couple the nature with duration
+                        coupled = (nature, c_duration)
+                        song[i] = coupled
+                        counter = 1 
+                        for n in range(1, size-1, 2):
+                            ext = split[n] + ' ' + split[n+1]
+                            coupled = (ext, c_duration)
+                            song.insert(i+counter, coupled)
+                            counter += 1
+        #need to do it separately to avoid the index out of range           
+        for i, item in enumerate(song):
+            element = item[0] #extract the chord information
+            c_duration = item[1] #extract the duration information
+            
+            if 'add' in element or 'alter' in element:
+                #print(element)
+                split = element.split(' ')
+                size = len(split)
+                if size > 2:   
+                    if size%2 == 0:
+                        #delete the element
+                        song.pop(i)
+                        counter = 0
+                        for n in range(0, size-1, 2):
+                            ext = split[n] + ' ' + split[n+1]
+                            coupled = (ext, c_duration)
+                            song.insert(i+counter, coupled)
+                            counter += 1
 #----------------------------------------------------------------------------------
 #expand the song form
 def expand_song_structure(song_structure, duration_structure, id = 0, verbose = False):

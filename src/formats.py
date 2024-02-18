@@ -13,7 +13,7 @@ def getFormat():
     return format
 
 def listToIgnore():
-    ignore_list = {'<start>', '<end>', '<pad>', '.', '|', '||', 'Repeat_0', 'Repeat_1', 'Repeat_2', 'Repeat_3', 'Intro', 
+    ignore_list = {'<start>', '<end>', '<pad>', '.', '|', '||', 'b||', 'e||', 'Repeat_0', 'Repeat_1', 'Repeat_2', 'Repeat_3', 'Intro', 
                     'Form_A', 'Form_B', 'Form_C', 'Form_D', 
                     'Form_verse', 'Form_intro', 'Form_Coda', 'Form_Head', 
                     'Form_Segno', '|:', ':|'}
