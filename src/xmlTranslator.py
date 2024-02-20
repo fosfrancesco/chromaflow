@@ -489,26 +489,50 @@ def fix_extensions(sequence):
                             coupled = (ext, c_duration)
                             song.insert(i+counter, coupled)
                             counter += 1
+                            
+#----------------------------------------------------------------------------------
+#Correct the location of 'e||'
+def correct_coda_end(song, durations, verbose = False):
+    # Check and replace 'e||' with '|', then find the correct position for '|'
+    song = song.tolist()
+    durations = durations.tolist()
+    
+    if 'e||' in song:
+        e_index = song.index('e||')
+        song[e_index] = '|'
+        # Find the next position to insert '|'
+        for i in range(e_index + 1, len(song)):
+            if song[i] in ('|'):
+                song[i] = 'e||'
+                break
+            if song[i] in (':|'):
+                #insert the bar
+                song.insert(i, 'e||')
+                durations.insert(i, 0)
+                break
+    song = np.array(song, dtype=object)
+    durations = np.array(durations, dtype=float)
+    return song, durations
+
+
 #----------------------------------------------------------------------------------
 #expand the song form
 def expand_song_structure(song_structure, duration_structure, id = 0, verbose = False):
     status = True
     
-    if '|:' not in song_structure:
+    if '|:' not in song_structure and 'Form_Coda' not in song_structure:
         if verbose: 
-            print('No repetition data found')
+            print('No repetition or Coda data found in', 'song:', id)
             print("-----------------------------\n")    
         return song_structure, duration_structure, status
     
     #convert numpy into array
     song_structure = song_structure.tolist()
     
-    if verbose: print('Length of sequence:', len(song_structure))
+    if verbose: print('Song:', id, '\nLength of sequence:', len(song_structure))
     #identify the location of the repetition symbols
     
-    form_zone = {'start': 0, 'end': 0, id: 0}
-    inner_zone = {'start': 0, 'end': 0, id: 0}
-    #rest_zone = {'start': 0, 'end': 0, id: 0}
+    coda_zone = {'head': -1, 'from': -1, 'to': -1, 'from_done' : False, 'to_done': False, 'id': 0}
     
     #jump to the third element and save the prior information
     intro_data = song_structure[0:2]
@@ -519,26 +543,68 @@ def expand_song_structure(song_structure, duration_structure, id = 0, verbose = 
     
     #get the location of the repetition symbols
     #find :| and Repeat_
-    close = []
-    repeat = []
-    c_id = 0
+
+ 
+    
+    #identify the location of Coda, Segno or Form_A
+    form_segno_found = False
+   
+    for i, element in enumerate(sequence):
+        if element == 'Form_Segno' and form_segno_found == False:
+            coda_zone['head'] = i
+            form_segno_found = True
+            
+        #for those cases that from segno is not explicitly defined
+        elif element == 'Form_A' and form_segno_found == False:
+            coda_zone['head'] = i
+            
+        elif form_segno_found == False:
+            coda_zone['head'] = 0 
+        
+        if element == ('e||'):
+            coda_zone['from'] = i
+        
+        if element == ('b||'):
+            coda_zone['to'] = i
+        
+    #if (verbose): print('coda_zone:', coda_zone)
+        
+    #count how many repetitions bars are in the song    
+    id_counter = 0
     r_id = 0
+    bar_dotted_section = {'start': -1, 'end': -1, 'done': False, 'id': -1}
+    dotted = []
+    repeat = []
+    
     for i, e in enumerate(sequence):
-        close_repetition = {'loc': 0, 'done': False, 'id': 0}
+        if e == '|:':
+            bar_dotted_section = {'start': i, 'end': -1, 'done': False, 'id': id_counter}
+            #print(e, i)
+    
+        elif e == ':|' and bar_dotted_section['start'] != -1:
+            bar_dotted_section['end'] = i
+            bar_dotted_section['id'] = id_counter
+            dotted.append(bar_dotted_section.copy())
+            id_counter += 1
+            
+        elif e == ':|' and bar_dotted_section['start'] == -1:
+            bar_dotted_section = {'start': 0, 'end': i, 'done': False, 'id': id_counter}
+            dotted.append(bar_dotted_section.copy())
+            id_counter += 1
+        
+        if i == len(sequence)-1 and bar_dotted_section['end'] == -1:
+            bar_dotted_section['end'] = i
+            bar_dotted_section['id'] = id_counter
+            dotted.append(bar_dotted_section.copy())
+            
         repeat_section = {'loc': 0, 'done': False, 'id': 0}
-        if e == ':|':
-            close_repetition['loc'] = i
-            close_repetition['id'] = c_id
-            #print(close_repetition)
-            close.append(close_repetition)
-            c_id += 1
         if e.startswith('Repeat'):
             repeat_section['loc'] = i
             repeat_section['id'] = r_id
             #print(repeat_section)
-            repeat.append(repeat_section)
+            repeat.append(repeat_section.copy())
             r_id += 1
-    
+        
     if len(repeat) == 1:
         # Substring to search for
         substring = 'Repeat_'
@@ -556,21 +622,24 @@ def expand_song_structure(song_structure, duration_structure, id = 0, verbose = 
     repeat_times = 0
     control_loop = 0
     repeat_bar = 0
-    
-    #r_id = 0
     repeat_done = False
     done = True
     this_repeat = None
     next_repeat = None
     
+    if '|:' not in sequence and ':|' not in sequence:
+        #print('No repetition data found in', 'song:', id)
+        repeat_done = True
+        
     while done:
         #grab the element 
         e = sequence[stepper]
         d = duration_sequence[stepper]
         #print(stepper, e)
         if e == '|:':
-            form_zone['start'] = stepper  
-        
+            current_dotted = dotted[repeat_bar]
+            #print('Repetition bar at:', stepper)
+            
         if e.startswith('Repeat') and repeat_done == False:
             #find the repeat that is located in that stepper
             for current in repeat:
@@ -580,16 +649,17 @@ def expand_song_structure(song_structure, duration_structure, id = 0, verbose = 
                     this_repeat = current
                     this_id = current['id']
                     break 
-            #Ask if this repeat is done
+            #ask if this repeat is done
             if this_repeat['done'] == False:
-                inner_zone['start'] = stepper 
-                id = this_repeat['id']   
-                if verbose: print('first repeat done', stepper, id)           
+                
+                m_id = this_repeat['id']   
+                if verbose: print('first repeat done', stepper, m_id)           
+                
                 #move forward
                 stepper += 1
                 e = sequence[stepper]
                 d = duration_sequence[stepper]
-                repeat[id]['done'] = True
+                repeat[m_id]['done'] = True
                 
                 #Ask which is the next available repeat? 
                 for current in repeat:
@@ -598,8 +668,8 @@ def expand_song_structure(song_structure, duration_structure, id = 0, verbose = 
                         if verbose: print('next repeat:', next_repeat['loc'], next_repeat['id'])
                         break
                 if (next_repeat == None):
-                    if verbose: print('All repetitions done 0')
-                    done = False
+                    if verbose: print('All repetitions are done 0')
+                    #repeat_done = True
                     break
             
             elif this_repeat['done'] == True and next_repeat['done'] == False and repeat[this_id]['id'] < len(repeat)-1:
@@ -611,41 +681,56 @@ def expand_song_structure(song_structure, duration_structure, id = 0, verbose = 
                 
                 id_next = next_repeat['id']
                 repeat[id_next]['done'] = True
-                if verbose: print('second repeat done at', 'stepper:', stepper, 'id:', id)
+                if verbose: print('second repeat done at', 'stepper:', stepper)
                 
             elif repeat[repeat_times]['done'] == True and repeat[this_id]['id'] == len(repeat)-1:
-                #repeat_done = True
-                #TODO: check if this section is needed
-                if verbose: print('All repetitions done')
-                #done = False #close the loop
+                repeat_done = True
+                #print('All repetitions done 1')
                 #e = 'None'
             
         
         if e == ':|':
-            current = close[repeat_bar]
+            current_dotted = dotted[repeat_bar]
             #check the current repetition turn
-            if current['done'] == True and repeat_bar < len(close)-1:
+            if current_dotted['done'] == True and repeat_bar < len(dotted)-1:
                 repeat_bar += 1
-                current = close[repeat_bar]
-                #print('next close repetition')
+                current_dotted = dotted[repeat_bar]
+                #print('next repetition', current_dotted)
             
             #do the repetition    
-            if current['done'] == False:
-                
-                #save location 
-                form_zone['end'] = stepper
-                inner_zone['end'] = stepper
-                
+            elif current_dotted['done'] == False:        
                 #move to the original location
-                stepper = form_zone['start'] + 1
+                stepper = current_dotted['start']-1
                 e = sequence[stepper]
                 d = duration_sequence[stepper]
                 
                 #update its information
-                close[repeat_bar]['done'] = True  
-                current['done'] = True    
-                #print('repetition done', repeat_bar)
+                dotted[repeat_bar]['done'] = True  
+                current_dotted['done'] = True    
+                #print('done!', current_dotted)
+                
         
+        #Check the form of the coda
+        if repeat_done == True:
+            if e == 'e||' and coda_zone['from_done'] == True:
+                stepper = coda_zone['to']
+                e = sequence[stepper]
+                coda_zone['to_done'] = True
+                if verbose: print('Second time goes to Coda at:', stepper)
+                
+            elif e == 'e||' and coda_zone['from_done'] == False and coda_zone['to_done'] == False:
+                #stepper = coda_zone['head']
+                #e = sequence[stepper]
+                coda_zone['from_done'] = True
+                if verbose: print('First coda passed at:', stepper)
+                
+            if e == 'b||' and coda_zone['to_done'] == False:
+                if verbose: print('Moved to Head from', stepper, coda_zone['head'])
+                stepper = coda_zone['head']
+                e = sequence[stepper]
+                coda_zone['to_done'] = True
+                
+            
         #copy the information    
         copy_section.append(e)
         copy_durations.append(d)
@@ -655,7 +740,7 @@ def expand_song_structure(song_structure, duration_structure, id = 0, verbose = 
         if stepper == len(sequence):
             done = False
         if control_loop > 3000:
-            print('ERROR: -----> Control loop break! \nid:', id)
+            print('ERROR: -----> Control loop break!')
             status = False
             return 0, 0, status
     
