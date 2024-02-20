@@ -285,11 +285,6 @@ def correctBackTheFormat(reference, toBeCorrected):
     new_dataset = np.array(new_dataset, dtype=object)
     return new_dataset
 
-#Check the chord is handdleled by music21
-def checkChordFormat(element):
-    tmp = m21.harmony.ChordSymbol(element)
-    return [str(p) for p in tmp.pitches]
-
 #Correct style tokens by reference
 def correctStyleTokensInMeta(data):
     #Get all the elements in meta and correct the style tokens

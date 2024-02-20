@@ -7,9 +7,17 @@ class Voicing:
     def __init__(self):
         #define the natures of the chords
         self.natures = {'maj', 'm', 'm6', 'm7', 'dom7', 'maj6', 'maj7', 'o7', 'o', 'sus', 'sus2', 'sus7', 'sus4', 'ø7', 'power', 'm_maj7', 'aug', 'o_maj7'}
-        self.alter = {'add #11', 'add #5', 'add #7', 'add #9', 'add 13', 'add 2', 'add 5', 'add 6', 'add 7', 'add 8', 'add 9', 'add b13', 'add b2', 'add b6', 'add b9', 'alter #11', 'alter #5', 'alter #7', 'alter #9', 'alter b5', 'alter b9'}
+        
+        #alterations and add
+        self.alter = {'add b2', 'add 2', 'add b5', 'add 5', 'add #5', 'add b6', 'add 6' 'add 7', 'add #7', 'add 8', 'add b9', 'add 9', 'add #9', 'add #11', 'add 13', 'add b13', 'alter #11', 'alter #5', 'alter #7', 'alter #9', 'alter b5', 'alter b9'}        
+        
+        #Structural elements
         self.structural_elements = {'.', '|', '||', ':|', '|:', 'b||', 'e||', '/', 'N.C.'} #to add the maj token 
+        
+        #Voicing
         self.voicing = ['v_0', 'v_1', 'v_2', 'v_3']
+        
+        #All notes
         self.all_notes = {
             'C': 48, 'C#': 49, 'Db': 49, 'D': 50, 'D#': 51, 'Eb': 51, 'E': 52, 'F': 53, 'F#': 54, 'Gb': 42, 'G': 43, 'G#': 44, 'Ab':44, 'A': 45, 'A#': 46, 'Bb': 46, 'B': 47, 
             'A##': 47, 'Abb': 43, 'Abbb': 42, 'B#': 48, 'B##': 49, 'Bbb': 45, 'Bbbb': 44, 
@@ -23,19 +31,19 @@ class Voicing:
         self.maj7 = {'v_0':[0, 11, 14, 16, 19], 'v_1':[0, 11, 16, 19], 'v_2':[0, 11, 14, 16], 'v_3':[0, 11, 14, 16, 19]}
         self.maj6 = {'v_0':[0, 7, 9, 12, 16], 'v_1':[0, 7, 9, 16], 'v_2':[0, 7, 14, 16, 21], 'v_3':[0, 4, 7, 9, 12, 14]}
         self.power = {'v_0':[0, 7, 12, 19], 'v_1':[0, 7, 12, 19], 'v_2':[0, 7, 12, 24], 'v_3':[0, 7, 12, 24]}
-        self.m = {'v_0':[0, 12, 15, 19], 'v_1':[0, 15, 19, 24], 'v_2':[0, 19, 24, 27], 'v_3':[0, 12, 19, 24, 27]}
+        self.m = {'v_0':[0, 12, 15, 19], 'v_1':[0, 7, 12, 15], 'v_2':[0, 7, 12, 15, 19], 'v_3':[0, 7, 14, 15, 19]}
         self.m7 = {'v_0':[0, 10, 15, 19], 'v_1':[0, 7, 10, 15], 'v_2':[0, 10, 14, 15], 'v_3':[0, 10, 14, 15]}
         self.m_maj7 = {'v_0':[0, 11, 15, 19], 'v_1':[0, 7, 11, 12, 15], 'v_2':[0, 7, 11, 14, 15], 'v_3':[0, 11, 15, 19]}
         self.dom7 = {'v_0':[0, 7, 10, 16, 19], 'v_1':[0, 10, 16, 19], 'v_2':[0, 10, 14, 16], 'v_3':[0, 10, 14, 16, 19]}
-        self.ø7 =  {'v_0':[0, 15, 18, 22], 'v_1':[0, 10, 15, 18], 'v_2':[0, 15, 18, 22, 24], 'v_3':[0, 6, 10, 15, 18]}
-        self.o7 = {'v_0':[0, 15, 18, 21], 'v_1':[0, 15, 18, 21, 24], 'v_2':[0, 18, 21, 24, 27], 'v_3':[0, 12, 15, 18, 21]}
+        self.ø7 =  {'v_0':[0, 15, 18, 22], 'v_1':[0, 10, 15, 18], 'v_2':[0, 12, 15, 18, 22], 'v_3':[0, 6, 10, 15, 18]}
+        self.o7 = {'v_0':[0, 6, 10, 14, 15], 'v_1':[0, 15, 18, 21, 24], 'v_2':[0, 15, 18, 21, 24], 'v_3':[0, 12, 15, 18, 21]}
         self.o = {'v_0':[0, 3, 6, 12], 'v_1':[0, 6, 12, 15], 'v_2':[0, 15, 18, 21], 'v_3':[0, 12, 15, 18, 21]}
-        self.sus = {'v_0':[0, 12, 17, 19], 'v_1':[0, 17, 19, 24], 'v_2':[0, 19, 24, 29], 'v_3':[0, 12, 19, 24, 29]} 
+        self.sus = {'v_0':[0, 12, 17, 19], 'v_1':[0, 17, 19, 24], 'v_2':[0, 10, 14, 17], 'v_3':[0, 7, 14, 17, 19]} 
         self.sus7 = {'v_0':[0, 10, 17, 19], 'v_1':[0, 10, 14, 17, 19], 'v_2':[0, 10, 14, 17], 'v_3':[0, 10, 14, 17, 19]}
         self.sus2 = {'v_0':[0, 10, 17, 19], 'v_1':[0, 10, 14, 17, 19], 'v_2':[0, 10, 14, 17], 'v_3':[0, 10, 14, 17, 19]}
-        self.sus4 = {'v_0':[0, 12, 17, 22], 'v_1':[0, 12, 17, 22], 'v_2':[0, 12, 17, 22], 'v_3':[0, 12, 17, 22]}
+        self.sus4 = {'v_0':[0, 5, 7, 12, 14], 'v_1':[0, 7, 14, 17], 'v_2':[0, 7, 12, 17, 19], 'v_3':[0, 14, 12, 17, 10]}
         self.aug = {'v_0':[0, 4, 8, 12, 16], 'v_1':[0, 8, 12, 16, 20], 'v_2':[0, 12, 16, 20, 24], 'v_3':[0, 8, 12, 16]}
-        self.o_maj7 = {'v_0':[0, 11, 15, 18], 'v_1':[0, 6, 11, 15], 'v_2':[0, 6, 11, 15, 18], 'v_3':[0, 11, 15, 18, 24]}
+        self.o_maj7 = {'v_0':[0, 11, 15, 18], 'v_1':[0, 6, 11, 15], 'v_2':[0, 6, 11, 15, 18], 'v_3':[0, 11, 12, 15, 18]}
        
         # Define the voicing dictionaries for the chords
         self.chord_voicing = {'maj': self.maj, 'maj7': self.maj7, 'm': self.m, 'm7': self.m7, 'dom7': self.dom7, 
@@ -74,19 +82,20 @@ class Voicing:
         status = True
         # Create a dictionary for the alter section
         add_dict = {
-            'add b9': 1 + 12,
-            'add 9': 2 + 12,
-            'add #9': 3 + 12,
             'add b13': 8 + 12,
             'add 13': 9 + 12,
-            'add 6': 9,
             'add #11': 6 + 12,
-            'add 2': 2 + 12,
-            'add 5': 7,
-            'add 7': 11,
+            'add #9': 3 + 12,
+            'add 9': 2 + 12,
+            'add b9': 1 + 12,
             'add 8': 12,
-            'add b2': 1,
-            'add b6': 8 + 12
+            'add 7': 11,
+            'add 6': 9,
+            'add b6': 8 + 12,
+            'add 5': 7,
+            'add b5': 6,
+            'add 2': 2 + 12,
+            'add b2': 1
         }
         # Create a dictionary for the alter section
         alter_dict = {
@@ -125,8 +134,9 @@ class Voicing:
             elif element == '/':
                 #check the next element
                 if sequence[v + 1][0] in self.all_notes:
-                    slash_root = self.all_notes[sequence[v + 1][0]]-12
+                    slash_root = self.all_notes[sequence[v + 1][0]]
                     #print(sequence[v + 1], slash_root)
+                    midi[0] = midi[0] + 12
                     midi.insert(0, slash_root)
                     
             elif element in add_dict:
@@ -145,6 +155,9 @@ class Voicing:
                             midi[i] = n - 1
                         elif element.find('#') != -1 and diff == alter_dict[element]:
                             midi[i] = n + 1
+                        else:
+                            #add the element if it is not in the midi array
+                            midi.append(root + alter_dict[element])
             v += 1
         
         return midi_sequence, status
