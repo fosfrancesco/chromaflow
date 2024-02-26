@@ -5,7 +5,7 @@ from tqdm.auto import tqdm
 
 # some by default declarations
 def getNotes():
-    notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb']
+    notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'E#', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb', 'Fb']
     return notes
 
 def getFormat():
