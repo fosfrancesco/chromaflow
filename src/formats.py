@@ -8,6 +8,10 @@ def getNotes():
     notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'E#', 'Bb', 'Eb', 'Ab', 'Db', 'Gb', 'Cb', 'Fb']
     return notes
 
+def getNatures():
+    natures = ['maj', 'maj6', 'maj7', 'm', 'm7', 'm_maj7', 'm6', 'dom7', 'ø7', 'o7', 'o', 'power', 'sus', 'sus7', 'sus2', 'sus4', 'aug', 'o_maj7']
+    return natures
+
 def getFormat():
     format = ['.', '<start>', '<end>', '<pad>']
     return format
