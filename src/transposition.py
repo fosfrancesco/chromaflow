@@ -28,6 +28,8 @@ class Transposition:
             'E#': 'F',
             'B#': 'C',
             'Cb': 'B',
+            'B': 'Cb',
+            'E': 'Fb',
             'Fb': 'E'
         }
 
@@ -140,7 +142,7 @@ class Transposition:
             this_idx = self.line_of_fifths.index(this_note)
             new_note = self.line_of_fifths[this_idx+12]
             tonality = new_note + ' ' + this_mode
-
+        
         mode = 'None'
         if 'major' in tonality:
             mode = 'major'
@@ -151,13 +153,26 @@ class Transposition:
         
         root_note, quality = tonality.split(' ')
         alterations = None
+        enharmonic_alterations = None
         
         if mode == 'minor':
             alterations = self.minor_keys.get(root_note)
+            enharmonic_alterations = self.minor_keys.get(self.enharmonic_equivalents.get(root_note))
         elif mode == 'dominant':
             alterations = self.dominant_keys.get(root_note)
+            enharmonic_alterations = self.dominant_keys.get(self.enharmonic_equivalents.get(root_note))
         elif mode == 'major':
             alterations = self.major_keys.get(root_note)
+            enharmonic_alterations = self.major_keys.get(self.enharmonic_equivalents.get(root_note))
+            
+        #print(alterations, enharmonic_alterations)
+        
+        if enharmonic_alterations != None and alterations != None:
+            if len(alterations) > len(enharmonic_alterations):
+                alterations = enharmonic_alterations
+                root_note = self.enharmonic_equivalents.get(root_note)
+                #print(f"Enharmonic equivalent found: {root_note}")
+                tonality = f"{root_note} {quality}"
             
         corrected_tonality = tonality
         
@@ -310,26 +325,30 @@ class Transposition:
                 
             steps = item['distance']
             new_note = self.get_note_from_steps_distance(previous_note, steps)
-            #print(new_note)
-            nature = item['nature']
+            #check its validity 
+            
+            nature = item['nature'][0]
             check_note = None
             transposed = new_note
             
             if nature == 'maj' or nature == 'maj7' or nature == 'maj6':
                 mode = 'major'
                 check_note, _, _ = self.get_alterations_scales(transposed+' '+mode)
+                transposed = check_note.split(' ')[0]
                 
-            if nature == 'm' or nature == 'm7' or nature == 'm6':
+            elif nature == 'm' or nature == 'm7' or nature == 'm6':
                 mode = 'minor'
                 check_note, _, _ = self.get_alterations_scales(transposed+' '+mode)
+                transposed = check_note.split(' ')[0]
                 
-            if nature == 'dom7':
+            elif nature == 'dom7':
                 mode = 'dominant'
                 check_note, _, _ = self.get_alterations_scales(transposed+' '+mode)
-                #print(check_note, transposed)
-            
-            if check_note != None:
                 transposed = check_note.split(' ')[0]
+            
+            elif check_note != None:
+                transposed = check_note.split(' ')[0]
+            
             new_item['note'] = transposed
             transposed_song.append(new_item)
         
@@ -343,11 +362,12 @@ class Transposition:
                     distance = self.get_distance_line_of_fifth(current_note, next_note)
                     #print(current_note, next_note, distance)
                     if distance == -13:
+                        assert True, "Distance chord not correct"
                         new_note = self.get_note_from_steps_distance(next_note, 1)
                         result ,_ ,_ = self.get_alterations_scales(new_note+' major')
                         new_note = result.split(' ')[0]
                         transposed_song[i]['note'] = new_note
-        print(transposed_song)
+        
         #create a new file 
         transposed_final = sequence.copy()
         for i, element in enumerate(transposed_song):
