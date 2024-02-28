@@ -1,3 +1,5 @@
+import formats as fmt
+
 class Transposition:
     #define the class
     def __init__(self):
@@ -250,5 +252,106 @@ class Transposition:
         else:
             distance = -1
         return distance
+    
+    #--------------------------------------------------------------------------------
+    #Transpose the sequence
+    def transpose_song(self, sequence, tonality, new_tonality):
+        '''
+        Get the sequence, extract the song information, the chords location and its duration and 
+        transpose to a new tonality.
+        '''
+        print('from:', tonality, 'to:', new_tonality)
+        tonality_note = tonality.split(' ')[0]
+
+        #Extract the notes
+        check_notes = fmt.getNotes()
+        song_to_translate_notes = []
+
+        other_elements = fmt.listToIgnore()
+        # Extract chords information with its location and duration
+        
+        for i, item in enumerate(sequence):
+            info = {'note': '', 'distance': -1, 'nature': 'Null', 'loc': -1, 'duration': -1}
+            element = item[0]
+            duration = item[1]
+            if element in check_notes:
+                info['note'] = element
+                info['loc'] = i
+                info['duration'] = duration
+                this_nature = sequence[i+1]
+                if this_nature in other_elements:
+                    this_nature = 'maj'
+                info['nature'] = this_nature
+                song_to_translate_notes.append(info)     
+            
+        for i, item in enumerate(song_to_translate_notes):
+            current_note = item['note']
+            if i == 0:
+                previous_note = tonality_note
+            else:
+                previous_note = song_to_translate_notes[i-1]['note']
+
+            distance = self.get_distance_line_of_fifth(previous_note, current_note)
+        
+            song_to_translate_notes[i]['distance'] = distance
+            
+        new_note = ''
+        transposed = ''
+        transposed_song = []
+        
+        #Transpose the notes based in the line of fifths
+        for i, item in enumerate(song_to_translate_notes):
+            new_item = item.copy()
+            current_note = item['note']
+            if i == 0:
+                previous_note = new_tonality
+            else:
+                previous_note = new_note
+                
+            steps = item['distance']
+            new_note = self.get_note_from_steps_distance(previous_note, steps)
+            #print(new_note)
+            nature = item['nature']
+            check_note = None
+            transposed = new_note
+            
+            if nature == 'maj' or nature == 'maj7' or nature == 'maj6':
+                mode = 'major'
+                check_note, _, _ = self.get_alterations_scales(transposed+' '+mode)
+                
+            if nature == 'm' or nature == 'm7' or nature == 'm6':
+                mode = 'minor'
+                check_note, _, _ = self.get_alterations_scales(transposed+' '+mode)
+                
+            if nature == 'dom7':
+                mode = 'dominant'
+                check_note, _, _ = self.get_alterations_scales(transposed+' '+mode)
+                #print(check_note, transposed)
+            
+            if check_note != None:
+                transposed = check_note.split(' ')[0]
+            new_item['note'] = transposed
+            transposed_song.append(new_item)
+        
+        #Correct the fifths enharmonics
+        for i, item in enumerate(transposed_song):
+            if i < len(transposed_song) - 1:
+                next_note = transposed_song[i+1]['note']
+                next_step = transposed_song[i+1]['distance']
+                current_note = item['note']
+                if next_step == -1:
+                    distance = self.get_distance_line_of_fifth(current_note, next_note)
+                    #print(current_note, next_note, distance)
+                    if distance == -13:
+                        new_note = self.get_note_from_steps_distance(next_note, 1)
+                        result ,_ ,_ = self.get_alterations_scales(new_note+' major')
+                        new_note = result.split(' ')[0]
+                        transposed_song[i]['note'] = new_note
+        print(transposed_song)
+        #create a new file 
+        transposed_final = sequence.copy()
+        for i, element in enumerate(transposed_song):
+            transposed_final[element['loc']] = (element['note'], element['duration'])
+        return transposed_final
             
          

@@ -19,9 +19,9 @@ class Voicing:
         
         #All notes
         self.all_notes = {
-            'C': 48, 'C#': 49, 'Db': 49, 'D': 50, 'D#': 51, 'Eb': 51, 'E': 52, 'Fb': 52, 'F': 53, 'F#': 54, 'Gb': 42, 'G': 43, 'G#': 44, 'Ab':44, 'A': 45, 'A#': 46, 'Bb': 46, 'B': 47, 
+            'C': 48, 'C#': 49, 'Db': 49, 'D': 50, 'D#': 51, 'Eb': 51, 'E': 52, 'Fb': 52, 'F': 53, 'E#': 53, 'F#': 54, 'Gb': 42, 'G': 43, 'G#': 44, 'Ab':44, 'A': 45, 'A#': 46, 'Bb': 46, 'B': 47, 
             'A##': 47, 'Abb': 43, 'Abbb': 42, 'B#': 48, 'B##': 49, 'Bbb': 45, 'Bbbb': 44,
-            'C##': 50, 'C###': 51, 'Cb': 59, 'Cbb': 58, 'D##': 52, 'Dbb': 48, 'Dbbb': 47, 'E##': 54, 'Ebb': 50, 'Ebbb': 49, 
+            'C##': 50, 'C###': 51, 'Cb': 47, 'Cbb': 46, 'D##': 52, 'Dbb': 48, 'Dbbb': 47, 'E##': 54, 'Ebb': 50, 'Ebbb': 49, 
             'F##': 55, 'F###': 56, 'Fbb': 51, 'G##': 45, 'Gbb': 41
             }
         
@@ -161,7 +161,7 @@ class Voicing:
                             #add the element if it is not in the midi array
                             midi.append(root + alter_dict[element])
             v += 1
-        
+          
         return midi_sequence, status
     
     
@@ -199,6 +199,9 @@ class Voicing:
         
         
     #--------------------------------------------------------------------------------
+    #Get the chords from the sequence
     def get_chords(self, sequence):
         strings_array = [item[0] for item in sequence if item[0] != '']
         return strings_array
+    
+    
