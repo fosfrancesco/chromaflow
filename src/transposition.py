@@ -275,7 +275,7 @@ class Transposition:
         Get the sequence, extract the song information, the chords location and its duration and 
         transpose to a new tonality.
         '''
-        print('from:', tonality, 'to:', new_tonality)
+        #print('from:', tonality, 'to:', new_tonality)
         tonality_note = tonality.split(' ')[0]
 
         #Extract the notes
