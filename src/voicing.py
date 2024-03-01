@@ -1,18 +1,22 @@
 #make a class of voicing
 from midiutil import MIDIFile
+import tqdm as tqdm
 import random
 
 class Voicing:
     #define the class
     def __init__(self):
         #define the natures of the chords
-        self.natures = {'maj', 'm', 'm6', 'm7', 'dom7', 'maj6', 'maj7', 'o7', 'o', 'sus', 'sus2', 'sus7', 'sus4', 'ø7', 'power', 'm_maj7', 'aug', 'o_maj7'}
+        self.natures = {'maj', 'maj6', 'maj7', 'm', 'm6', 'm7', 'm_maj7', 'dom7', 'sus', 'sus2', 'sus7', 'sus4', 'o7', 'o', 'ø7', 'power', 'aug', 'o_maj7'}
         
         #alterations and add
         self.alter = {'add b2', 'add 2', 'add b5', 'add 5', 'add #5', 'add b6', 'add 6' 'add 7', 'add #7', 'add 8', 'add b9', 'add 9', 'add #9', 'add #11', 'add 13', 'add b13', 'alter #11', 'alter #5', 'alter #7', 'alter #9', 'alter b5', 'alter b9'}        
         
         #Structural elements
         self.structural_elements = {'.', '|', '||', ':|', '|:', 'b||', 'e||', '/', 'N.C.'} #to add the maj token 
+        
+        #element in the chord frontiers
+        self.after_chords = {'.', '|', '||', ':|', '|:', 'b||', 'e||'} 
         
         #Voicing
         self.voicing = ['v_0', 'v_1', 'v_2', 'v_3']
@@ -26,7 +30,7 @@ class Voicing:
             }
         
         #define voicing for natures for piano
-        self.maj = {'v_0':[0, 7, 12, 16], 'v_1':[0, 7, 16, 19], 'v_2':[0, 4, 7, 12], 'v_3':[0, 7, 16, 19]}
+        self.maj = {'v_0':[0, 7, 12, 16], 'v_1':[0, 7, 16, 19], 'v_2':[0, 12, 16, 19], 'v_3':[0, 7, 12, 16]}
         self.m6 = {'v_0':[0, 7, 9, 16], 'v_1':[0, 9, 16, 19], 'v_2':[0, 9, 12, 16], 'v_3':[0, 9, 12, 16, 19]}
         self.maj7 = {'v_0':[0, 11, 14, 16, 19], 'v_1':[0, 11, 16, 19], 'v_2':[0, 11, 14, 16], 'v_3':[0, 11, 14, 16, 19]}
         self.maj6 = {'v_0':[0, 7, 9, 12, 16], 'v_1':[0, 7, 9, 16], 'v_2':[0, 7, 14, 16, 21], 'v_3':[0, 4, 7, 9, 12, 14]}
@@ -34,7 +38,7 @@ class Voicing:
         self.m = {'v_0':[0, 12, 15, 19], 'v_1':[0, 7, 12, 15], 'v_2':[0, 7, 12, 15, 19], 'v_3':[0, 7, 14, 15, 19]}
         self.m7 = {'v_0':[0, 10, 15, 19], 'v_1':[0, 7, 10, 15], 'v_2':[0, 10, 14, 15], 'v_3':[0, 10, 14, 15]}
         self.m_maj7 = {'v_0':[0, 11, 15, 19], 'v_1':[0, 7, 11, 12, 15], 'v_2':[0, 7, 11, 14, 15], 'v_3':[0, 11, 15, 19]}
-        self.dom7 = {'v_0':[0, 7, 10, 16, 19], 'v_1':[0, 10, 16, 19], 'v_2':[0, 10, 14, 16], 'v_3':[0, 10, 14, 16, 19]}
+        self.dom7 = {'v_0':[0, 10, 14, 16, 19], 'v_1':[0, 10, 16, 19], 'v_2':[0, 10, 14, 16], 'v_3':[0, 10, 14, 16, 19]}
         self.ø7 =  {'v_0':[0, 15, 18, 22], 'v_1':[0, 10, 15, 18], 'v_2':[0, 12, 15, 18, 22], 'v_3':[0, 6, 10, 15, 18]}
         self.o7 = {'v_0':[0, 6, 10, 14, 15], 'v_1':[0, 15, 18, 21, 24], 'v_2':[0, 15, 18, 21, 24], 'v_3':[0, 12, 15, 18, 21]}
         self.o = {'v_0':[0, 3, 6, 12], 'v_1':[0, 6, 12, 15], 'v_2':[0, 15, 18, 21], 'v_3':[0, 12, 15, 18, 21]}
@@ -78,14 +82,12 @@ class Voicing:
     def convert_chords_to_voicing(self, sequence):
         midi_sequence = []
         root = 0
-        midi = []
-        v = 0
         mod = 4
         status = True
         # Create a dictionary for the alter section
         add_dict = {
             'add b13': 8 + 12,
-            'add 13': 9 + 12,
+            'add 13': 9 + 12, 
             'add #11': 6 + 12,
             'add #9': 3 + 12,
             'add 9': 2 + 12,
@@ -108,66 +110,138 @@ class Voicing:
             'alter #7': 11,
             'alter #11': 11
         }
+        
+        midi = [0, 0, 0, 0, 0, 0, 0, 0]
         #check the chord info
-        for item in sequence:
+        for i, item in enumerate(sequence):
             element = item[0]
             duration = item[1]
-
+            
             #check notes
-            if element in self.all_notes:
+            if element in self.all_notes and sequence[i-1][0] != '/':
                 root = self.all_notes[element]
-                pitch = element
-            #check natures
+                midi = [root, 0, 0, 0, 0, 0, 0, 0]
+                couple = (midi, duration, element)
+                midi_sequence.append(couple)
+                #print(element, sequence[i-1][0]) 
+            
+            # Nature section --------------------------------------------------------
             elif element in self.natures:
-                #random voicing int from 0 to 3
-                #n = random.randint(0, 3)
-                n = v % mod
-                try:
-                    midi = [x + root for x in self.chord_voicing[element][self.voicing[n]]]
-                    #print(pitch, element, n)
-                    #couple midi and durations
-                    couple = (midi, duration)
-                    midi_sequence.append(couple)
-                
-                except:
-                    status = False
-                    print("Error in:", element)
-                    return None, status
+                n = i % mod
+                midi = [x + root for x in self.chord_voicing[element][self.voicing[n]]]
+                #print('chord:', element, midi)
+                infoMidi = midi.copy()
+                couple = (infoMidi, duration, element)
+                midi_sequence.append(couple)
+            
+            # Slash section --------------------------------------------------------    
             elif element == '/':
-                #check the next element
-                if sequence[v + 1][0] in self.all_notes:
-                    slash_root = self.all_notes[sequence[v + 1][0]]
-                    #print(sequence[v + 1], slash_root)
-                    midi[0] = midi[0] + 12
-                    midi.insert(0, slash_root)
-                    
+                midi_for_slash = [0, 0, 0, 0, 0, 0, 0, 127]
+                couple = (midi_for_slash, duration, element)
+                midi_sequence.append(couple)
+                
+            # New root after slash section -----------------------------------------  
+            elif sequence[i-1][0] == '/' and element in self.all_notes:
+                midiInfo = midi.copy()
+                slash_root = self.all_notes[element]
+                midiInfo[0] = midiInfo[0] + 12
+                midiInfo.insert(0, slash_root)
+                couple = (midiInfo, duration, element)
+                midi_sequence.append(couple)
+            
+            # Add section --------------------------------------------------------      
             elif element in add_dict:
-                if element in add_dict:
-                    midi.append(root + add_dict[element])
-                for i, n in enumerate(midi):
-                    diff = (n - root) % 12 
-                    if (n - root) % 12 == 2 and element.find('9') != -1:
-                        #delete the note from the midi array
-                        midi.remove(n)
+                #print('original', midi)
+                new_note = root + add_dict[element]
+                if new_note not in midi:
+                    midi.append(new_note)
+                
+                midiInfo = midi.copy()     
+                
+                if element == 'add b9' or element == 'add #9':
+                    #check if the 9 is in the chord
+                    if (root + 14) in midiInfo:
+                        index = midiInfo.index(root + 14)
+                        midiInfo.pop(index)
+                    elif (root + 26) in midiInfo:
+                        index = midiInfo.index(root + 26)
+                        midiInfo.pop(index)
                         
+                couple = (midiInfo, duration, element)
+                midi_sequence.append(couple)
+                
+            # Alter section --------------------------------------------------------            
             elif element in alter_dict:
-                for i, n in enumerate(midi):
-                        diff = (n - root) % 12 
-                        if element.find('b') != -1 and diff == alter_dict[element]:
-                            midi[i] = n - 1
-                        elif element.find('#') != -1 and diff == alter_dict[element]:
-                            midi[i] = n + 1
-                        else:
-                            #add the element if it is not in the midi array
-                            midi.append(root + alter_dict[element])
-            v += 1
-          
+                #print('original', element, midi)
+                my_ref = [x for x in midi if (x - root) % 12 == alter_dict[element]]
+                
+                if len(my_ref) == 1:
+                    loc = midi.index(my_ref[0])
+                    if element.find('b') != -1:
+                        midi[loc] = my_ref[0] - 1
+                    elif element.find('#') != -1:
+                        midi[loc] = my_ref[0] + 1
+                        
+                elif len(my_ref) > 1:
+                    for i, n in enumerate(my_ref):
+                        loc = midi.index(n)
+                        if element.find('b') != -1 and (n - root) % 12 == alter_dict[element]:
+                            midi[loc] = n - 1
+                        elif element.find('#') != -1 and (n - root) % 12 == alter_dict[element]:
+                            midi[loc] = n + 1 
+                
+                elif len(my_ref) == 0:
+                    new_note = root + alter_dict[element]
+                    midi.append(new_note)
+                midiInfo = midi.copy()     
+                couple = (midiInfo, duration, element)
+                midi_sequence.append(couple)
+                #print('result', element, midi)
+            
+            # Structural elements section ---------------------------------------------
+            elif element in self.structural_elements and element != '/':
+                midi = [0, 0, 0, 0, 0, 0, 0, 0]
+                couple = (midi, duration, element)
+                midi_sequence.append(couple)
+                
+            # Form section -------------------------------------------------------------
+            elif element not in self.all_notes and element not in self.natures and element not in self.structural_elements:
+                midi = [0, 0, 0, 0, 0, 0, 0, 0]
+                couple = (midi, duration, element)
+                midi_sequence.append(couple)
+        
+            #Normalize the length of the MIDI sequence to 8 ----------------------------
+            current_midi = midi_sequence[-1][0]
+            if len(current_midi) < 8:
+                for i in range(8 - len(current_midi)):
+                    current_midi.append(0)
+                midi_sequence[-1] = (current_midi, duration, element)
+              
         return midi_sequence, status
     
     
     #--------------------------------------------------------------------------------
     #Export the file to MIDI
-    def export_to_midi(self, sequence, path, filename):
+    def export_to_midi(self, sequence, filename, path = "../data/midi_files/"):
+        #Capture the information
+        midi_capture = []
+        
+        for i, element in enumerate(sequence):
+            chord = element[2]
+            #print('element:', element)
+            if chord == '.':
+                ref = i+1 
+                counter = 0
+                
+                while sequence[ref][2] not in self.after_chords and sequence[ref][2].startswith('Form_') == False and ref < len(sequence) - 2:
+                    ref += 1
+                    counter += 1
+              
+                if counter > 0:
+                    midi = (sequence[i+counter][0], sequence[i+counter][1])
+                    #print('\nmidi:', midi)
+                    midi_capture.append(midi)
+                    
         # Create a MIDI file
         track    = 0
         channel  = 0
@@ -180,7 +254,7 @@ class Voicing:
 
         time = 0
         
-        for item in sequence:
+        for item in midi_capture:
             m = item[0]
             d = item[1]
   
@@ -205,3 +279,7 @@ class Voicing:
         return strings_array
     
     
+   
+        
+    
+      
