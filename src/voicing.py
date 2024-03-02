@@ -7,13 +7,13 @@ class Voicing:
     #define the class
     def __init__(self):
         #define the natures of the chords
-        self.natures = {'maj', 'maj6', 'maj7', 'm', 'm6', 'm7', 'm_maj7', 'dom7', 'sus', 'sus2', 'sus7', 'sus4', 'o7', 'o', 'ø7', 'power', 'aug', 'o_maj7'}
+        self.natures = {'maj', 'maj6', 'maj7', 'm', 'm6', 'm7', 'm_maj7', 'dom7', 'sus', 'sus2', 'sus7', 'sus4', 'o7', 'o', 'ø7', 'power', 'aug', 'o_maj7', 'N.C.'}
         
         #alterations and add
         self.alter = {'add b2', 'add 2', 'add b5', 'add 5', 'add #5', 'add b6', 'add 6' 'add 7', 'add #7', 'add 8', 'add b9', 'add 9', 'add #9', 'add #11', 'add 13', 'add b13', 'alter #11', 'alter #5', 'alter #7', 'alter #9', 'alter b5', 'alter b9'}        
         
         #Structural elements
-        self.structural_elements = {'.', '|', '||', ':|', '|:', 'b||', 'e||', '/', 'N.C.'} #to add the maj token 
+        self.structural_elements = {'.', '|', '||', ':|', '|:', 'b||', 'e||', '/'} #to add the maj token 
         
         #element in the chord frontiers
         self.after_chords = {'.', '|', '||', ':|', '|:', 'b||', 'e||'} 
@@ -233,7 +233,7 @@ class Voicing:
         
         for i, element in enumerate(sequence):
             chord = element[2]
-
+            #print('chord:', chord)
             if chord == '.':
                 ref = i+1 
                 counter = 0
@@ -241,13 +241,14 @@ class Voicing:
                 next = sequence[ref][2]  
                 while doIt:
                     next = sequence[ref][2]    
+                    print('next:', next)
                     ref += 1
                     counter += 1
                     if next in self.after_chords or next.startswith('Form_') or ref == len(sequence)-1:
                         doIt = False
                         counter -= 1
                     
-                #print(counter)
+                print(counter)
                 
                 if counter > 0:
                     midi = (sequence[i+counter][0], sequence[i+counter][1])
