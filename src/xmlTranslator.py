@@ -489,6 +489,17 @@ def fix_extensions(sequence):
                             coupled = (ext, c_duration)
                             song.insert(i+counter, coupled)
                             counter += 1
+        for i, item in enumerate(song):
+            element = item[0]
+            c_duration = item[1]
+            if element == 'm7 add 9':
+                nature = 'm7'
+                ext = 'add 9'
+                coupled = (nature, c_duration)
+                song[i] = coupled
+                coupled = (ext, c_duration)
+                song.insert(i+1, coupled)
+    
                             
 #----------------------------------------------------------------------------------
 #Correct the location of 'e||'

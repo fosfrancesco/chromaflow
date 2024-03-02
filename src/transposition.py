@@ -289,11 +289,13 @@ class Transposition:
             info = {'note': '', 'distance': -1, 'nature': 'Null', 'loc': -1, 'duration': -1}
             element = item[0]
             duration = item[1]
+            
             if element in check_notes:
                 info['note'] = element
                 info['loc'] = i
                 info['duration'] = duration
-                this_nature = sequence[i+1]
+                if i < len(sequence)-1: this_nature = sequence[i+1]
+              
                 if this_nature in other_elements:
                     this_nature = 'maj'
                 info['nature'] = this_nature

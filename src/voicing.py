@@ -94,6 +94,7 @@ class Voicing:
             'add b9': 1 + 12,
             'add 8': 12,
             'add 7': 11,
+            'add #7': 11,
             'add 6': 9,
             'add b6': 8 + 12,
             'add 5': 7,
@@ -153,11 +154,10 @@ class Voicing:
             elif element in add_dict:
                 #print('original', midi)
                 new_note = root + add_dict[element]
-                if new_note not in midi:
-                    midi.append(new_note)
-                
-                midiInfo = midi.copy()     
-                
+                midiInfo = midi.copy()    
+                if new_note not in midiInfo:
+                    midiInfo.append(new_note)
+                      
                 if element == 'add b9' or element == 'add #9':
                     #check if the 9 is in the chord
                     if (root + 14) in midiInfo:
@@ -222,23 +222,32 @@ class Voicing:
     
     #--------------------------------------------------------------------------------
     #Export the file to MIDI
-    def export_to_midi(self, sequence, filename, path = "../data/midi_files/"):
+    def export_to_midi(self, sequence, filename, path = "/workspace/data/midi_files/"):
         #Capture the information
         midi_capture = []
         
         for i, element in enumerate(sequence):
             chord = element[2]
-            #print('element:', element)
+
             if chord == '.':
                 ref = i+1 
                 counter = 0
-                
-                while sequence[ref][2] not in self.after_chords and sequence[ref][2].startswith('Form_') == False and ref < len(sequence) - 2:
+                doIt = True
+                next = sequence[ref][2]  
+                while doIt:
+                    next = sequence[ref][2]    
                     ref += 1
                     counter += 1
-              
+                    if next in self.after_chords or next.startswith('Form_') or ref == len(sequence)-1:
+                        doIt = False
+                        counter -= 1
+                    
+                #print(counter)
+                
                 if counter > 0:
                     midi = (sequence[i+counter][0], sequence[i+counter][1])
+                    if midi[0] == [0, 0, 0, 0, 0, 0, 0, 0]:
+                        assert False, 'Error: Empty MIDI'
                     #print('\nmidi:', midi)
                     midi_capture.append(midi)
                     
