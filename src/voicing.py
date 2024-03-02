@@ -48,14 +48,15 @@ class Voicing:
         self.sus4 = {'v_0':[0, 5, 7, 12, 14], 'v_1':[0, 7, 14, 17], 'v_2':[0, 7, 12, 17, 19], 'v_3':[0, 14, 12, 17, 10]}
         self.aug = {'v_0':[0, 4, 8, 12, 16], 'v_1':[0, 8, 12, 16, 20], 'v_2':[0, 12, 16, 20, 24], 'v_3':[0, 8, 12, 16]}
         self.o_maj7 = {'v_0':[0, 11, 15, 18], 'v_1':[0, 6, 11, 15], 'v_2':[0, 6, 11, 15, 18], 'v_3':[0, 11, 12, 15, 18]}
-       
+        self.noChord = {'v_0':[0, 0, 0, 0], 'v_1':[0, 0, 0, 0], 'v_2':[0, 0, 0, 0], 'v_3':[0, 0, 0, 0]}
+               
         #TODO: define voicing for guitar
         
         #Define the voicing dictionaries for the chords
         self.chord_voicing = {'maj': self.maj, 'maj7': self.maj7, 'm': self.m, 'm7': self.m7, 'dom7': self.dom7, 
                               'ø7': self.ø7, 'o7': self.o7, 'o': self.o, 'sus': self.sus, 'sus7': self.sus7, 
                               'sus2': self.sus2, 'sus4': self.sus4, 'm6': self.m6, 'power': self.power, 'o': self.o, 
-                              'm_maj7': self.m_maj7, 'maj6': self.maj6, 'aug': self.aug, 'o_maj7': self.o_maj7}
+                              'm_maj7': self.m_maj7, 'maj6': self.maj6, 'aug': self.aug, 'o_maj7': self.o_maj7, 'N.C.': self.noChord}
     
     #-----------------------------------------------------------------------
     def getStructuralElements(self):
@@ -241,19 +242,20 @@ class Voicing:
                 next = sequence[ref][2]  
                 while doIt:
                     next = sequence[ref][2]    
-                    print('next:', next)
                     ref += 1
                     counter += 1
                     if next in self.after_chords or next.startswith('Form_') or ref == len(sequence)-1:
                         doIt = False
                         counter -= 1
                     
-                print(counter)
+                #print(counter)
                 
                 if counter > 0:
                     midi = (sequence[i+counter][0], sequence[i+counter][1])
                     if midi[0] == [0, 0, 0, 0, 0, 0, 0, 0]:
-                        assert False, 'Error: Empty MIDI'
+                        assert False, 'Error: Empty MIDI, ce pa cool Raul'
+                    if midi[0] == [48, 48, 48, 48, 0, 0, 0, 0]: #this is No Chord!
+                        midi = ([0, 0, 0, 0, 0, 0, 0, 0], sequence[i+counter][1])
                     #print('\nmidi:', midi)
                     midi_capture.append(midi)
                     
