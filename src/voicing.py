@@ -109,7 +109,7 @@ class Voicing:
             'alter b5': 7,
             'alter #5': 7,
             'alter #7': 11,
-            'alter #11': 11
+            'alter #11': 5
         }
         
         midi = [0, 0, 0, 0, 0, 0, 0, 0]
@@ -192,7 +192,12 @@ class Voicing:
                 
                 elif len(my_ref) == 0:
                     new_note = root + alter_dict[element]
+                    if element.find('b') != -1:
+                        new_note -= 1
+                    elif element.find('#') != -1:
+                        new_note += 1
                     midi.append(new_note)
+                
                 midiInfo = midi.copy()     
                 couple = (midiInfo, duration, element)
                 midi_sequence.append(couple)
