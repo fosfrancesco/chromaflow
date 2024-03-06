@@ -513,10 +513,10 @@ def correct_coda_end(song, durations, verbose = False):
         song[e_index] = '|'
         # Find the next position to insert '|'
         for i in range(e_index + 1, len(song)):
-            if song[i] in ('|'):
+            if song[i] == ('|'):
                 song[i] = 'e||'
                 break
-            if song[i] in (':|'):
+            elif song[i] == (':|'):
                 #insert the bar
                 song.insert(i, 'e||')
                 durations.insert(i, 0)
@@ -711,7 +711,7 @@ def expand_song_structure(song_structure, duration_structure, id = 0, verbose = 
             #do the repetition    
             elif current_dotted['done'] == False:        
                 #move to the original location
-                stepper = current_dotted['start']-1
+                stepper = current_dotted['start']
                 e = sequence[stepper]
                 d = duration_sequence[stepper]
                 

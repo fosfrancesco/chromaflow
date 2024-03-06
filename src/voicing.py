@@ -90,6 +90,7 @@ class Voicing:
             'add b13': 8 + 12,
             'add 13': 9 + 12, 
             'add #11': 6 + 12,
+            'add 11': 6 + 11,
             'add #9': 3 + 12,
             'add 9': 2 + 12,
             'add b9': 1 + 12,
@@ -118,7 +119,8 @@ class Voicing:
         for i, item in enumerate(sequence):
             element = item[0]
             duration = item[1]
-            
+            #print('element:', element, 'duration:', duration)
+
             #check notes
             if element in self.all_notes and sequence[i-1][0] != '/':
                 root = self.all_notes[element]
@@ -175,21 +177,22 @@ class Voicing:
             elif element in alter_dict:
                 #print('original', element, midi)
                 my_ref = [x for x in midi if (x - root) % 12 == alter_dict[element]]
+                midiInfo = midi.copy() 
                 
                 if len(my_ref) == 1:
                     loc = midi.index(my_ref[0])
                     if element.find('b') != -1:
-                        midi[loc] = my_ref[0] - 1
+                        midiInfo[loc] = my_ref[0] - 1
                     elif element.find('#') != -1:
-                        midi[loc] = my_ref[0] + 1
+                        midiInfo[loc] = my_ref[0] + 1
                         
                 elif len(my_ref) > 1:
                     for i, n in enumerate(my_ref):
                         loc = midi.index(n)
                         if element.find('b') != -1 and (n - root) % 12 == alter_dict[element]:
-                            midi[loc] = n - 1
+                            midiInfo[loc] = n - 1
                         elif element.find('#') != -1 and (n - root) % 12 == alter_dict[element]:
-                            midi[loc] = n + 1 
+                            midiInfo[loc] = n + 1 
                 
                 elif len(my_ref) == 0:
                     new_note = root + alter_dict[element]
@@ -197,23 +200,22 @@ class Voicing:
                         new_note -= 1
                     elif element.find('#') != -1:
                         new_note += 1
-                    midi.append(new_note)
-                
-                midiInfo = midi.copy()     
+                    midiInfo.append(new_note)
+                    
                 couple = (midiInfo, duration, element)
                 midi_sequence.append(couple)
                 #print('result', element, midi)
             
             # Structural elements section ---------------------------------------------
             elif element in self.structural_elements and element != '/':
-                midi = [0, 0, 0, 0, 0, 0, 0, 0]
-                couple = (midi, duration, element)
+                thisMidi = [0, 0, 0, 0, 0, 0, 0, 0]
+                couple = (thisMidi, duration, element)
                 midi_sequence.append(couple)
                 
             # Form section -------------------------------------------------------------
             elif element not in self.all_notes and element not in self.natures and element not in self.structural_elements:
-                midi = [0, 0, 0, 0, 0, 0, 0, 0]
-                couple = (midi, duration, element)
+                thisMidi = [0, 0, 0, 0, 0, 0, 0, 0]
+                couple = (thisMidi, duration, element)
                 midi_sequence.append(couple)
         
             #Normalize the length of the MIDI sequence to 8 ----------------------------
