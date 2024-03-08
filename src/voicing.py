@@ -138,21 +138,6 @@ class Voicing:
                 couple = (infoMidi, duration, element)
                 midi_sequence.append(couple)
             
-            # Slash section --------------------------------------------------------    
-            elif element == '/':
-                midi_for_slash = [0, 0, 0, 0, 0, 0, 0, 127]
-                couple = (midi_for_slash, duration, element)
-                midi_sequence.append(couple)
-                
-            # New root after slash section -----------------------------------------  
-            elif sequence[i-1][0] == '/' and element in self.all_notes:
-                midiInfo = midi.copy()
-                slash_root = self.all_notes[element]
-                midiInfo[0] = midiInfo[0] + 12
-                midiInfo.insert(0, slash_root)
-                couple = (midiInfo, duration, element)
-                midi_sequence.append(couple)
-            
             # Add section --------------------------------------------------------      
             elif element in add_dict:
                 #print('original', midi)
@@ -172,6 +157,7 @@ class Voicing:
                         
                 couple = (midiInfo, duration, element)
                 midi_sequence.append(couple)
+                midi = midiInfo
                 
             # Alter section --------------------------------------------------------            
             elif element in alter_dict:
@@ -205,6 +191,21 @@ class Voicing:
                 couple = (midiInfo, duration, element)
                 midi_sequence.append(couple)
                 #print('result', element, midi)
+                
+            # Slash section --------------------------------------------------------    
+            elif element == '/':
+                midi_for_slash = [0, 0, 0, 0, 0, 0, 0, 27]
+                info = (midi_for_slash, duration, element)
+                midi_sequence.append(info)
+                
+            # New root after slash section -----------------------------------------  
+            elif sequence[i-1][0] == '/' and element in self.all_notes:
+                midiInfo = midi.copy()
+                slash_root = self.all_notes[element]
+                midiInfo[0] = midiInfo[0] + 12
+                midiInfo.insert(0, slash_root)
+                info = (midiInfo, duration, element)
+                midi_sequence.append(info)
             
             # Structural elements section ---------------------------------------------
             elif element in self.structural_elements and element != '/':
@@ -218,12 +219,16 @@ class Voicing:
                 couple = (thisMidi, duration, element)
                 midi_sequence.append(couple)
         
-            #Normalize the length of the MIDI sequence to 8 ----------------------------
-            current_midi = midi_sequence[-1][0]
+            
+        #Normalize the length of the MIDI sequence to 8 ----------------------------
+        for i, item in enumerate(midi_sequence):    
+            current_midi = item[0]
+            duration = item[1]
+            element = item[2]
             if len(current_midi) < 8:
                 for i in range(8 - len(current_midi)):
                     current_midi.append(0)
-                midi_sequence[-1] = (current_midi, duration, element)
+                item = (current_midi, duration, element)
               
         return midi_sequence, status
     
