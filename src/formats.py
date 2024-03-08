@@ -73,8 +73,8 @@ def splitChordTokens(chord):
             line = line.rstrip()
         list.append(line)
     
-    discart = ''
-    while discart in list: list.remove(discart)
+    discard = ''
+    while discard in list: list.remove(discard)
     return list
 
 #------------------------------------------------------------------------------
@@ -88,7 +88,8 @@ def splitSlashChords(chord):
     list = splitChordTokens(section[0]) + ['/'] + splitChordTokens(section[1])
     return list
 
-#Split the chords --------------------------------------------
+#------------------------------------------------------------------------------
+#Split the chords
 def splitTheChords(chords):
     ignore_list = listToIgnore()
     chord_list = []
@@ -109,36 +110,8 @@ def splitTheChords(chords):
         
     return chord_list
 
-
-#get all chords from file -----------------------------------------------------
-def get_all_chords_from_file(path):
-    """
-    Iterate over the files in a directory and extract the chords
-    """
-    chord_list = []
-    xml_song = m21.converter.parse(path)
-
-    m = xml_song.parts[0].getElementsByClass(m21.stream.Measure)
-    for x in range(len(m)):
-        #durations = []
-        chords = m[x].getElementsByClass(m21.harmony.ChordSymbol)
-        #duration = m[x].getElementsByClass(m21.note.Note)    
-        for chord_type in chords:
-            #first clean the data not related to the chord
-            chord = chord_type.figure
-            if chord == "Chord Symbol Cannot Be Identified" or chord == "N.C.":
-                break
-
-            if '/' in chord:
-                result = splitSlashChords(chord)
-            else :
-                result = splitChordTokens(chord)
-            chord_list = chord_list + result
-    # to remove duplicated from list
-    result = set(chord_list)
-    return result
-
-#Convert the separated chords into one unify chord -----------------------------
+#------------------------------------------------------------------------------
+#Convert the separated chords into one unify chord
 def convertChordsFromOutput(sequence):
     chord = []
     chordArray = []
@@ -171,8 +144,8 @@ def convertChordsFromOutput(sequence):
                
     return chordArray
 
-
-#Get the array of elements per chord and also configure the offsets --------------------------------------------
+#------------------------------------------------------------------------------
+#Get the array of elements per chord and also configure the offsets
 def getArrayOfElementsInChord(chords, offsets):
     ignore_list = listToIgnore()
     chord_list = []
@@ -200,56 +173,8 @@ def getArrayOfElementsInChord(chords, offsets):
 
 
 #-------------------------------------------------------------------------
-def extendDatasetToAllNotes(data):
-    '''
-    Get all the songs by default and it extend to all posible keys 
-    input: chord progressions with '<start>', '<end>' and '<pad>' tokens
-    output: same chord progressions transposed to all posible keys
-    it means each song is in 18 keys, it needs to be shuffled 
-    '''
-    ignore_list = listToIgnore()
-    
-    x_data = []
-    erros_found=[]
-    notes = getNotes()
-    file = 0
-    print(data.shape)
-    for songs in tqdm(data):
-        #let's pass the starting and style elements
-        for i in range(len(notes)):
-            transposed_song = []
-            style_format = songs[:3]
-            chord_sequence = songs[3:]
-            for element in chord_sequence:
-                if element not in ignore_list:
-                    
-                    if element.find('b') > 0 and element[1:2] == 'b':
-                        element = element[0:1] + '-' + element[2:]
-                    try:
-                        tmp = m21.harmony.ChordSymbol(element)
-                    except:
-                        print('error in file:', file, 'element:', element)
-                        erros_found.append(element)
-                    #Here we transpose the song to all possible keys
-                    
-                    loc = notes.index(tmp.bass().name) 
-                    ref = (loc + i) % len(notes) #calculate the distance to the reference
-                    interval = m21.interval.Interval(tmp.bass(), m21.pitch.Pitch(notes[ref]))
-                    tmp2 = tmp.transpose(interval).figure
-                    #print(i, 'origin:', tmp.figure, 'transposed:', tmp2, 'interval:', interval.name)
-                    transposed_song.append(tmp2)
-                else:
-                    transposed_song.append(element)
-            transposed_song = style_format + transposed_song
-            x_data.append(transposed_song)
-            
-        file += 1    
-    x_data = np.array(x_data, dtype=object)
-    return x_data, erros_found
-
 #Correct the format of the chords
-#-------------------------------------------------------------------------
-def correctBackTheFormat(reference, toBeCorrected):
+def correctTheFormat(reference, toBeCorrected):
     '''
     This function will correct the format of the chords
     '''
@@ -288,11 +213,14 @@ def correctBackTheFormat(reference, toBeCorrected):
     new_dataset = np.array(new_dataset, dtype=object)
     return new_dataset
 
+#------------------------------------------------------------------------------
 #Correct style tokens by reference
 def correctStyleTokensInMeta(data):
     #Get all the elements in meta and correct the style tokens
     for x in tqdm(range(len(data))):
         element = data[x]['style']
+        if element == 'Moderately':
+            data[x]['style'] = 'Pop'
         if element == "Even 8th's" or element == "Even 8's":
             data[x]['style'] = 'Even 8ths'
         if (element.find('Swing') != -1):
@@ -343,6 +271,8 @@ def correctStyleTokens(data):
     for x in tqdm(range(size_x)):
         for y in range(size_y):
             element = data[x][y]
+            if element == 'Moderately':
+                data[x][y] = 'Pop'
             if element == "Even 8th's" or element == "Even 8's":
                 data[x][y] = 'Even 8ths'
             if (element.find('Swing') != -1):
@@ -387,169 +317,33 @@ def correctStyleTokens(data):
                 data[x][y] = 'Gospel'
                 
 #-------------------------------------------------------------------------                
-#Get the midi notes from the chords
-def get_the_midi_notes(chord_list):
-    ''' 
-    input: the chords in the format of the dataset
-    output: the midi notes of the chords
-    '''
-    noChord = [0,0,0,0,0,0,0,0] #this part is for the no chord
-    slashChord = [0,0,0,0,0,0,0,127] #this part is for the no chord
-    starting = [[0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0]]
-    all_midiNotesChords = []
-    ignore = listToIgnore()
-    ignore.remove('.') #we need the dot to identify the chord
-    ignore.remove('<end>')
-    x = 0
-    for song in tqdm(chord_list):
-        songChordMidiNotes = []
-        section = song[3:]
-        for element in section:
-            if element not in ignore:
-                #print(element)
-                if element == '.':
-                    buildChord = ''
-                    songChordMidiNotes.append(noChord)
-                elif element != '<end>':
-                    if element == '/':
-                        songChordMidiNotes.append(slashChord)
-                        buildChord+=element
-                    else:
-                        buildChord+=element
-                        #print('chord', buildChord)
-                        #Get the notes from the chord
-                        try:
-                            chords = m21.harmony.ChordSymbol(buildChord)
-                        except:
-                            print('Error parsing element:', x, buildChord)
-                        #Define an octave for the notes
-                        chords = chords.closedPosition(forceOctave=4, inPlace=False)
-                        #Create the array of notes
-                        theNotes = [str(p) for p in chords.pitches]
-                        midiNotes = []
-                        for n in theNotes:
-                            change = n.find('-')
-                            if change != -1:
-                                n = n.replace('-', 'b')
-                            #Translate the notes to midi notes
-                            midi_key = lib.note_to_midi(n)
-                            #Recollect the notes in an array-
-                            midiNotes.append(midi_key)
-                        if (len(midiNotes)) < 8:
-                            for i in range(8-(len(midiNotes))):
-                                midiNotes.append(0.0)
-                        songChordMidiNotes.append(midiNotes)
-                else:
-                    songChordMidiNotes.append(noChord)
-            else:
-                songChordMidiNotes.append(noChord)  
-        songChordMidiNotes = starting + songChordMidiNotes
-        all_midiNotesChords.append(songChordMidiNotes)
-        x+=1
-    
-    return all_midiNotesChords
-
-
-
-
-#-------------------------------------------------------------------------                
-#Get the midi notes from the chords
-def get_the_midi_in_song(song):
-    ''' 
-    input: the chords in the format of the dataset
-    output: the midi notes of the chords
-    '''
-    noChord = [0,0,0,0,0,0,0,0] #this part is for the no chord
-    slashChord = [0,0,0,0,0,0,0,127] #this part is for the no chord
-    starting = [[0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0]]
-
-    ignore = listToIgnore()
-    ignore.remove('.') #we need the dot to identify the chord
-    ignore.remove('<end>')
-    duration = 4.0
-    songChordMidiNotes = []
-    section = song[3:]
-    x = 0
-    status = True
-    for element in section:
-        #print (element)
-        if element == '|':
-            d = 0
-        if element not in ignore:
-            #print(element)
-            if element == '.':
-                buildChord = ''
-                songChordMidiNotes.append(noChord)
-            elif element != '<end>':
-                if element == '/':
-                    songChordMidiNotes.append(slashChord)
-                    buildChord+=element
-                else:
-                    buildChord+=element
-                    #print('chord', buildChord)
-                    #Get the notes from the chord
-                    try:
-                        chords = m21.harmony.ChordSymbol(buildChord)
-                    except:
-                        print('Error parsing element:', buildChord, 'in position:', x)
-                        status = False
-                    #Define an octave for the notes
-                    chords = chords.closedPosition(forceOctave=4, inPlace=False)
-                    chords.duration = m21.duration.Duration(duration)
-                    #Create the array of notes
-                    theNotes = [str(p) for p in chords.pitches]
-                    midiNotes = []
-                    for n in theNotes:
-                        change = n.find('-')
-                        if change != -1:
-                            n = n.replace('-', 'b')
-                        #Translate the notes to midi notes
-                        midi_key = lib.note_to_midi(n)
-                        #Recollect the notes in an array-
-                        midiNotes.append(midi_key)
-                    if (len(midiNotes)) < 8:
-                        for i in range(8-(len(midiNotes))):
-                            midiNotes.append(0)
-                    songChordMidiNotes.append(midiNotes)
-            else:
-                songChordMidiNotes.append(noChord)
-        else:
-            songChordMidiNotes.append(noChord)
-        x+=1
-    songChordMidiNotes = starting + songChordMidiNotes
-
-    
-    return songChordMidiNotes, status
-
-
-#-------------------------------------------------------------------------                
-#Correct the extensions of the chords
-def correct_extensions(song, offset, block_size):
-    i = 0
-    for chord, off in zip(song, offset):
-        if '<pad>' not in chord:
-            if 'add' in chord or 'alter' in chord:
-                toSplit = chord.split(' ')
-                if len(toSplit) > 2:
-                    #print('cleared ---->', song[i])
-                    song = np.delete(song, i)
-                    tmpOff = off
-                    #print('cleared ---->', off)
-                    offset = np.delete(offset, i)
-                    i-=1
-                    for x in range(0, len(toSplit), 2):
-                        #print(toSplit[x], toSplit[x+1])
-                        newElement = toSplit[x] + ' ' + toSplit[x+1]  
-                        song = np.insert(song, i+1, newElement)
-                        offset = np.insert(offset, i+1, tmpOff)
-                        i+=1
+# #Correct the extensions of the chords
+# def correct_extensions(song, offset, block_size):
+#     i = 0
+#     for chord, off in zip(song, offset):
+#         if '<pad>' not in chord:
+#             if 'add' in chord or 'alter' in chord:
+#                 toSplit = chord.split(' ')
+#                 if len(toSplit) > 2:
+#                     #print('cleared ---->', song[i])
+#                     song = np.delete(song, i)
+#                     tmpOff = off
+#                     #print('cleared ---->', off)
+#                     offset = np.delete(offset, i)
+#                     i-=1
+#                     for x in range(0, len(toSplit), 2):
+#                         #print(toSplit[x], toSplit[x+1])
+#                         newElement = toSplit[x] + ' ' + toSplit[x+1]  
+#                         song = np.insert(song, i+1, newElement)
+#                         offset = np.insert(offset, i+1, tmpOff)
+#                         i+=1
                     
-                #print(i, '------->', len(toSplit))
-            i+=1
+#                 #print(i, '------->', len(toSplit))
+#             i+=1
 
-    #clear the length of the array
-    for e in range(len(song)):
-        if e >= block_size:
-            song = np.delete(song, len(song)-1)
-            offset = np.delete(offset, len(offset)-1)
-    return song, offset
+#     #clear the length of the array
+#     for e in range(len(song)):
+#         if e >= block_size:
+#             song = np.delete(song, len(song)-1)
+#             offset = np.delete(offset, len(offset)-1)
+#     return song, offset
