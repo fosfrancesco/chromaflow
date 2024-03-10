@@ -21,103 +21,6 @@ def getFormat():
     format = ['.', '<start>', '<end>', '<pad>']
     return format
 
-
-#-------------------------------------------------------------------------
-#Iterate over the files in directory and get the chords individually   
-def get_chords_from_file(path, verbose=False):
-    xml_song = m21.converter.parse(path)
-    data = xml_song.parts[0].getElementsByClass(m21.stream.Measure)
-   
-    my_chords = []
-    durations = []
-    bass_notes = []
-    relative_positions = []
-    
-    if(verbose): print(path)
-    #first populate the chords, basses and its durations
-    for bars in data:
-        
-        chords = bars.getElementsByClass(m21.harmony.ChordSymbol)
-        duration = bars.getElementsByClass(m21.note.Note) 
-        
-        #get element <rehearsal> to get the song form
-        form = bars.getElementsByClass(m21.expressions.RehearsalMark)
-        repeat = bars.getElementsByClass(m21.repeat.RepeatMark)
-        repeatNumber = bars.getElementsByClass(m21.spanner.Spanner)
-        #isinstance(repeatNumber[0], m21.bar.Repeat)
-        
-        if len(repeatNumber) > 0:
-            print(repeatNumber[0])
-            
-        #get the measure number
-        measure_number = bars.number
-        offset = bars.offset
-        if(verbose):print('measure:', measure_number, 'offset:',offset)
-        relative_positions.append(offset)
-        
-        #this section get the info of repetition bars and coda elements
-        if len(repeat) > 0:
-            try:
-                direction = repeat[0].direction #repetition bars
-                if (direction == 'start'):
-                    my_chords.append('|:')
-                elif (direction == 'end'):
-                    my_chords.append(':|')
-                #print(direction)
-            except:
-                #print(repeat[0].name) #coda and segno sections
-                coda = 'coda:' + repeat[0].name 
-                my_chords.append(coda)
-            #Element doesn't exist, do Y
-        else:
-            #add a normal bar token to the list
-            my_chords.append('|')
-        
-        if len(form) > 0:
-            #if(verbose):print('Form:'+form[0].content)
-            my_chords.append('Form:'+form[0].content)
-            relative_positions.append(offset)
-            
-        if(verbose):print('chords:', len(chords))
-        
-        #iterate over the chords in the measure  
-        i = 0
-        for chord in chords:
-            chord_type = chord.figure
-            bass = str(chord.bass())
-            notes = bass[:-1]
-            bass_notes.append(notes)
-            if bass[1:2] == '-':
-                bass = bass.replace('-', 'b')
-            if chord_type == "Chord Symbol Cannot Be Identified" or chord_type == "N.C.":
-                break
-            if chord_type[1:] == 'bpedal':
-                    chord_type = chord_type.replace('bpedal', '-pedal')
-            my_chords.append(chord_type)
-            d = float(duration[i].quarterLength)
-            d = math.floor(d)
-            if d == 0:
-                d = 1.0
-            c_offset = chord.offset + offset
-            relative_positions.append(c_offset)
-            if(verbose): print('chord offset:', c_offset )
-            if(verbose): print('duration:', d)
-            durations.append(d)
-            i+=1
-    
-    #format the data
-    durations = np.asarray(durations).astype(int).astype(str)
-    relative_positions = np.asarray(relative_positions).astype(int).astype(str)
-    bass_notes = np.asarray(bass_notes).astype(str)
-        
-    my_chords = format_start_end(my_chords)
-    relative_positions = format_start_end(relative_positions)
-    durations = format_start_end(durations)
-    bass_notes = format_start_end(bass_notes)
-   
-  
-    return durations, relative_positions, my_chords, bass_notes
-
 #-------------------------------------------------------------------------
 #Get the metadata and chords from the XML files 
 def createCustomDataset(path, padding_length=512, onlyFourByFour=True):
@@ -315,83 +218,6 @@ def get_metadata(path):
     #print('Time_signature:', metadata['time_signature'])
     return metadata
 
-
-#Get the midi notes from the song list --------------------------------------------
-def get_the_midi_notes_from_songs(chord_list):
-    ''' 
-    input: the chords in the format of the dataset
-    output: the midi notes of the chords
-    '''
-    noChord = [0,0,0,0,0,0,0,0] #this part is for the no chord
-    all_midiNotesChords = []
-    for song in tqdm(chord_list):
-        songChordMidiNotes = []
-        for element in song:
-            if element != '<start>' and element != '<end>' and element != '<pad>' and element != 'None':
-                #Get the notes from the chord
-                chords = m21.harmony.ChordSymbol(element)
-                #Define an octave for the notes
-                chords = chords.closedPosition(forceOctave=4, inPlace=False)
-                #Create the array of notes
-                theNotes = [str(p) for p in chords.pitches]
-                midiNotes = []
-                for n in theNotes:
-                    change = n.find('-')
-                    if change != -1:
-                        n = n.replace('-', 'b') 
-                    #Translate the notes to midi notes
-                    midi_key = lib.note_to_midi(n)
-                    #Recollect the notes in an array-
-                    midiNotes.append(midi_key)
-                songChordMidiNotes.append(midiNotes)
-            else:
-                songChordMidiNotes.append(noChord)
-        all_midiNotesChords.append(songChordMidiNotes)
-    return all_midiNotesChords
-
-#Get the midi notes from the chords --------------------------------------------
-def get_the_midi_notes_chords(song):
-    ''' 
-    input: the chords in the format of the dataset
-    output: the midi notes of the chords
-    '''
-    noChord = [0,0,0,0,0,0,0,0] #this part is for the no chord
-    all_midiNotesChords = []
-    for element in song:
-        if element != '<start>' and element != '<end>' and element != '<pad>' and element != 'None':
-            #Get the notes from the chord
-            chords = m21.harmony.ChordSymbol(element)
-            #Define an octave for the notes
-            chords = chords.closedPosition(forceOctave=4, inPlace=False)
-            #Create the array of notes
-            theNotes = [str(p) for p in chords.pitches]
-            midiNotes = []
-            for n in theNotes:
-                change = n.find('-')
-                if change != -1:
-                    n = n.replace('-', 'b') 
-                #Translate the notes to midi notes
-                midi_key = lib.note_to_midi(n)
-                #Recollect the notes in an array-
-                midiNotes.append(midi_key)
-            all_midiNotesChords.append(midiNotes)
-        else:
-            all_midiNotesChords.append(noChord)
-
-    #all_midiNotesPadding = []
-    
-    mySongs= []
-    for chord in all_midiNotesChords:
-        if (len(chord)) < 8:
-            for i in range(8-(len(chord))):
-                chord.append(0.0)
-        
-        mySongs.append(chord)
-    mySongs = np.array(mySongs)
-   
-    return mySongs
-
-
 #Get the midi notes from the chords --------------------------------------------
 def createMidiAndChord(chordList):
     midi_embeddings = get_the_midi_notes_chords(chordList)
@@ -424,21 +250,6 @@ def createMidiAndChord(chordList):
 
     song_midi_embeddings = np.array(song_midi_embeddings)
     return nature, song_midi_embeddings
-
-#Create chord from the nature ---------------------------------------------------
-def createChord(chordSymbol):
-    ref = m21.harmony.ChordSymbol(chordSymbol)
-    ref = ref.closedPosition(forceOctave=4, inPlace=False)
-    theNotes = [str(p) for p in ref.pitches] 
-    theNotes = np.vectorize(lambda x: x.replace('-', 'b'))(theNotes)
-    arrayOfNotes=[]
-    for n in theNotes:
-        midi_key = lib.note_to_midi(n)
-        arrayOfNotes.append(midi_key)
-    if len(arrayOfNotes) < 8:
-        for i in range(8-len(arrayOfNotes)):
-            arrayOfNotes.append(0)
-    return arrayOfNotes
 
 #Counter of elements in chord ---------------------------------------------------
 def counterOfElementsInChord(song):

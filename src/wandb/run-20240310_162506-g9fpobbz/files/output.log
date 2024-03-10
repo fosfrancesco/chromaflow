@@ -1,0 +1,52 @@
+
+Available devices:  2
+(50772, 1024, 2) (5640, 1024, 2) (50772, 1024, 3) (5640, 1024, 3)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+(50772, 1024, 2) (5640, 1024, 2) (50772, 3) (5640, 3)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+(50772, 1024, 2) (5640, 1024, 2) (50772, 3) (5640, 3)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+(50772, 1024, 2) (5640, 1024, 2) (50772, 8) (5640, 8)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+(50772, 1024, 2) (5640, 1024, 2) (50772, 1024, 3) (5640, 1024, 3)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+[[list([0, 0, 0, 0, 0, 0, 0, 0]) 0.0 'Style']
+ [list([0, 0, 0, 0, 0, 0, 0, 0]) 0.0 'Samba']
+ [list([0, 0, 0, 0, 0, 0, 0, 0]) 0.0 'Tonality']
+ ...
+ [list([0, 0, 0, 0, 0, 0, 0, 0]) 0.0 '<pad>']
+ [list([0, 0, 0, 0, 0, 0, 0, 0]) 0.0 '<pad>']
+ [list([0, 0, 0, 0, 0, 0, 0, 0]) 0.0 '<pad>']]
+(50772, 1024, 2) (5640, 1024, 2) (50772, 1024, 3) (5640, 1024, 3)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+[list([0, 0, 0, 0, 0, 0, 0, 0]) 0.0 'Style']
+(50772, 1024, 2) (5640, 1024, 2) (50772, 1024, 3) (5640, 1024, 3)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+[0, 0, 0, 0, 0, 0, 0, 0]
+(50772, 1024, 2) (5640, 1024, 2) (50772, 1024, 3) (5640, 1024, 3)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+[0, 0, 0, 0, 0, 0, 0, 0]
+(51990528, 8)
+(50772, 1024, 2) (5640, 1024, 2) (50772, 1024, 3) (5640, 1024, 3)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+(50772, 1024, 8)
+(50772, 1024, 2) (5640, 1024, 2) (50772, 1024, 3) (5640, 1024, 3)
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+[0, 0, 0, 0, 0, 0, 0, 0]
+data has 50772 pieces, 243 unique tokens.
+data has 5640 pieces, 243 unique tokens.
+../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
+03/10/2024 18:38:41 - INFO - model -   number of parameters: 1.879808e+06
+03/10/2024 18:38:41 - INFO - model -   number of parameters: 1.879808e+06
