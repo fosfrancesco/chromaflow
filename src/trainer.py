@@ -84,7 +84,7 @@ class Trainer:
                 # forward the model
                 with torch.set_grad_enabled(is_train):
                     logits, _ = model(x, y, m)
-                    mask = y != 198  # Create a boolean mask for non-pad tokens
+                    mask = y != 111  # Create a boolean mask for non-pad tokens
                     logits_masked = logits[mask]
                     y_masked = y[mask]
                     

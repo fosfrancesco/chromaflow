@@ -1,0 +1,7 @@
+03/11/2024 19:13:27 - INFO - model -   number of parameters: 1.887872e+06
+03/11/2024 19:13:28 - INFO - model -   number of parameters: 1.887872e+06
+  0%|          | 0/677 [00:00<?, ?it/s]
+../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
+03/11/2024 19:14:03 - INFO - model -   number of parameters: 1.887872e+06
+03/11/2024 19:14:03 - INFO - model -   number of parameters: 1.887872e+06
+../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
