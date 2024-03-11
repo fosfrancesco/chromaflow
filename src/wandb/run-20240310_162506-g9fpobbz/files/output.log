@@ -50,3 +50,16 @@ data has 5640 pieces, 243 unique tokens.
 ../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
 03/10/2024 18:38:41 - INFO - model -   number of parameters: 1.879808e+06
 03/10/2024 18:38:41 - INFO - model -   number of parameters: 1.879808e+06
+  0%|          | 0/794 [00:00<?, ?it/s]
+[autoreload of utils failed: Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/IPython/extensions/autoreload.py", line 276, in check
+    superreload(m, reload, self.old_objects)
+  File "/usr/local/lib/python3.10/dist-packages/IPython/extensions/autoreload.py", line 500, in superreload
+    update_generic(old_obj, new_obj)
+  File "/usr/local/lib/python3.10/dist-packages/IPython/extensions/autoreload.py", line 397, in update_generic
+    update(a, b)
+  File "/usr/local/lib/python3.10/dist-packages/IPython/extensions/autoreload.py", line 365, in update_class
+    update_instances(old, new)
+  File "/usr/local/lib/python3.10/dist-packages/IPython/extensions/autoreload.py", line 319, in update_instances
+    refs = gc.get_referrers(old)
+KeyboardInterrupt

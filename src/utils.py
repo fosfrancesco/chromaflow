@@ -42,7 +42,6 @@ def createCustomDataset(path, padding_length=512, onlyFourByFour=True):
     for item in tqdm(songFiles):
         song_path = path + '/' + item
         meta_info = get_metadata(song_path)
-        #Let's start only with 4/4 songs later we tranfer-knowledge to other time signatures
         if onlyFourByFour:  
             if (meta_info['time_signature'] == '4/4') or (meta_info['time_signature'] == '2/4'): 
                 meta.append(meta_info)
