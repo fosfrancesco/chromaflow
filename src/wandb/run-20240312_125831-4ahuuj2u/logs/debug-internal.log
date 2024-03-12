@@ -205,3 +205,4 @@
 2024-03-12 13:01:11,661 INFO    Thread-12 :4923 [dir_watcher.py:_on_file_modified():288] file/dir modified: /workspace/src/wandb/run-20240312_125831-4ahuuj2u/files/output.log
 2024-03-12 13:01:11,779 DEBUG   HandlerThread:4923 [handler.py:handle_request():146] handle_request: status_report
 2024-03-12 13:01:13,662 INFO    Thread-12 :4923 [dir_watcher.py:_on_file_modified():288] file/dir modified: /workspace/src/wandb/run-20240312_125831-4ahuuj2u/files/output.log
+2024-03-12 13:01:15,663 INFO    Thread-12 :4923 [dir_watcher.py:_on_file_modified():288] file/dir modified: /workspace/src/wandb/run-20240312_125831-4ahuuj2u/files/output.log
