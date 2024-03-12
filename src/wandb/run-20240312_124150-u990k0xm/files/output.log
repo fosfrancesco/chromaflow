@@ -1,0 +1,52 @@
+03/12/2024 12:42:01 - INFO - model -   number of parameters: 1.861376e+06
+03/12/2024 12:42:01 - INFO - model -   number of parameters: 1.861376e+06
+  0%|          | 0/677 [00:00<?, ?it/s]
+../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
+03/12/2024 12:42:28 - INFO - model -   number of parameters: 1.861376e+06
+03/12/2024 12:42:28 - INFO - model -   number of parameters: 1.861376e+06
+  0%|          | 0/677 [00:00<?, ?it/s]
+../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
+03/12/2024 12:43:27 - INFO - model -   number of parameters: 1.861376e+06
+03/12/2024 12:43:27 - INFO - model -   number of parameters: 1.861376e+06
+  0%|          | 0/677 [00:00<?, ?it/s]
+../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
+03/12/2024 12:43:46 - INFO - model -   number of parameters: 1.861376e+06
+03/12/2024 12:43:46 - INFO - model -   number of parameters: 1.861376e+06
+../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
+  0%|          | 0/677 [00:00<?, ?it/s]
+03/12/2024 12:44:40 - INFO - model -   number of parameters: 1.861376e+06
+../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
+03/12/2024 12:44:41 - INFO - model -   number of parameters: 1.861376e+06
+  0%|          | 0/677 [00:00<?, ?it/s]
+03/12/2024 12:47:29 - INFO - model -   number of parameters: 1.861376e+06
+03/12/2024 12:47:29 - INFO - model -   number of parameters: 1.861376e+06
+../models/model_epochs->250_heads->4_embd->192_batch->64_new_midi_embeddings
+  0%|          | 0/677 [00:01<?, ?it/s]
+[[0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ ...
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]]
+[[0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ ...
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]]
+[[0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ ...
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]]
+Available devices:  2
+torch version: 2.2.1+cu121
+cudnn version: 8902
+cuda version: 12.1
+(43272, 2048) (4800, 2048) (43272, 2048, 8) (4800, 2048, 8)
+data has 43272 pieces, 195 unique tokens.
+data has 4800 pieces, 195 unique tokens.

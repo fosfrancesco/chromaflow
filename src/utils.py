@@ -96,7 +96,8 @@ class TokenDatasetMidi(Dataset):
     def __getitem__(self, idx):
         chunk = self.dataset[idx:idx+1]
         midi = self.midi_dataset[idx:idx+1][0] # 1 x 512 x 8
-        print(midi.shape)
+        
+        #print(midi.shape)
         # encode every token to an integer
         dix = [self.stoi[s] for s in chunk[0]]
         

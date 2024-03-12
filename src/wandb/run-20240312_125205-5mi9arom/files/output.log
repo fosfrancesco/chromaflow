@@ -1,0 +1,16 @@
+03/12/2024 12:52:13 - INFO - model -   number of parameters: 1.861376e+06
+03/12/2024 12:52:13 - INFO - model -   number of parameters: 1.861376e+06
+  0%|          | 0/677 [00:00<?, ?it/s]
+
+  0%|          | 0/677 [00:01<?, ?it/s]
+../models/model_epochs->250_heads->4_embd->192_batch->32_new_midi_embeddings
+03/12/2024 12:52:44 - INFO - model -   number of parameters: 1.861376e+06
+03/12/2024 12:52:44 - INFO - model -   number of parameters: 1.861376e+06
+  0%|          | 0/1353 [00:00<?, ?it/s]
+../models/model_epochs->250_heads->4_embd->192_batch->16_new_midi_embeddings
+03/12/2024 12:52:53 - INFO - model -   number of parameters: 1.861376e+06
+03/12/2024 12:52:53 - INFO - model -   number of parameters: 1.861376e+06
+  0%|          | 0/2705 [00:00<?, ?it/s]
+Available devices:  2
+torch version: 2.2.1+cu121
+cudnn version: 8902

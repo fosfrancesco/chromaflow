@@ -649,3 +649,358 @@
 2024-03-12 12:37:18,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
 2024-03-12 12:37:18,397 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
 2024-03-12 12:37:23,398 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:37:28,399 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:37:33,144 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:37:33,145 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:37:33,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:37:34,351 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:37:39,352 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:37:44,353 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:37:48,144 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:37:48,145 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:37:48,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:37:50,328 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:37:55,329 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:00,330 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:03,144 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:38:03,145 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:38:03,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:38:05,347 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:10,348 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:15,349 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:18,145 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:38:18,146 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:38:18,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:38:21,347 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:26,348 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:31,350 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:33,145 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:38:33,146 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:38:33,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:38:37,334 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:42,335 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:47,336 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:48,145 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:38:48,146 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:38:48,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:38:52,360 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:38:57,361 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:02,362 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:03,145 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:39:03,145 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:39:03,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:39:07,387 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:12,388 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:17,390 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:18,145 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:39:18,146 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:39:18,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:39:23,377 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:28,378 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:33,145 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:39:33,146 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:39:33,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:39:34,364 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:39,365 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:44,367 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:48,145 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:39:48,146 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:39:48,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:39:50,333 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:39:55,334 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:00,335 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:03,146 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:40:03,146 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:40:03,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:40:05,347 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:10,349 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:15,350 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:18,146 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:40:18,147 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:40:18,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:40:20,413 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:25,414 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:30,415 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:33,146 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:40:33,146 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:40:33,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:40:36,379 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:41,380 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:46,381 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:48,146 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:40:48,147 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:40:48,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:40:51,389 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:40:56,390 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:01,391 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:03,146 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:41:03,147 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:41:03,187 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:41:07,049 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: resume
+2024-03-12 12:41:07,049 INFO    HandlerThread:2678169 [handler.py:handle_request_resume():699] starting system metrics thread
+2024-03-12 12:41:07,050 INFO    HandlerThread:2678169 [system_monitor.py:start():194] Starting system monitor
+2024-03-12 12:41:07,050 INFO    SystemMonitor:2678169 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-12 12:41:07,051 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started cpu monitoring
+2024-03-12 12:41:07,052 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started disk monitoring
+2024-03-12 12:41:07,055 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started gpu monitoring
+2024-03-12 12:41:07,056 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started memory monitoring
+2024-03-12 12:41:07,056 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started network monitoring
+2024-03-12 12:41:07,091 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: pause
+2024-03-12 12:41:07,091 INFO    HandlerThread:2678169 [handler.py:handle_request_pause():708] stopping system metrics thread
+2024-03-12 12:41:07,091 INFO    HandlerThread:2678169 [system_monitor.py:finish():203] Stopping system monitor
+2024-03-12 12:41:07,091 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-03-12 12:41:07,092 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined cpu monitor
+2024-03-12 12:41:07,093 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-03-12 12:41:07,093 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined disk monitor
+2024-03-12 12:41:07,093 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-03-12 12:41:07,161 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined gpu monitor
+2024-03-12 12:41:07,162 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined memory monitor
+2024-03-12 12:41:07,162 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined network monitor
+2024-03-12 12:41:07,166 DEBUG   SenderThread:2678169 [sender.py:send():378] send: stats
+2024-03-12 12:41:07,170 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:07,197 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: resume
+2024-03-12 12:41:07,198 INFO    HandlerThread:2678169 [handler.py:handle_request_resume():699] starting system metrics thread
+2024-03-12 12:41:07,198 INFO    HandlerThread:2678169 [system_monitor.py:start():194] Starting system monitor
+2024-03-12 12:41:07,198 INFO    SystemMonitor:2678169 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-12 12:41:07,199 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started cpu monitoring
+2024-03-12 12:41:07,200 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started disk monitoring
+2024-03-12 12:41:07,202 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started gpu monitoring
+2024-03-12 12:41:07,203 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started memory monitoring
+2024-03-12 12:41:07,203 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started network monitoring
+2024-03-12 12:41:07,230 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: pause
+2024-03-12 12:41:07,233 INFO    HandlerThread:2678169 [handler.py:handle_request_pause():708] stopping system metrics thread
+2024-03-12 12:41:07,233 INFO    HandlerThread:2678169 [system_monitor.py:finish():203] Stopping system monitor
+2024-03-12 12:41:07,234 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined cpu monitor
+2024-03-12 12:41:07,234 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-03-12 12:41:07,235 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined disk monitor
+2024-03-12 12:41:07,235 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-03-12 12:41:07,236 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-03-12 12:41:07,305 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined gpu monitor
+2024-03-12 12:41:07,306 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined memory monitor
+2024-03-12 12:41:07,306 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined network monitor
+2024-03-12 12:41:07,309 DEBUG   SenderThread:2678169 [sender.py:send():378] send: stats
+2024-03-12 12:41:07,327 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: resume
+2024-03-12 12:41:07,327 INFO    HandlerThread:2678169 [handler.py:handle_request_resume():699] starting system metrics thread
+2024-03-12 12:41:07,327 INFO    HandlerThread:2678169 [system_monitor.py:start():194] Starting system monitor
+2024-03-12 12:41:07,327 INFO    SystemMonitor:2678169 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-12 12:41:07,328 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started cpu monitoring
+2024-03-12 12:41:07,329 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started disk monitoring
+2024-03-12 12:41:07,331 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started gpu monitoring
+2024-03-12 12:41:07,333 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started memory monitoring
+2024-03-12 12:41:07,334 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started network monitoring
+2024-03-12 12:41:08,414 INFO    Thread-12 :2678169 [dir_watcher.py:_on_file_modified():288] file/dir modified: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/output.log
+2024-03-12 12:41:12,311 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:17,312 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:19,381 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: keepalive
+2024-03-12 12:41:20,982 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:41:21,179 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:41:21,180 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:41:22,429 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:27,430 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:32,431 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:37,432 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:42,433 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:46,301 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: keepalive
+2024-03-12 12:41:47,434 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:49,428 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:41:49,429 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: pause
+2024-03-12 12:41:49,430 INFO    HandlerThread:2678169 [handler.py:handle_request_pause():708] stopping system metrics thread
+2024-03-12 12:41:49,430 INFO    HandlerThread:2678169 [system_monitor.py:finish():203] Stopping system monitor
+2024-03-12 12:41:49,431 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined cpu monitor
+2024-03-12 12:41:49,432 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-03-12 12:41:49,432 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined disk monitor
+2024-03-12 12:41:49,432 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-03-12 12:41:49,433 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-03-12 12:41:49,503 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined gpu monitor
+2024-03-12 12:41:49,503 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined memory monitor
+2024-03-12 12:41:49,503 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined network monitor
+2024-03-12 12:41:49,503 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 12:41:49,505 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 12:41:49,707 DEBUG   SenderThread:2678169 [sender.py:send():378] send: stats
+2024-03-12 12:41:49,823 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: resume
+2024-03-12 12:41:49,823 INFO    HandlerThread:2678169 [handler.py:handle_request_resume():699] starting system metrics thread
+2024-03-12 12:41:49,823 INFO    HandlerThread:2678169 [system_monitor.py:start():194] Starting system monitor
+2024-03-12 12:41:49,824 INFO    SystemMonitor:2678169 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-12 12:41:49,824 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started cpu monitoring
+2024-03-12 12:41:49,825 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started disk monitoring
+2024-03-12 12:41:49,826 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started gpu monitoring
+2024-03-12 12:41:49,827 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started memory monitoring
+2024-03-12 12:41:49,828 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started network monitoring
+2024-03-12 12:41:49,989 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: pause
+2024-03-12 12:41:49,989 INFO    HandlerThread:2678169 [handler.py:handle_request_pause():708] stopping system metrics thread
+2024-03-12 12:41:49,989 INFO    HandlerThread:2678169 [system_monitor.py:finish():203] Stopping system monitor
+2024-03-12 12:41:49,990 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined cpu monitor
+2024-03-12 12:41:49,990 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-03-12 12:41:49,991 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined disk monitor
+2024-03-12 12:41:49,991 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-03-12 12:41:49,992 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-03-12 12:41:50,066 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined gpu monitor
+2024-03-12 12:41:50,066 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined memory monitor
+2024-03-12 12:41:50,066 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined network monitor
+2024-03-12 12:41:50,069 DEBUG   SenderThread:2678169 [sender.py:send():378] send: stats
+2024-03-12 12:41:50,076 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: resume
+2024-03-12 12:41:50,077 INFO    HandlerThread:2678169 [handler.py:handle_request_resume():699] starting system metrics thread
+2024-03-12 12:41:50,077 INFO    HandlerThread:2678169 [system_monitor.py:start():194] Starting system monitor
+2024-03-12 12:41:50,077 INFO    SystemMonitor:2678169 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-12 12:41:50,078 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started cpu monitoring
+2024-03-12 12:41:50,078 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started disk monitoring
+2024-03-12 12:41:50,079 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started gpu monitoring
+2024-03-12 12:41:50,079 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started memory monitoring
+2024-03-12 12:41:50,080 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started network monitoring
+2024-03-12 12:41:50,111 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: pause
+2024-03-12 12:41:50,113 INFO    HandlerThread:2678169 [handler.py:handle_request_pause():708] stopping system metrics thread
+2024-03-12 12:41:50,113 INFO    HandlerThread:2678169 [system_monitor.py:finish():203] Stopping system monitor
+2024-03-12 12:41:50,113 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-03-12 12:41:50,114 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined cpu monitor
+2024-03-12 12:41:50,114 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-03-12 12:41:50,114 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined disk monitor
+2024-03-12 12:41:50,115 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-03-12 12:41:50,179 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined gpu monitor
+2024-03-12 12:41:50,180 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined memory monitor
+2024-03-12 12:41:50,180 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined network monitor
+2024-03-12 12:41:50,183 DEBUG   SenderThread:2678169 [sender.py:send():378] send: stats
+2024-03-12 12:41:50,269 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: resume
+2024-03-12 12:41:50,269 INFO    HandlerThread:2678169 [handler.py:handle_request_resume():699] starting system metrics thread
+2024-03-12 12:41:50,269 INFO    HandlerThread:2678169 [system_monitor.py:start():194] Starting system monitor
+2024-03-12 12:41:50,269 INFO    SystemMonitor:2678169 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-12 12:41:50,270 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started cpu monitoring
+2024-03-12 12:41:50,271 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started disk monitoring
+2024-03-12 12:41:50,272 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started gpu monitoring
+2024-03-12 12:41:50,273 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started memory monitoring
+2024-03-12 12:41:50,274 INFO    SystemMonitor:2678169 [interfaces.py:start():190] Started network monitoring
+2024-03-12 12:41:50,317 DEBUG   SenderThread:2678169 [sender.py:send():378] send: telemetry
+2024-03-12 12:41:50,318 DEBUG   SenderThread:2678169 [sender.py:send():378] send: exit
+2024-03-12 12:41:50,318 INFO    SenderThread:2678169 [sender.py:send_exit():585] handling exit code: 0
+2024-03-12 12:41:50,318 INFO    SenderThread:2678169 [sender.py:send_exit():587] handling runtime: 45
+2024-03-12 12:41:50,319 INFO    SenderThread:2678169 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 12:41:50,319 INFO    SenderThread:2678169 [sender.py:send_exit():593] send defer
+2024-03-12 12:41:50,319 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:50,320 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 0
+2024-03-12 12:41:50,320 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:50,320 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 0
+2024-03-12 12:41:50,320 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 1
+2024-03-12 12:41:50,320 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:50,320 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 1
+2024-03-12 12:41:50,321 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:50,321 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 1
+2024-03-12 12:41:50,321 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 2
+2024-03-12 12:41:50,321 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:50,321 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 2
+2024-03-12 12:41:50,321 INFO    HandlerThread:2678169 [system_monitor.py:finish():203] Stopping system monitor
+2024-03-12 12:41:50,322 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-03-12 12:41:50,322 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-03-12 12:41:50,322 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined cpu monitor
+2024-03-12 12:41:50,322 DEBUG   SystemMonitor:2678169 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-03-12 12:41:50,323 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined disk monitor
+2024-03-12 12:41:50,393 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined gpu monitor
+2024-03-12 12:41:50,394 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined memory monitor
+2024-03-12 12:41:50,395 INFO    HandlerThread:2678169 [interfaces.py:finish():202] Joined network monitor
+2024-03-12 12:41:50,398 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:50,398 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 2
+2024-03-12 12:41:50,398 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 3
+2024-03-12 12:41:50,398 DEBUG   SenderThread:2678169 [sender.py:send():378] send: stats
+2024-03-12 12:41:50,398 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:50,399 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 3
+2024-03-12 12:41:50,400 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:50,400 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 3
+2024-03-12 12:41:50,400 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 4
+2024-03-12 12:41:50,400 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:50,400 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 4
+2024-03-12 12:41:50,400 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:50,401 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 4
+2024-03-12 12:41:50,401 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 5
+2024-03-12 12:41:50,401 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:50,401 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 5
+2024-03-12 12:41:50,401 DEBUG   SenderThread:2678169 [sender.py:send():378] send: summary
+2024-03-12 12:41:50,402 INFO    SenderThread:2678169 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 12:41:50,402 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:50,402 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 5
+2024-03-12 12:41:50,403 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 6
+2024-03-12 12:41:50,403 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:50,403 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 6
+2024-03-12 12:41:50,403 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:50,403 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 6
+2024-03-12 12:41:50,409 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 12:41:50,443 INFO    Thread-12 :2678169 [dir_watcher.py:_on_file_created():271] file/dir created: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/wandb-summary.json
+2024-03-12 12:41:50,573 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 7
+2024-03-12 12:41:50,573 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:50,574 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 7
+2024-03-12 12:41:50,574 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:50,574 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 7
+2024-03-12 12:41:51,319 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-12 12:41:51,444 INFO    Thread-12 :2678169 [dir_watcher.py:_on_file_modified():288] file/dir modified: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/config.yaml
+2024-03-12 12:41:52,444 INFO    Thread-12 :2678169 [dir_watcher.py:_on_file_modified():288] file/dir modified: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/output.log
+2024-03-12 12:41:54,327 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 8
+2024-03-12 12:41:54,328 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: poll_exit
+2024-03-12 12:41:54,328 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:54,329 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 8
+2024-03-12 12:41:54,330 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:54,330 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 8
+2024-03-12 12:41:54,330 INFO    SenderThread:2678169 [job_builder.py:build():298] Attempting to build job artifact
+2024-03-12 12:41:54,331 INFO    SenderThread:2678169 [job_builder.py:_get_source_type():428] is repo sourced job
+2024-03-12 12:41:54,331 INFO    SenderThread:2678169 [job_builder.py:_get_program_relpath():446] run is notebook based run
+2024-03-12 12:41:54,331 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 9
+2024-03-12 12:41:54,331 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:54,331 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 9
+2024-03-12 12:41:54,332 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:54,332 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 9
+2024-03-12 12:41:54,332 INFO    SenderThread:2678169 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-03-12 12:41:54,445 INFO    Thread-12 :2678169 [dir_watcher.py:_on_file_modified():288] file/dir modified: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/output.log
+2024-03-12 12:41:54,446 INFO    SenderThread:2678169 [dir_watcher.py:finish():388] scan: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files
+2024-03-12 12:41:54,447 INFO    SenderThread:2678169 [dir_watcher.py:finish():402] scan save: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/config.yaml config.yaml
+2024-03-12 12:41:54,447 INFO    SenderThread:2678169 [dir_watcher.py:finish():402] scan save: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/wandb-metadata.json wandb-metadata.json
+2024-03-12 12:41:54,447 INFO    SenderThread:2678169 [dir_watcher.py:finish():402] scan save: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/requirements.txt requirements.txt
+2024-03-12 12:41:54,450 INFO    SenderThread:2678169 [dir_watcher.py:finish():402] scan save: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/output.log output.log
+2024-03-12 12:41:54,456 INFO    SenderThread:2678169 [dir_watcher.py:finish():402] scan save: /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/wandb-summary.json wandb-summary.json
+2024-03-12 12:41:54,461 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 10
+2024-03-12 12:41:54,462 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:54,462 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 10
+2024-03-12 12:41:54,466 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:54,466 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 10
+2024-03-12 12:41:54,466 INFO    SenderThread:2678169 [file_pusher.py:finish():172] shutting down file pusher
+2024-03-12 12:41:55,240 INFO    wandb-upload_0:2678169 [upload_job.py:push():131] Uploaded file /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/config.yaml
+2024-03-12 12:41:55,320 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-12 12:41:55,321 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: poll_exit
+2024-03-12 12:41:55,545 INFO    wandb-upload_3:2678169 [upload_job.py:push():131] Uploaded file /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/wandb-summary.json
+2024-03-12 12:41:55,585 INFO    wandb-upload_1:2678169 [upload_job.py:push():131] Uploaded file /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/requirements.txt
+2024-03-12 12:41:55,594 INFO    wandb-upload_2:2678169 [upload_job.py:push():131] Uploaded file /workspace/src/wandb/run-20240312_121347-uwvc8opq/files/output.log
+2024-03-12 12:41:55,794 INFO    Thread-11 (_thread_body):2678169 [sender.py:transition_state():613] send defer: 11
+2024-03-12 12:41:55,795 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:55,796 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 11
+2024-03-12 12:41:55,796 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:55,796 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 11
+2024-03-12 12:41:55,796 INFO    SenderThread:2678169 [file_pusher.py:join():178] waiting for file pusher
+2024-03-12 12:41:55,797 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 12
+2024-03-12 12:41:55,797 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:55,797 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 12
+2024-03-12 12:41:55,798 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:55,798 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 12
+2024-03-12 12:41:55,798 INFO    SenderThread:2678169 [file_stream.py:finish():595] file stream finish called
+2024-03-12 12:41:56,292 INFO    SenderThread:2678169 [file_stream.py:finish():599] file stream finish is done
+2024-03-12 12:41:56,292 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 13
+2024-03-12 12:41:56,293 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:56,293 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 13
+2024-03-12 12:41:56,294 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:56,294 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 13
+2024-03-12 12:41:56,294 INFO    SenderThread:2678169 [sender.py:transition_state():613] send defer: 14
+2024-03-12 12:41:56,295 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 12:41:56,295 DEBUG   SenderThread:2678169 [sender.py:send():378] send: final
+2024-03-12 12:41:56,295 INFO    HandlerThread:2678169 [handler.py:handle_request_defer():172] handle defer: 14
+2024-03-12 12:41:56,296 DEBUG   SenderThread:2678169 [sender.py:send():378] send: footer
+2024-03-12 12:41:56,296 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: defer
+2024-03-12 12:41:56,296 INFO    SenderThread:2678169 [sender.py:send_request_defer():609] handle sender defer: 14
+2024-03-12 12:41:56,299 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-12 12:41:56,299 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: poll_exit
+2024-03-12 12:41:56,303 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 12:41:56,305 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: server_info
+2024-03-12 12:41:56,305 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: server_info
+2024-03-12 12:41:56,348 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: get_summary
+2024-03-12 12:41:56,348 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: sampled_history
+2024-03-12 12:41:56,348 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: job_info
+2024-03-12 12:41:56,453 DEBUG   SenderThread:2678169 [sender.py:send_request():405] send_request: job_info
+2024-03-12 12:41:56,456 DEBUG   HandlerThread:2678169 [handler.py:handle_request():146] handle_request: shutdown
+2024-03-12 12:41:56,457 INFO    HandlerThread:2678169 [handler.py:finish():869] shutting down handler
+2024-03-12 12:41:57,350 INFO    WriterThread:2678169 [datastore.py:close():296] close: /workspace/src/wandb/run-20240312_121347-uwvc8opq/run-uwvc8opq.wandb
+2024-03-12 12:41:57,454 INFO    SenderThread:2678169 [sender.py:finish():1521] shutting down sender
+2024-03-12 12:41:57,454 INFO    SenderThread:2678169 [file_pusher.py:finish():172] shutting down file pusher
+2024-03-12 12:41:57,454 INFO    SenderThread:2678169 [file_pusher.py:join():178] waiting for file pusher
