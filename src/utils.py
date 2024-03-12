@@ -46,7 +46,7 @@ def createCustomDataset(path, padding_length=512, onlyFourByFour=True):
             if (meta_info['time_signature'] == '4/4') or (meta_info['time_signature'] == '2/4'): 
                 meta.append(meta_info)
                 durations, relative_positions, chords, bass_notes = get_chords_from_file(song_path, False)
-                #padd the arrays to the max length
+                #pad the arrays to the max length
                 bass_notes = padding(bass_notes, padding_length)
                 durations = padding(durations, padding_length)
                 chords = padding(chords, padding_length)
@@ -59,7 +59,7 @@ def createCustomDataset(path, padding_length=512, onlyFourByFour=True):
         else:
             meta.append(meta_info)
             durations, relative_positions, chords, bass_notes = get_chords_from_file(song_path)
-            #padd the arrays to the max length
+            #pad the arrays to the max length
             bass_notes = padding(bass_notes, padding_length)
             durations = padding(durations, padding_length)
             chords = padding(chords, padding_length)
@@ -283,7 +283,7 @@ def correctMidiEmbeddings(midi, data, theCounter):
             symbol = data[i-1] + data[i]
             newChord = createChord(symbol)
             midi[i] = newChord
-        #correct that shlash is an special midi embedding
+        #correct that slash is an special midi embedding
         if data[i] == '/':
             midi[i] = [0,0,0,0,0,0,0,127]
         #correct the base after the slash when it has nature
@@ -311,80 +311,6 @@ def correctMidiEmbeddings(midi, data, theCounter):
     if last == '.':
         midi.append([0,0,0,0,0,0,0,0])
     return midi
-
-'''
-#this code is not correct it will be replaced by get_the_midi_in_song located in formats.py
-#Midi from sequence ------------------------------------------------------------
-def getMidiFromTokenSequence(sequence, counter):
-    newMidi = []
-    counter = counter + [0, 0, 0, 0] #needed to correct the last element
-    sequence = sequence + [0, 0]
-    
-    for i in range(len(sequence)-1):
-        data = sequence[i]
-        c_1 = counter[i]
-        c_2 = counter[i+1]
-        c_3 = counter[i+2]
-       
-        #print(data, '\t->', c_1)
-        if data == '<style>':
-            newMidi.append([0,0,0,0,0,0,0,0])
-            newMidi.append([0,0,0,0,0,0,0,0])
-        if data == '<start>':
-            newMidi.append([0,0,0,0,0,0,0,0])
-        if data == '.':
-            newMidi.append([0,0,0,0,0,0,0,0])
-        if c_2 == 2 and sequence[i+1] != '/':
-            note = data
-            if note.find('-') != -1:
-                note = note.replace('-', 'b')
-            m = lib.note_to_midi(note) + 48
-            newMidi.append([m] + [0,0,0,0,0,0,0])
-        if c_1 == 2 and data != '/':
-            symbol = sequence[i-1] + data
-            newChord = createChord(symbol)
-            newMidi.append(newChord)
-        #correct the nature after the base before a slash
-        if c_1 == 2 and data != '/' and sequence[i+1] == '/':
-            m = 0
-        #correct that shlash is an special midi embedding
-        if data == '/':
-            newMidi.append([0,0,0,0,0,0,0,127])
-        #correct the base after the slash when it has nature
-        if data == '/' and c_3 == 5:
-            note = sequence[i+1]
-            if note.find('-') != -1:
-                note = note.replace('-', 'b')
-            m = lib.note_to_midi(note) + 48
-            out = [m] + [0,0,0,0,0,0,0]
-            newMidi.append(out)
-        #correct the chord before the slash in the case there is no nature
-        if sequence[i+1] == '/' and c_1 == 1:
-            symbol = data
-            newChord = createChord(symbol)
-            newMidi.append(newChord)
-        #correct the nature before an extension without slash
-        if c_1 == 1 and c_2 == 2 and c_3 == 3 and sequence[i+1] != '/' and sequence[i+2] != '/':
-            symbol = data + sequence[i+1]
-            newChord = createChord(symbol)
-            newMidi.append(newChord)
-        if c_1 == 4 and sequence[i-1] == '/':
-            symbol = sequence[i-3] + sequence[i-2] + sequence[i-1] + data
-            newChord = createChord(symbol)
-            newMidi.append(newChord)
-        if c_1 == 1 and sequence[i+1] == 0 and data != '.' and data.isnumeric() == False and len(data) <= 2: 
-            note = data
-            if note.find('-') != -1:
-                note = note.replace('-', 'b')
-            m = lib.note_to_midi(note) + 48
-            newMidi.append([m] + [0,0,0,0,0,0,0])
-        if len(sequence) > 4 and data != '.' and c_1 == 4 and sequence[i-1] != '.' and sequence[i-2] != '.' and sequence[i-3] != '.' and data != '/' and sequence[i-1] != '/' and sequence[i-2] != '/' and sequence[i-3] != '/':
-            symbol = str(sequence[i-3]) + str(sequence[i-2]) + ' ' + str(sequence[i-1]) + ' ' + data
-            #print(symbol)
-            newChord = createChord(symbol)
-            newMidi.append(newChord)
-    return newMidi
-'''
 
 #Shuffle Dataset ----------------------------------------------------------------
 

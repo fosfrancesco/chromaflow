@@ -215,135 +215,106 @@ def correctTheFormat(reference, toBeCorrected):
 
 #------------------------------------------------------------------------------
 #Correct style tokens by reference
-def correctStyleTokensInMeta(data):
+def correctStyleTokensInMeta(sequence):
     #Get all the elements in meta and correct the style tokens
-    for x in tqdm(range(len(data))):
-        element = data[x]['style']
+    for x, item in enumerate(tqdm(sequence)):
+        element = item['style']
         if element == 'Moderately':
-            data[x]['style'] = 'Pop'
+            sequence[x]['style'] = 'Pop'
         if element == "Even 8th's" or element == "Even 8's":
-            data[x]['style'] = 'Even 8ths'
+            sequence[x]['style'] = 'Even 8ths'
         if (element.find('Swing') != -1):
-            data[x]['style'] = 'Jazz'
+            sequence[x]['style'] = 'Jazz'
         if (element.find('Blues') != -1):
-            data[x]['style'] = 'Blues'
+            sequence[x]['style'] = 'Blues'
         if (element.find('Folk') != -1):
-            data[x]['style'] = 'Folk'
+            sequence[x]['style'] = 'Folk'
         if (element.find('Fusion') != -1):
-            data[x]['style'] = 'Jazz'
+            sequence[x]['style'] = 'Jazz'
         if (element.find('Jazz') != -1):
-            data[x]['style'] = 'Jazz'
+            sequence[x]['style'] = 'Jazz'
         if (element.find('Bossa') != -1):
-            data[x]['style'] = 'Bossa'
+            sequence[x]['style'] = 'Bossa'
         if (element.find('Reggae') != -1):
-            data[x]['style'] = 'Reggae'
+            sequence[x]['style'] = 'Reggae'
         if (element.find('Folk') != -1):
-            data[x]['style'] = 'Folk'
+            sequence[x]['style'] = 'Folk'
         if (element.find('Samba') != -1):
-            data[x]['style'] = 'Samba'
+            sequence[x]['style'] = 'Samba'
         if (element.find('Funk') != -1):
-            data[x]['style'] = 'Funk'
+            sequence[x]['style'] = 'Funk'
         if (element.find('Pop') != -1):
-            data[x]['style'] = 'Pop'
+            sequence[x]['style'] = 'Pop'
         if (element.find('Son') != -1):
-            data[x]['style'] = 'Son'
+            sequence[x]['style'] = 'Son'
         if (element.find('Rock') != -1):
-            data[x]['style'] = 'Rock'
+            sequence[x]['style'] = 'Rock'
         if (element.find('Soul') != -1):
-            data[x]['style'] = 'Soul'
+            sequence[x]['style'] = 'Soul'
         if (element.find('Balad') != -1):
-            data[x]['style'] = 'Balad'
+            sequence[x]['style'] = 'Balad'
         if element == "R'n'B":
-            data[x]['style'] = "RnB"
+            sequence[x]['style'] = "RnB"
         if element == 'Beatles': 
-            data[x]['style'] = 'Rock'
+            sequence[x]['style'] = 'Rock'
         if element == 'Afoxe': 
-            data[x]['style'] = 'Afoxé'
+            sequence[x]['style'] = 'Afoxé'
         if element == 'Worship': 
-            data[x]['style'] = 'Gospel'
+            sequence[x]['style'] = 'Gospel'
         if element == 'Traditional Gospel': 
-            data[x]['style'] = 'Gospel'
+            sequence[x]['style'] = 'Gospel'
+        if element == 'Deliberately': 
+            sequence[x]['style'] = 'Pop'
     
 #------------------------------------------------------------------------------
 #Correct style tokens by reference in meta data
 def correctStyleTokens(data):
-    size_x, size_y = data.shape
-    for x in tqdm(range(size_x)):
-        for y in range(size_y):
-            element = data[x][y]
-            if element == 'Moderately':
-                data[x][y] = 'Pop'
-            if element == "Even 8th's" or element == "Even 8's":
-                data[x][y] = 'Even 8ths'
-            if (element.find('Swing') != -1):
-                data[x][y] = 'Jazz'
-            if (element.find('Blues') != -1):
-                data[x][y] = 'Blues'
-            if (element.find('Folk') != -1):
-                data[x][y] = 'Folk'
-            if (element.find('Jazz') != -1):
-                data[x][y] = 'Jazz'
-            if (element.find('Fusion') != -1):
-                data[x][y] = 'Jazz'
-            if (element.find('Bossa') != -1):
-                data[x][y] = 'Bossa'
-            if (element.find('Reggae') != -1):
-                data[x][y] = 'Reggae'
-            if (element.find('Folk') != -1):
-                data[x][y] = 'Folk'
-            if (element.find('Samba') != -1):
-                data[x][y] = 'Samba'
-            if (element.find('Funk') != -1):
-                data[x][y] = 'Funk'
-            if (element.find('Pop') != -1):
-                data[x][y] = 'Pop'
-            if (element.find('Son') != -1):
-                data[x][y] = 'Son'
-            if (element.find('Rock') != -1):
-                data[x][y] = 'Rock'
-            if (element.find('Soul') != -1):
-                data[x][y] = 'Soul'
-            if (element.find('Balad') != -1):
-                data[x][y] = 'Balad'
-            if element == "R'n'B":
-                data[x][y] = "RnB"
-            if element == 'Beatles': 
-                data[x][y] = 'Rock'
-            if element == 'Afoxe': 
-                data[x][y] = 'Afoxé'
-            if element == 'Worship': 
-                data[x][y] = 'Gospel'
-            if element == 'Traditional Gospel': 
-                data[x][y] = 'Gospel'
+    for x, song in enumerate(tqdm(data)):
+        element = song[1]
+        if element == 'Moderately':
+            song[1] = 'Pop'
+        if element == "Even 8th's" or element == "Even 8's":
+            song[1] = 'Even 8ths'
+        if (element.find('Swing') != -1):
+            song[1] = 'Jazz'
+        if (element.find('Blues') != -1):
+            song[1] = 'Blues'
+        if (element.find('Folk') != -1):
+            song[1] = 'Folk'
+        if (element.find('Jazz') != -1):
+            song[1] = 'Jazz'
+        if (element.find('Fusion') != -1):
+            song[1] = 'Jazz'
+        if (element.find('Bossa') != -1):
+            song[1] = 'Bossa'
+        if (element.find('Reggae') != -1):
+            song[1] = 'Reggae'
+        if (element.find('Folk') != -1):
+            song[1] = 'Folk'
+        if (element.find('Samba') != -1):
+            song[1] = 'Samba'
+        if (element.find('Funk') != -1):
+            song[1] = 'Funk'
+        if (element.find('Pop') != -1):
+            song[1] = 'Pop'
+        if (element.find('Son') != -1):
+            song[1] = 'Son'
+        if (element.find('Rock') != -1):
+            song[1] = 'Rock'
+        if (element.find('Soul') != -1):
+            song[1] = 'Soul'
+        if (element.find('Balad') != -1):
+            song[1] = 'Balad'
+        if element == "R'n'B":
+            song[1] = "RnB"
+        if element == 'Beatles': 
+            song[1] = 'Rock'
+        if element == 'Afoxe': 
+            song[1] = 'Afoxé'
+        if element == 'Worship': 
+            song[1] = 'Gospel'
+        if element == 'Traditional Gospel': 
+            song[1] = 'Gospel'
+        if element == 'Deliberately': 
+            song[1] = 'Pop'
                 
-#-------------------------------------------------------------------------                
-# #Correct the extensions of the chords
-# def correct_extensions(song, offset, block_size):
-#     i = 0
-#     for chord, off in zip(song, offset):
-#         if '<pad>' not in chord:
-#             if 'add' in chord or 'alter' in chord:
-#                 toSplit = chord.split(' ')
-#                 if len(toSplit) > 2:
-#                     #print('cleared ---->', song[i])
-#                     song = np.delete(song, i)
-#                     tmpOff = off
-#                     #print('cleared ---->', off)
-#                     offset = np.delete(offset, i)
-#                     i-=1
-#                     for x in range(0, len(toSplit), 2):
-#                         #print(toSplit[x], toSplit[x+1])
-#                         newElement = toSplit[x] + ' ' + toSplit[x+1]  
-#                         song = np.insert(song, i+1, newElement)
-#                         offset = np.insert(offset, i+1, tmpOff)
-#                         i+=1
-                    
-#                 #print(i, '------->', len(toSplit))
-#             i+=1
-
-#     #clear the length of the array
-#     for e in range(len(song)):
-#         if e >= block_size:
-#             song = np.delete(song, len(song)-1)
-#             offset = np.delete(offset, len(offset)-1)
-#     return song, offset
