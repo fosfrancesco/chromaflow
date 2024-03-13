@@ -5,3 +5,5 @@
 *.cubin
 *.fatbin
 data/
+wandb/
+runs/

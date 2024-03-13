@@ -30,3 +30,5 @@ config: {'learning_rate': 3e-05, 'architecture': 'Transformer - minGPT', 'datase
 2024-03-12 12:58:32,109 INFO    MainThread:3895 [jupyter.py:save_ipynb():373] not saving jupyter notebook
 2024-03-12 12:58:32,109 INFO    MainThread:3895 [wandb_init.py:_pause_backend():437] pausing backend
 2024-03-12 12:58:32,171 INFO    MainThread:3895 [wandb_init.py:_resume_backend():442] resuming backend
+2024-03-12 14:32:40,958 INFO    MainThread:3895 [jupyter.py:save_ipynb():373] not saving jupyter notebook
+2024-03-12 14:32:40,958 INFO    MainThread:3895 [wandb_init.py:_pause_backend():437] pausing backend
