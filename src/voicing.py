@@ -21,6 +21,13 @@ class Voicing:
         #Voicing
         self.voicing = ['v_0', 'v_1', 'v_2', 'v_3']
         
+        #Durations 
+        self.durations = {'0.3997395833333333', '0.4440104166666667', '0.5', '0.5703125'
+                '0.6666666666666666', '0.75', '0.7994791666666666', '0.8880208333333334'
+                '1.0', '1.1419270833333333', '1.3333333333333333', '1.5'
+                '1.5989583333333333', '1.7135416666666667', '2.0', '2.25'
+                '2.3997395833333335', '2.6666666666666665', '3.0', '4.0'}
+        
         #All notes
         self.all_notes = {
             'C': 48, 'C#': 49, 'Db': 49, 'D': 50, 'D#': 51, 'Eb': 51, 'E': 52, 'Fb': 52, 'F': 53, 'E#': 53, 'F#': 54, 'Gb': 42, 'G': 43, 'G#': 44, 'Ab':44, 'A': 45, 'A#': 46, 'Bb': 46, 'B': 47, 
@@ -115,14 +122,18 @@ class Voicing:
         }
         
         midi = [0, 0, 0, 0, 0, 0, 0, 0]
+        duration = 0.0
         #check the chord info
-        for i, item in enumerate(sequence):
-            element = item[0]
-            duration = item[1]
-            #print('element:', element, 'duration:', duration)
-
-            #check notes
-            if element in self.all_notes and sequence[i-1][0] != '/':
+        for i, element in enumerate(sequence):
+            
+            #Check it is a dot ----------------------------------------------------
+            if element == '.':
+                duration = float(sequence[i+1])
+                couple = (midi, duration, element)
+                midi_sequence.append(couple)
+                
+            #check notes ------------------------------------------------------------
+            elif element in self.all_notes and sequence[i-1][0] != '/':
                 root = self.all_notes[element]
                 midi = [root, 0, 0, 0, 0, 0, 0, 0]
                 couple = (midi, duration, element)
@@ -214,7 +225,7 @@ class Voicing:
                 midi_sequence.append(couple)
                 
             # Form section -------------------------------------------------------------
-            elif element not in self.all_notes and element not in self.natures and element not in self.structural_elements:
+            elif element not in self.all_notes and element not in self.natures and element not in self.structural_elements and element not in self.durations:
                 thisMidi = [0, 0, 0, 0, 0, 0, 0, 0]
                 couple = (thisMidi, duration, element)
                 midi_sequence.append(couple)
@@ -223,7 +234,7 @@ class Voicing:
         #Normalize the length of the MIDI sequence to 8 ----------------------------
         for i, item in enumerate(midi_sequence):    
             current_midi = item[0]
-            duration = item[1]
+            #duration = item[1]
             element = item[2]
             if len(current_midi) < 8:
                 for i in range(8 - len(current_midi)):
@@ -238,12 +249,13 @@ class Voicing:
     def export_to_midi(self, sequence, filename, path = "/workspace/data/midi_files/"):
         #Capture the information
         midi_capture = []
-        
+            
         for i, element in enumerate(sequence):
+            #print('chord:', element)
             chord = element[2]
-            #print('chord:', chord)
+            
             if chord == '.':
-                ref = i+1 
+                ref = i+1
                 counter = 0
                 doIt = True
                 next = sequence[ref][2]  
@@ -251,20 +263,21 @@ class Voicing:
                     next = sequence[ref][2]    
                     ref += 1
                     counter += 1
-                    if next in self.after_chords or next.startswith('Form_') or ref == len(sequence)-1:
+                    if next in self.after_chords or next.startswith('Form_') or ref == len(sequence)-1 or next == '<end>':
                         doIt = False
                         counter -= 1
                     
-                #print(counter)
+                #print(element, counter)
                 
                 if counter > 0:
                     midi = (sequence[i+counter][0], sequence[i+counter][1])
                     if midi[0] == [0, 0, 0, 0, 0, 0, 0, 0]:
-                        assert False, 'Error: Empty MIDI, ce pa cool Raul'
+                        assert False, 'Error: Empty MIDI'
                     if midi[0] == [48, 48, 48, 48, 0, 0, 0, 0]: #this is No Chord!
                         midi = ([0, 0, 0, 0, 0, 0, 0, 0], sequence[i+counter][1])
                     #print('\nmidi:', midi)
                     midi_capture.append(midi)
+            
                     
         # Create a MIDI file
         track    = 0
