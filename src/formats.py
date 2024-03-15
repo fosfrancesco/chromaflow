@@ -149,17 +149,15 @@ def convertChordsFromOutput(sequence):
 def getArrayOfElementsInChord(chords, offsets):
     ignore_list = listToIgnore()
     chord_list = []
-    offset_list= []
+   
     #print(type(chords))
-          
     for chord, offset in zip(chords, offsets):
         if chord in ignore_list:
             chord_list.append(chord)
-            offset_list.append(offset)
             continue
         
         chord_list.append('.')
-        offset_list.append(offset)
+        chord_list.append(str(offset))
         
         if '/' in chord:
             result = splitSlashChords(chord)
@@ -167,9 +165,8 @@ def getArrayOfElementsInChord(chords, offsets):
             result = splitChordTokens(chord)
             
         chord_list.extend(result)
-        offset_list.extend([offset] * len(result))
     
-    return chord_list, offset_list
+    return chord_list
 
 
 #-------------------------------------------------------------------------

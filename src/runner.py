@@ -50,14 +50,15 @@ wandb.init(
     }
 )
 
-epochs = 250
-embedding = 192
+epochs = 90
+embedding = 512
 heads = 4
 layers = 4
 batch_size = 32
 learning_rate = 3e-5
 num_workers = 4
 midi_vocab = 128
+token_size = len(tokens)
 
 mconf = GPTConfig(len(tokens), dataset.block_size, midi_vocab, n_layer=layers, n_head=heads, n_embd=embedding)
 session_model = GPT(mconf)
