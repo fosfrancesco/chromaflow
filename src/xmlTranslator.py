@@ -146,14 +146,14 @@ def replaceTheseChords(mySequence, verbose = False):
                     '5': 'power'
                     }
     sequence = []
-    durations = []
+    #durations = []
     
     for song in tqdm(mySequence):
         tmp = []
-        tmp_d = []  
-        for item in song:
-            element = item[0]  
-            e_duration = item[1]          
+        #tmp_d = []  
+        for element in song:
+            #element = item[0]  
+            #e_duration = item[1]          
             for key, value in correct_this.items():
                 if key == element:
                     if (verbose):
@@ -161,7 +161,7 @@ def replaceTheseChords(mySequence, verbose = False):
                     element = element.replace(key, value)
                     break
             tmp.append(element)
-            tmp_d.append(e_duration)
+            #tmp_d.append(e_duration)
         
         #check the case of 'G dom7' and split it into two
         if 'G dom7' in tmp:
@@ -169,30 +169,30 @@ def replaceTheseChords(mySequence, verbose = False):
                 if n == 'G dom7':
                     tmp[i] = 'G'
                     tmp.insert(i+1, 'dom7')
-                    tmp_d.insert(i+1, tmp_d[i])
+                    #tmp_d.insert(i+1, tmp_d[i])
          
         sequence.append(tmp)
-        durations.append(tmp_d)
+        #durations.append(tmp_d)
         
     #Unify the dataset again
-    result = []
-    for chords_values, durations_values in zip(sequence, durations):
-        coupled = list(zip(chords_values, durations_values))
-        result.append(coupled)
+    # result = []
+    # for chords_values, durations_values in zip(sequence, durations):
+    #     coupled = list(zip(chords_values, durations_values))
+    #     result.append(coupled)
     
     #clean repeated ones
-    for x, song in enumerate(result):
+    for x, song in enumerate(sequence):
         for y, item in enumerate(song):
-            chord = item[0]
-            s = chord.split(' ')
+            #chord = item[0]
+            s = item.split(' ')
             if len(s) >= 5:
                 #print(s)
                 if s[1]+s[2] == s[3]+s[4]:
                     #print(x, y, chord)
-                    result[x][y]=s[0]+' '+s[1]+' '+s[2]
+                    sequence[x][y]=s[0]+' '+s[1]+' '+s[2]
                     #print(sequence[x][y])
                     
-    return result
+    return sequence
 
 #------------------------------------------------------------------
 def parse_info_from_XML(path, verbose = False):
@@ -450,9 +450,9 @@ def parse_info_from_XML(path, verbose = False):
 #This class fix all extensions to avoid redundancy and extra tokens
 def fix_extensions(sequence):
     for song in tqdm(sequence):
-        for i, item in enumerate(song):
-            element = item[0] #extract the chord information
-            c_duration = item[1] #extract the duration information
+        for i, element in enumerate(song):
+            #element = item[0] #extract the chord information
+            #c_duration = item[1] #extract the duration information
             if 'add' in element or 'alter' in element:
                 #print(element)
                 split = element.split(' ')
@@ -462,18 +462,18 @@ def fix_extensions(sequence):
                         #print('odd', split)
                         nature = split[0]
                         #couple the nature with duration
-                        coupled = (nature, c_duration)
-                        song[i] = coupled
+                    
+                        song[i] = nature
                         counter = 1 
                         for n in range(1, size-1, 2):
                             ext = split[n] + ' ' + split[n+1]
-                            coupled = (ext, c_duration)
-                            song.insert(i+counter, coupled)
+                            #coupled = (ext, c_duration)
+                            song.insert(i+counter, ext)
                             counter += 1
         #need to do it separately to avoid the index out of range           
-        for i, item in enumerate(song):
-            element = item[0] #extract the chord information
-            c_duration = item[1] #extract the duration information
+        for i, element in enumerate(song):
+            #element = item[0] #extract the chord information
+            #c_duration = item[1] #extract the duration information
             
             if 'add' in element or 'alter' in element:
                 #print(element)
@@ -486,19 +486,19 @@ def fix_extensions(sequence):
                         counter = 0
                         for n in range(0, size-1, 2):
                             ext = split[n] + ' ' + split[n+1]
-                            coupled = (ext, c_duration)
-                            song.insert(i+counter, coupled)
+                           #coupled = (ext, c_duration)
+                            song.insert(i+counter, ext)
                             counter += 1
-        for i, item in enumerate(song):
-            element = item[0]
-            c_duration = item[1]
+        for i, element in enumerate(song):
+            #element = item[0]
+            #c_duration = item[1]
             if element == 'm7 add 9':
                 nature = 'm7'
                 ext = 'add 9'
-                coupled = (nature, c_duration)
-                song[i] = coupled
-                coupled = (ext, c_duration)
-                song.insert(i+1, coupled)
+                #coupled = (nature, c_duration)
+                song[i] = nature
+                #coupled = (ext, c_duration)
+                song.insert(i+1, ext)
     
                             
 #----------------------------------------------------------------------------------

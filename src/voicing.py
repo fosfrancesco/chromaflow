@@ -23,10 +23,10 @@ class Voicing:
         self.voicing = ['v_0', 'v_1', 'v_2', 'v_3']
         
         #Durations 
-        self.durations = {'0.3997395833333333', '0.4440104166666667', '0.5', '0.5703125'
-                '0.6666666666666666', '0.75', '0.7994791666666666', '0.8880208333333334'
-                '1.0', '1.1419270833333333', '1.3333333333333333', '1.5'
-                '1.5989583333333333', '1.7135416666666667', '2.0', '2.25'
+        self.durations = {'0.3997395833333333', '0.4440104166666667', '0.5', '0.5703125',
+                '0.6666666666666666', '0.75', '0.7994791666666666', '0.8880208333333334',
+                '1.0', '1.1419270833333333', '1.3333333333333333', '1.5',
+                '1.5989583333333333', '1.7135416666666667', '2.0', '2.25',
                 '2.3997395833333335', '2.6666666666666665', '3.0', '4.0'}
         
         #All notes
@@ -276,8 +276,13 @@ class Voicing:
         for i, element in enumerate(sequence):
             
             #Check it is a dot ----------------------------------------------------
-            if element == '.':
+            if element == '.' and i < len(sequence) - 2:
                 duration = float(sequence[i+1])
+                couple = (midi, duration, element)
+                midi_sequence.append(couple)
+            
+            elif element in self.durations:
+                duration = float(element)
                 couple = (midi, duration, element)
                 midi_sequence.append(couple)
                 
@@ -403,7 +408,7 @@ class Voicing:
             #print('chord:', element)
             chord = element[2]
             
-            if chord == '.':
+            if chord == '.' and i < len(sequence) - 2:
                 ref = i+1
                 counter = 0
                 doIt = True
@@ -432,7 +437,7 @@ class Voicing:
         track    = 0
         channel  = 0
         time     = 0    # In beats
-        tempo    = 200   # In BPM
+        tempo    = 120   # In BPM
         volume   = 80  # 0-127, as per the MIDI standard
 
         MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created automatically)
@@ -442,8 +447,8 @@ class Voicing:
         
         for item in midi_capture:
             m = item[0]
-            d = item[1]
-  
+            d = float(item[1])
+            
             for i, pitch in enumerate(m):
                 volume = int(random.uniform(55, 85))
                 MyMIDI.addNote(track, channel, pitch, time, d, volume)

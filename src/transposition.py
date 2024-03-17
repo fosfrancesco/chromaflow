@@ -1,5 +1,6 @@
 import formats as fmt
 
+
 class Transposition:
     #define the class
     def __init__(self):
@@ -11,6 +12,13 @@ class Transposition:
            'Fbb', 'Cbb', 'Gbb', 'Dbb', 'Abb', 'Ebb', 'Bbb', 'Fb', 'Cb', 'Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F', 'C','G',
            'D', 'A', 'E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'E#', 'B#', 'F##', 'C##', 'G##', 'D##', 'A##', 'E##', 'B##'
         ]
+        
+        #Durations 
+        self.length_durations = {'0.3997395833333333', '0.4440104166666667', '0.5', '0.5703125',
+                '0.6666666666666666', '0.75', '0.7994791666666666', '0.8880208333333334',
+                '1.0', '1.1419270833333333', '1.3333333333333333', '1.5',
+                '1.5989583333333333', '1.7135416666666667', '2.0', '2.25',
+                '2.3997395833333335', '2.6666666666666665', '3.0', '4.0'}
         
         self.notes_in_the_scale = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
         # Enharmonic equivalents and mappings updated to include minor keys properly
@@ -280,16 +288,18 @@ class Transposition:
 
         #Extract the notes
         check_notes = fmt.getNotes()
+        
         song_to_translate_notes = []
 
         other_elements = fmt.listToIgnore()
         # Extract chords information with its location and duration
         
-        for i, item in enumerate(sequence):
+        for i, element in enumerate(sequence):
             info = {'note': '', 'distance': -1, 'nature': 'Null', 'loc': -1, 'duration': -1}
-            element = item[0]
-            duration = item[1]
-            
+            #element = item[0]
+            #duration = item[1]
+            if element in self.length_durations:
+                duration = element
             if element in check_notes:
                 info['note'] = element
                 info['loc'] = i
@@ -373,7 +383,7 @@ class Transposition:
         #create a new file 
         transposed_final = sequence.copy()
         for i, element in enumerate(transposed_song):
-            transposed_final[element['loc']] = (element['note'], element['duration'])
+            transposed_final[element['loc']] = element['note']
         return transposed_final
             
          

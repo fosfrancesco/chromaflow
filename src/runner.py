@@ -50,8 +50,8 @@ wandb.init(
     }
 )
 
-epochs = 90
-embedding = 512
+epochs = 20
+embedding = 1024
 heads = 4
 layers = 4
 batch_size = 32
