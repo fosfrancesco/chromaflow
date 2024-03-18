@@ -427,7 +427,7 @@ class Voicing:
                     midi = (sequence[i+counter][0], sequence[i+counter][1])
                     if midi[0] == [0, 0, 0, 0, 0, 0, 0, 0]:
                         assert False, 'Error: Empty MIDI'
-                    if midi[0] == [48, 48, 48, 48, 0, 0, 0, 0]: #this is No Chord!
+                    if midi[0] == [48, 48, 48, 48, 0, 0, 0, 0]: #this is a No Chord!
                         midi = ([0, 0, 0, 0, 0, 0, 0, 0], sequence[i+counter][1])
                     #print('\nmidi:', midi)
                     midi_capture.append(midi)

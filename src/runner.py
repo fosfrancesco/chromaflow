@@ -50,11 +50,11 @@ wandb.init(
     }
 )
 
-epochs = 20
-embedding = 1024
+epochs = 250
+embedding = 256
 heads = 4
 layers = 4
-batch_size = 32
+batch_size = 128
 learning_rate = 3e-5
 num_workers = 4
 midi_vocab = 128
