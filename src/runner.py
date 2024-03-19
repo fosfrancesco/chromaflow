@@ -15,7 +15,7 @@ print("cudnn version:", torch.backends.cudnn.version())
 print("cuda version:", torch.version.cuda)
 
 print("loading the dataset....")
-max_length = 2048
+max_length = 1024
 id = 0
 tokens = np.load('/workspace/data/formatted/tokens.npy', allow_pickle=True)
 train = np.load('/workspace/data/shuffled/dataset_train.npy', allow_pickle=True)
@@ -50,7 +50,7 @@ wandb.init(
     }
 )
 
-epochs = 250
+epochs = 270
 embedding = 256
 heads = 4
 layers = 4

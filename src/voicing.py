@@ -3,6 +3,8 @@ from midiutil import MIDIFile
 import tqdm as tqdm
 import random
 import numpy as np
+import pytz
+from datetime import datetime, timezone
 
 class Voicing:
     #define the class
@@ -90,7 +92,7 @@ class Voicing:
     def get_midi(self, sequence):
         midi_sequence = []
         root = 0
-        mod = 4
+        mod = 3
         status = True
         # Create a dictionary for the alter section
         add_dict = {
@@ -129,6 +131,7 @@ class Voicing:
             #Check it is a dot ----------------------------------------------------
             if element == '.':
                 #duration = float(sequence[i+1])
+                midi = [0, 0, 0, 0, 0, 0, 0, 0]
                 midi_sequence.append(midi)
             #check the duration ----------------------------------------------------
             elif element in self.durations:
@@ -239,7 +242,7 @@ class Voicing:
     def convert_chords_to_voicing(self, sequence):
         midi_sequence = []
         root = 0
-        mod = 4
+        mod = 3
         status = True
         # Create a dictionary for the alter section
         add_dict = {
@@ -278,6 +281,7 @@ class Voicing:
             #Check it is a dot ----------------------------------------------------
             if element == '.' and i < len(sequence) - 2:
                 duration = float(sequence[i+1])
+                midi = [0, 0, 0, 0, 0, 0, 0, 0]
                 couple = (midi, duration, element)
                 midi_sequence.append(couple)
             
@@ -394,7 +398,7 @@ class Voicing:
                 for i in range(8 - len(current_midi)):
                     current_midi.append(0)
                 item = (current_midi, duration, element)
-              
+     
         return midi_sequence, status
     
     
@@ -409,30 +413,51 @@ class Voicing:
             chord = element[2]
             
             if chord == '.' and i < len(sequence) - 2:
-                ref = i+1
+                ref = i
                 counter = 0
                 doIt = True
-                next = sequence[ref][2]  
-                while doIt:
-                    next = sequence[ref][2]    
+                while doIt and ref < len(sequence)-1:       
+                    counter += 1 
                     ref += 1
-                    counter += 1
-                    if next in self.after_chords or next.startswith('Form_') or ref == len(sequence)-1 or next == '<end>':
+                    next = sequence[ref][2]
+                    if next in self.after_chords or next.startswith('Form_') or next == '<end>':
                         doIt = False
                         counter -= 1
                     
-                #print(element, counter)
+                #print(i, "\t", element, "\t", counter, sequence[i+counter])
                 
                 if counter > 0:
                     midi = (sequence[i+counter][0], sequence[i+counter][1])
                     if midi[0] == [0, 0, 0, 0, 0, 0, 0, 0]:
                         assert False, 'Error: Empty MIDI'
-                    if midi[0] == [48, 48, 48, 48, 0, 0, 0, 0]: #this is a No Chord!
+                        print("Error: Empty MIDI", counter, i)
+                        
+                    if midi[0] == [48, 48, 48, 48, 0, 0, 0, 0]: #this is a N.C.!
                         midi = ([0, 0, 0, 0, 0, 0, 0, 0], sequence[i+counter][1])
                     #print('\nmidi:', midi)
                     midi_capture.append(midi)
-            
+        
+        #check distances and correct them
+        for i, midiChord in enumerate(midi_capture):
+            if i < len(midi_capture) - 1:
+                currentMidi = midiChord[0]
+           
+                nextMidi = midi_capture[i+1][0]
+                #calculate the distance between each note of the chords
+                distance = [0, 0, 0, 0, 0, 0, 0, 0]
+                for j in range(1, 4):
+                    distance[j] = currentMidi[j] - nextMidi[j]
+                    if distance[j] <= -12:
+                        nextMidi[j] = nextMidi[j] - 12
+                        break
+                # for j in range(4):
+                #     distance[j] = currentMidi[j] - nextMidi[j]
+                #     if distance[j] >= 12:
+                #         nextMidi[j] = nextMidi[j] + 12
+                #         break
                     
+                #print(i, 'distance:', distance, currentMidi, nextMidi)
+                
         # Create a MIDI file
         track    = 0
         channel  = 0
@@ -440,7 +465,7 @@ class Voicing:
         tempo    = 120   # In BPM
         volume   = 80  # 0-127, as per the MIDI standard
 
-        MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created automatically)
+        MyMIDI = MIDIFile()  # One track, defaults to format 1 (tempo track is created automatically)
         MyMIDI.addTempo(track, time, tempo)
 
         time = 0
@@ -454,12 +479,35 @@ class Voicing:
                 MyMIDI.addNote(track, channel, pitch, time, d, volume)
             time += d
   
-        fullname = path + filename + '.mid'
+        tz = pytz.timezone('Europe/Stockholm')
+        stockholm_now = datetime.now(tz)
+        mh = str(stockholm_now.hour)
+        mm = str(stockholm_now.minute)
+        ms = str(stockholm_now.second)
+        
+        if len(mh) == 1:
+            mh = '0' + str(stockholm_now.hour)
+        if len(mm) == 1:
+            mm= '0' + str(stockholm_now.minute)
+        if len(ms) == 1:
+            ms = '0' + str(stockholm_now.second)
+            
+        ext =  mh + mm + ms + '_' +str(stockholm_now.day) + '_' + str(stockholm_now.month) + '_' + str(stockholm_now.year) + '_'
+        
+        fullname = path + ext + filename + '.mid'
+        currentName = ext + filename + '.mid'
         
         with open(fullname, "wb") as output_file:
             MyMIDI.writeFile(output_file)
+        
+        #Save sequence as text file
+        textFileName = ext + filename + '.txt'
+        with open(path + textFileName, 'w') as file:
+            for item in sequence:
+                file.write("%s\n" % str(item))
 
-        print('song:', filename) 
+        print('song:', currentName) 
+        print('file:', textFileName)
         print("MIDI file created!", '\n---------------------------------')
         
         
