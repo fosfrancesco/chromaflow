@@ -472,6 +472,8 @@ class Voicing:
         
         for item in midi_capture:
             m = item[0]
+            #clean the values that are zero
+            m = [x for x in m if x != 0]
             d = float(item[1])
             
             for i, pitch in enumerate(m):
