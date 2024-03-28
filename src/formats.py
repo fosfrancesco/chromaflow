@@ -28,7 +28,7 @@ def splitChordTokens(chord):
     input is a string of the chord
     output is a list of tokens
     '''
-    list = []
+    list = []  
     section = chord.split(' ')
     base = section[0][:1]
     nature = section[0][1:]
