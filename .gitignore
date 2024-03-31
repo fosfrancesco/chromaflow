@@ -12,3 +12,4 @@ src/hf_dataset/
 src/hf_dataset_tok/
 src/hf_gpt2_chords/
 src/__pycache__/
+models/
