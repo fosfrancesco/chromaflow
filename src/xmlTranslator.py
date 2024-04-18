@@ -118,7 +118,7 @@ def replaceTheseChords(mySequence, verbose = False):
                     '*m7*': 'm7',
                     '*-3*': 'm7',
                     '6b5*': 'G dom7',
-                    '7alt': '7 add b9',
+                    '7alt': 'dom7 add b9',
                     'maj9': 'maj7 add 9',
                     '-b5*': 'm add b5',
                     '6#9*': 'maj add 6 add 9',
