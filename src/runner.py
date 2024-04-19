@@ -37,6 +37,8 @@ validation = TokenDatasetMidi(test, midi_test, max_length, tokens)
 
 import wandb
 #wandb.login()
+#git config --global --add safe.directory /workspace
+
 wandb.init(
     # set the wandb project where this run will be logged
     project="music_gpt_new_voicing",
@@ -50,8 +52,8 @@ wandb.init(
     }
 )
 
-epochs = 270
-embedding = 256
+epochs = 100
+embedding = 512
 heads = 4
 layers = 4
 batch_size = 128
@@ -59,6 +61,22 @@ learning_rate = 3e-5
 num_workers = 4
 midi_vocab = 128
 token_size = len(tokens)
+
+#print parameters in a new line
+print("-----------------------------")
+print("\t\tParameters:")
+print(
+    f'epochs: {epochs}\n'
+    f'embedding: {embedding}\n'
+    f'heads: {heads}\n'
+    f'layers: {layers}\n'
+    f'batch_size: {batch_size}\n'
+    f'learning_rate: {learning_rate}\n'
+    f'num_workers: {num_workers}\n'
+    f'midi_vocab: {midi_vocab}\n'
+    f'token_size: {token_size}'
+)
+print("-----------------------------")
 
 mconf = GPTConfig(len(tokens), dataset.block_size, midi_vocab, n_layer=layers, n_head=heads, n_embd=embedding)
 session_model = GPT(mconf)
