@@ -4,7 +4,11 @@
 *.ptx
 *.cubin
 *.fatbin
-data/
+# Ignore everything in the data directory
+data/*
+# But not the iRealXML folder
+!data/iRealXML/
+
 wandb/
 runs/
 src/wandb/
