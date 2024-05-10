@@ -5,10 +5,14 @@ import random
 import numpy as np
 import pytz
 from datetime import datetime, timezone
+from music21 import midi, environment, stream
+import os
+
 
 class Voicing:
     #define the class
     def __init__(self):
+        
         #define the natures of the chords
         self.natures = {'maj', 'maj6', 'maj7', 'm', 'm6', 'm7', 'm_maj7', 'dom7', 'sus', 'sus2', 'sus7', 'sus4', 'o7', 'o', 'ø7', 'power', 'aug', 'o_maj7', 'N.C.'}
         
@@ -511,6 +515,7 @@ class Voicing:
         print('song:', currentName) 
         print('file:', textFileName)
         print("MIDI file created!", '\n---------------------------------')
+        return currentName
         
         
     #--------------------------------------------------------------------------------
@@ -519,6 +524,27 @@ class Voicing:
         strings_array = [item[0] for item in sequence if item[0] != '']
         return strings_array
     
+    #--------------------------------------------------------------------------------
+    def play_midi(self, filename):
+        # Check if the MIDI file exists
+        if not os.path.exists(filename):
+            print(f"Error: File not found - {filename}")
+            return
+
+         # Load the MIDI file into a music21 stream
+        mf = midi.MidiFile()
+        mf.open(filename)
+        mf.read()
+        mf.close()
+
+        # Convert MIDI file to a music21 stream
+        s = midi.translate.midiFileToStream(mf)
+
+        # Play the MIDI stream
+        s.show('midi')
+    
+    
+
     
    
         
