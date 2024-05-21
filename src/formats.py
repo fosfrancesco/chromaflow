@@ -111,40 +111,6 @@ def splitTheChords(chords):
     return chord_list
 
 #------------------------------------------------------------------------------
-#Convert the separated chords into one unify chord
-def convertChordsFromOutput(sequence):
-    chord = []
-    chordArray = []
-    ignore = listToIgnore()
-    ignore.remove('.') #we need the dot to identify the chord
-    ignore.remove('|')
-    ignore.remove(':|')
-    ignore.remove('<end>')
-    #if sequence[len(sequence)-1] != '.':
-    #    sequence.append('.')
-    for i in range (3, len(sequence)): #first two elementes are style context
-        element = sequence[i]
-        
-        if element not in ignore:
-            #check if the chord starts
-            if element != '.' and element != '|' and element != ':|' and element != '<end>':
-                #print(i, duration)
-                #collect the elements of the chord
-                if element.find('add') >= 0 or element.find('subtract') >= 0 or element.find('alter') >= 0:
-                    chord.append(' ')
-                chord.append(element)
-                #print(i, chord)
-            if len(chord) > 0:
-                if  element == '.' or element == '|' or element == ':|' or element == '<end>':
-                    #print(i, element)listToIgnore
-                    #join the sections into a formatted chord
-                    c = ''.join(chord) 
-                    chordArray.append(c)
-                    chord = []
-               
-    return chordArray
-
-#------------------------------------------------------------------------------
 #Get the array of elements per chord and also configure the offsets
 def getArrayOfElementsInChord(chords, offsets):
     ignore_list = listToIgnore()

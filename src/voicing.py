@@ -7,7 +7,8 @@ import pytz
 from datetime import datetime, timezone
 from music21 import midi, environment, stream
 import os
-
+import mido
+from mido import MidiFile, MidiTrack, Message
 
 class Voicing:
     #define the class
@@ -71,7 +72,14 @@ class Voicing:
                               'ø7': self.ø7, 'o7': self.o7, 'o': self.o, 'sus': self.sus, 'sus7': self.sus7, 
                               'sus2': self.sus2, 'sus4': self.sus4, 'm6': self.m6, 'power': self.power, 'o': self.o, 
                               'm_maj7': self.m_maj7, 'maj6': self.maj6, 'aug': self.aug, 'o_maj7': self.o_maj7, 'N.C.': self.noChord}
-    
+    #-----------------------------------------------------------------------
+    def listToIgnore(self):
+        ignore_list = {'<start>', '<end>', '<pad>', '.', '|', '||', 'b||', 'e||', 'Repeat_0', 'Repeat_1', 'Repeat_2', 'Repeat_3', 'Intro', 
+                        'Form_A', 'Form_B', 'Form_C', 'Form_D', 
+                        'Form_verse', 'Form_intro', 'Form_Coda', 'Form_Head', 
+                        'Form_Segno', '|:', ':|'}
+        return ignore_list
+
     #-----------------------------------------------------------------------
     def getStructuralElements(self):
         return self.structural_elements
@@ -542,8 +550,127 @@ class Voicing:
 
         # Play the MIDI stream
         s.show('midi')
+        
+    #--------------------------------------------------------------------------------
+    #Convert the separated chords into one unify chord
+    def convertChordsFromOutput(self, sequence):
+        chord = []
+        chordArray = []
+        ignore = self.listToIgnore()
+        ignore.remove('.') #we need the dot to identify the chord
+        ignore.remove('|')
+        ignore.remove(':|')
+        ignore.remove('<end>')
+        #if sequence[len(sequence)-1] != '.':
+        #    sequence.append('.')
+        for i in range (4, len(sequence)): #first four elements are style context
+            element = sequence[i]
+           
+            if element not in ignore and element not in self.durations:
+                if element == 'dom7':
+                    element = '7'
+                #check if the chord starts
+                if element != '.' and element != '|' and element != ':|' and element != '<end>':
+                    #print(i, duration)
+                    #collect the elements of the chord
+                    if element.find('add') >= 0 or element.find('subtract') >= 0 or element.find('alter') >= 0:
+                        chord.append(' ')
+                    chord.append(element)
+                    #print(i, chord)
+                if len(chord) > 0:
+                    if  element == '.' or element == '|' or element == ':|' or element == '<end>':
+                        #print(i, element)listToIgnore
+                        #join the sections into a formatted chord
+                        c = ''.join(chord) 
+                        chordArray.append(c)
+                        chord = []
+                
+        return chordArray
+    #----------------------------------------------------
+     # Function to create pitch bend messages
+    def create_pitch_bend(self, value, channel):
+        # Pitch bend value ranges from -8192 to 8191
+        pitch = int((value / 100) * 8192)
+        return Message('pitchwheel', pitch=pitch, channel=channel)
     
-    
+    #----------------------------------------------------
+    def MidiChord(self, path = "/workspace/data/midi_files/", filename = 'detuned_Cmaj_chord'):
+        
+        # Create a new MIDI file and a new track
+        mid = MidiFile()
+        track = MidiTrack()
+        mid.tracks.append(track)
+
+        # Constants for note durations and volumes
+        duration = 960  # duration in ticks (e.g., quarter note in standard MIDI)
+        volume = 64  # Volume (0-127)
+
+        # Define the MIDI note numbers for Cmaj7 chord
+        C_note = 60  # Middle C
+        E_note = 64  # E above middle C
+        G_note = 67  # G above middle C
+        B_note = 71  # B above middle C
+
+        # MIDI channels for MPE
+        C_channel = 0
+        E_channel = 1
+        G_channel = 2
+        B_channel = 3
+
+        # Function to create pitch bend messages
+        def create_pitch_bend(value, channel):
+            # Pitch bend value ranges from -8192 to 8191
+            pitch = int((value / 100) * 8192)
+            return Message('pitchwheel', pitch=pitch, channel=channel)
+
+        # Time for the start of the chord
+        start_time = 0
+
+        # Add the C note to the MIDI file (no detuning)
+        track.append(Message('note_on', note=C_note, velocity=volume, channel=C_channel, time=start_time))
+
+        # Add the detuned E note
+        track.append(create_pitch_bend(-25, E_channel))  # -25 cents detune
+        track.append(Message('note_on', note=E_note, velocity=volume, channel=E_channel, time=start_time))
+
+        # Add the G note to the MIDI file (no detuning)
+        track.append(Message('note_on', note=G_note, velocity=volume, channel=G_channel, time=start_time))
+
+        # Add the detuned B note
+        track.append(create_pitch_bend(-28, B_channel))  # -28 cents detune
+        track.append(Message('note_on', note=B_note, velocity=volume, channel=B_channel, time=start_time))
+
+        # Add note off messages for all notes at the same time (duration ticks later)
+        track.append(Message('note_off', note=C_note, velocity=volume, channel=C_channel, time=duration))
+        track.append(Message('note_off', note=E_note, velocity=volume, channel=E_channel, time=0))  # time=0 because it’s the same moment
+        track.append(Message('note_off', note=G_note, velocity=volume, channel=G_channel, time=0))
+        track.append(Message('note_off', note=B_note, velocity=volume, channel=B_channel, time=0))
+        track.append(create_pitch_bend(0, E_channel))  # Reset pitch bend for E
+        track.append(create_pitch_bend(0, B_channel))  # Reset pitch bend for B
+
+        tz = pytz.timezone('Europe/Stockholm')
+        stockholm_now = datetime.now(tz)
+        mh = str(stockholm_now.hour)
+        mm = str(stockholm_now.minute)
+        ms = str(stockholm_now.second)
+        
+        if len(mh) == 1:
+            mh = '0' + str(stockholm_now.hour)
+        if len(mm) == 1:
+            mm= '0' + str(stockholm_now.minute)
+        if len(ms) == 1:
+            ms = '0' + str(stockholm_now.second)
+            
+        ext =  mh + mm + ms + '_' +str(stockholm_now.day) + '_' + str(stockholm_now.month) + '_' + str(stockholm_now.year) + '_'
+        
+        fullname = path + ext + filename + '.mid'
+        currentName = ext + filename + '.mid'
+        
+        # Save the MIDI file
+        mid.save(fullname)
+            
+        print("MIDI file generated: ", currentName)
+
 
     
    
