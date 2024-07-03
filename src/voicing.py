@@ -617,11 +617,6 @@ class Voicing:
         G_channel = 2
         B_channel = 3
 
-        # Function to create pitch bend messages
-        def create_pitch_bend(value, channel):
-            # Pitch bend value ranges from -8192 to 8191
-            pitch = int((value / 100) * 8192)
-            return Message('pitchwheel', pitch=pitch, channel=channel)
 
         # Time for the start of the chord
         start_time = 0
@@ -630,14 +625,14 @@ class Voicing:
         track.append(Message('note_on', note=C_note, velocity=volume, channel=C_channel, time=start_time))
 
         # Add the detuned E note
-        track.append(create_pitch_bend(-25, E_channel))  # -25 cents detune
+        track.append(self.create_pitch_bend(-25, E_channel))  # -25 cents detune
         track.append(Message('note_on', note=E_note, velocity=volume, channel=E_channel, time=start_time))
 
         # Add the G note to the MIDI file (no detuning)
         track.append(Message('note_on', note=G_note, velocity=volume, channel=G_channel, time=start_time))
 
         # Add the detuned B note
-        track.append(create_pitch_bend(-28, B_channel))  # -28 cents detune
+        track.append(self.create_pitch_bend(-28, B_channel))  # -28 cents detune
         track.append(Message('note_on', note=B_note, velocity=volume, channel=B_channel, time=start_time))
 
         # Add note off messages for all notes at the same time (duration ticks later)
@@ -645,8 +640,8 @@ class Voicing:
         track.append(Message('note_off', note=E_note, velocity=volume, channel=E_channel, time=0))  # time=0 because it’s the same moment
         track.append(Message('note_off', note=G_note, velocity=volume, channel=G_channel, time=0))
         track.append(Message('note_off', note=B_note, velocity=volume, channel=B_channel, time=0))
-        track.append(create_pitch_bend(0, E_channel))  # Reset pitch bend for E
-        track.append(create_pitch_bend(0, B_channel))  # Reset pitch bend for B
+        track.append(self.create_pitch_bend(0, E_channel))  # Reset pitch bend for E
+        track.append(self.create_pitch_bend(0, B_channel))  # Reset pitch bend for B
 
         tz = pytz.timezone('Europe/Stockholm')
         stockholm_now = datetime.now(tz)
