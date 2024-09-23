@@ -1,7 +1,7 @@
 
 This is the repository for the paper
 # ChromaFlow: Modelling And Generating Harmonic Progressions With a Transformer And Voicing Encodings
-
+Modeling harmonic progressions in symbolic music notation. It encodes and produces musically coherent and varied chord progressions. We employ a transformer-based architecture trained on a comprehensive dataset of 48,072 songs, which includes an augmented set of 4,300 original pieces from the _iReal Pro_ application transposed across all chromatic keys. We introduce a novel tokenization and voicing encoding strategy designed to enhance the musicality of the generated chord progressions.
 
 ## Dataset
 The dataset is formed with original 4,300 songs from _iReal Pro_. It contains chords and structural data from musicXML files and metadata (style, time signature, tonality, composer, title). A custom song parser included which extracts bars (measures), chords (root notes, qualities, extensions, slash chords, duration), and form (repeat bars, sectional jumps, codas).
