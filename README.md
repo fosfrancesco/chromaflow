@@ -8,7 +8,10 @@ Visualizing the process of song transposition. In this case, we transpose Eb maj
 Distribution of Styles in the dataset
 ![Style distribution in the dataset](plots/styles.png)
 
-If you use this work, please cite:
+## Citation
+If you use this work in your research, please cite it as follows:
+
+```bibtex
 @inproceedings{dalmazzo2024chromaflow,
     author = {David Dalmazzo and Ken Déguernel and Bob L. T. Sturm},
     title = {ChromaFlow: Modeling And Generating Harmonic Progressions With a Transformer And Voicing Encoding},
@@ -18,3 +21,4 @@ If you use this work, please cite:
     address = {Vilnius, Lithuania},
     url = {https://github.com/Dazzid/chromaflow_1.1},
 }
+
