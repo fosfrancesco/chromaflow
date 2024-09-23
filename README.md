@@ -12,7 +12,7 @@ Distribution of Styles in the dataset:
 </div>
 
 ## Data Augmentation
-Custom Data Augmentation was implemented to avoid music21 errors with enharmonics. 
+Custom Data Augmentation was implemented to avoid _music21_ errors with enharmonics. 
 <div align="center">
 <img src="plots/Transposition_new.png" alt="Description" width="800" style="max-width: 100%; height: auto;"/>
 </div>
