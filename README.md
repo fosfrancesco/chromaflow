@@ -4,7 +4,7 @@ This is the repository for the paper
 
 Custom Data Augmentation was implemented to avoid music21 errors with enharmonics. 
 <div align="center">
-<img src="plots/Transposition_new.jpeg" alt="Description" width="800" style="max-width: 100%; height: auto;"/>
+<img src="plots/Transposition_new.png" alt="Description" width="800" style="max-width: 100%; height: auto;"/>
 </div>
 
 Visualizing the process of song transposition. In this case, we transpose Eb major to C major. The example is a fragment of Giant Steps. The time steps of each chord transposed are shown on a blue scale, from light blue to dark blue. A tuple distance coordinate is used to transpose; the first one is the "line of fifth" (LOF) distance, and the second is the distance in the chromatic scale (CD). The LOF is useful when checking tonality relations, e.g., if the distance of a dominant chord is 13 in the LOF, the chord is corrected to its enharmonic distance -1. It is shown in the Abmaj7, corrected after Eb7 G#maj7
