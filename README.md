@@ -2,12 +2,6 @@
 This is the repository for the paper
 # ChromaFlow: Modelling And Generating Harmonic Progressions With a Transformer And Voicing Encodings
 
-Custom Data Augmentation was implemented to avoid music21 errors with enharmonics. 
-<div align="center">
-<img src="plots/Transposition_new.png" alt="Description" width="800" style="max-width: 100%; height: auto;"/>
-</div>
-
-Visualizing the process of song transposition. In this case, we transpose Eb major to C major. The example is a fragment of Giant Steps. The time steps of each chord transposed are shown on a blue scale, from light blue to dark blue. A tuple distance coordinate is used to transpose; the first one is the "line of fifth" (LOF) distance, and the second is the distance in the chromatic scale (CD). The LOF is useful when checking tonality relations, e.g., if the distance of a dominant chord is 13 in the LOF, the chord is corrected to its enharmonic distance -1. It is shown in the Abmaj7, corrected after Eb7 G#maj7
 
 ## Dataset
 The dataset is formed with original 4,300 songs from _iReal Pro_. It contains chords and structural data from musicXML files and metadata (style, time signature, tonality, composer, title). A custom song parser included which extracts bars (measures), chords (root notes, qualities, extensions, slash chords, duration), and form (repeat bars, sectional jumps, codas).
@@ -16,6 +10,14 @@ Distribution of Styles in the dataset:
 <div align="center">
 <img src="plots/styles.png" alt="Description" width="600" style="max-width: 100%; height: auto;"/>
 </div>
+
+## Data Augmentation
+Custom Data Augmentation was implemented to avoid music21 errors with enharmonics. 
+<div align="center">
+<img src="plots/Transposition_new.png" alt="Description" width="800" style="max-width: 100%; height: auto;"/>
+</div>
+
+Visualizing the process of song transposition. In this case, we transpose Eb major to C major. The example is a fragment of Giant Steps. The time steps of each chord transposed are shown on a blue scale, from light blue to dark blue. A tuple distance coordinate is used to transpose; the first one is the "line of fifth" (LOF) distance, and the second is the distance in the chromatic scale (CD). The LOF is useful when checking tonality relations, e.g., if the distance of a dominant chord is 13 in the LOF, the chord is corrected to its enharmonic distance -1. It is shown in the Abmaj7, corrected after Eb7 G#maj7
 
 ## License
 This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
