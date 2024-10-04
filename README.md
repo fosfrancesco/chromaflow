@@ -22,7 +22,7 @@ Custom Data Augmentation was implemented to avoid _music21_ errors with enharmon
 
 Visualizing the process of song transposition. In this case, we transpose Eb major to C major. The example is a fragment of Giant Steps. The time steps of each chord transposed are shown on a blue scale, from light blue to dark blue. A tuple distance coordinate is used to transpose; the first one is the "line of fifth" (LOF) distance, and the second is the distance in the chromatic scale (CD). The LOF is useful when checking tonality relations, e.g., if the distance of a dominant chord is 13 in the LOF, the chord is corrected to its enharmonic distance -1. It is shown in the Abmaj7, corrected after Eb7 G#maj7
 
-## Samples of Model 1
+## Samples from Model 1 and Model 2
 To hear some samples from the voicing model, go to [this link](https://dazzid.github.io/chromaflow/)
 
 
