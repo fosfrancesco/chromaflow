@@ -52,7 +52,7 @@ wandb.init(
     }
 )
 
-epochs = 100
+epochs = 120
 embedding = 512
 heads = 4
 layers = 4
