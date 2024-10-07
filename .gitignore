@@ -18,5 +18,8 @@ src/hf_gpt2_chords/
 src/__pycache__/*
 models/
 
-#ignore pychache
+# Ignore pycache
 __pycache__/
+
+#Ignore wandb
+wandb/
