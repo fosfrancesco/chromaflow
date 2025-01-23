@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 2.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="2.0">
-  <movement-title>Who Can I Turn To</movement-title>
+  <movement-title>Who Can I Turn To?</movement-title>
   <identification>
     <creator type="composer">Newley-Bricusse</creator>
     <creator type="lyricist">Medium Swing</creator>
@@ -93,7 +93,7 @@
           <root-step>E</root-step>
           <root-alter>-1</root-alter>
         </root>
-        <kind text="maj7">major-seventh</kind>
+        <kind text="6">major-sixth</kind>
       </harmony>
       <note>
         <pitch>
@@ -115,7 +115,7 @@
           <root-step>E</root-step>
           <root-alter>-1</root-alter>
         </root>
-        <kind text="maj7">major-seventh</kind>
+        <kind text="6">major-sixth</kind>
       </harmony>
       <note>
         <pitch>
@@ -333,15 +333,10 @@
       <attributes/>
       <harmony print-frame="no" default-y="25" relative-x="10">
         <root>
-          <root-step>A</root-step>
+          <root-step>F</root-step>
           <root-alter>0</root-alter>
         </root>
-        <kind text="m7" parentheses-degrees="yes">minor-seventh</kind>
-        <degree>
-          <degree-value>5</degree-value>
-          <degree-alter>-1</degree-alter>
-          <degree-type>alter</degree-type>
-        </degree>
+        <kind text="m7">minor-seventh</kind>
       </harmony>
       <note>
         <pitch>
@@ -426,10 +421,10 @@
       <attributes/>
       <harmony print-frame="no" default-y="25" relative-x="10">
         <root>
-          <root-step>F</root-step>
-          <root-alter>0</root-alter>
+          <root-step>A</root-step>
+          <root-alter>-1</root-alter>
         </root>
-        <kind text="m7">minor-seventh</kind>
+        <kind text="maj7">major-seventh</kind>
       </harmony>
       <note>
         <pitch>
@@ -443,10 +438,15 @@
       </note>
       <harmony print-frame="no" default-y="25" relative-x="10">
         <root>
-          <root-step>F</root-step>
-          <root-alter>1</root-alter>
+          <root-step>D</root-step>
+          <root-alter>0</root-alter>
         </root>
-        <kind use-symbols="yes">diminished-seventh</kind>
+        <kind text="m7" parentheses-degrees="yes">minor-seventh</kind>
+        <degree>
+          <degree-value>5</degree-value>
+          <degree-alter>-1</degree-alter>
+          <degree-type>alter</degree-type>
+        </degree>
       </harmony>
       <note>
         <pitch>
@@ -562,7 +562,7 @@
           <root-step>E</root-step>
           <root-alter>-1</root-alter>
         </root>
-        <kind text="maj7">major-seventh</kind>
+        <kind text="6">major-sixth</kind>
       </harmony>
       <note>
         <pitch>
@@ -584,7 +584,7 @@
           <root-step>E</root-step>
           <root-alter>-1</root-alter>
         </root>
-        <kind text="maj7">major-seventh</kind>
+        <kind text="6">major-sixth</kind>
       </harmony>
       <note>
         <pitch>
@@ -932,8 +932,8 @@
       </note>
       <harmony print-frame="no" default-y="25" relative-x="10">
         <root>
-          <root-step>G</root-step>
-          <root-alter>-1</root-alter>
+          <root-step>F</root-step>
+          <root-alter>1</root-alter>
         </root>
         <kind use-symbols="yes">diminished-seventh</kind>
       </harmony>

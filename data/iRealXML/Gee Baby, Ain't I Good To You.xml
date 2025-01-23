@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 2.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="2.0">
-  <movement-title>Gee Baby, Ain't I Good To You</movement-title>
+  <movement-title>Gee Baby, Ain't I Good To You?</movement-title>
   <identification>
-    <creator type="composer">Don Redman</creator>
+    <creator type="composer">Donald Matthew Redman, Andy Razaf (1929)</creator>
     <creator type="lyricist">Slow Swing</creator>
     <rights>Made with iReal Pro</rights>
     <encoding>
@@ -210,7 +210,7 @@
           <root-step>E</root-step>
           <root-alter>-1</root-alter>
         </root>
-        <kind text="6">major-sixth</kind>
+        <kind text="">major</kind>
       </harmony>
       <note>
         <pitch>
@@ -369,7 +369,7 @@
           <root-step>E</root-step>
           <root-alter>-1</root-alter>
         </root>
-        <kind text="6">major-sixth</kind>
+        <kind text="">major</kind>
       </harmony>
       <note>
         <pitch>
@@ -416,7 +416,7 @@
           <root-step>A</root-step>
           <root-alter>-1</root-alter>
         </root>
-        <kind text="6">major-sixth</kind>
+        <kind text="">major</kind>
       </harmony>
       <note>
         <pitch>
@@ -498,7 +498,7 @@
           <root-step>A</root-step>
           <root-alter>-1</root-alter>
         </root>
-        <kind text="6">major-sixth</kind>
+        <kind text="">major</kind>
       </harmony>
       <note>
         <pitch>
@@ -515,7 +515,7 @@
           <root-step>A</root-step>
           <root-alter>0</root-alter>
         </root>
-        <kind use-symbols="yes">diminished-seventh</kind>
+        <kind use-symbols="yes">diminished</kind>
       </harmony>
       <note>
         <pitch>
@@ -532,20 +532,12 @@
     <measure number="12">
       <print/>
       <attributes/>
-      <barline location="right">
-        <bar-style>light-light</bar-style>
-      </barline>
       <harmony print-frame="no" default-y="25" relative-x="10">
         <root>
           <root-step>D</root-step>
           <root-alter>0</root-alter>
         </root>
-        <kind text="m7" parentheses-degrees="yes">minor-seventh</kind>
-        <degree>
-          <degree-value>5</degree-value>
-          <degree-alter>-1</degree-alter>
-          <degree-type>alter</degree-type>
-        </degree>
+        <kind use-symbols="yes">diminished</kind>
       </harmony>
       <note>
         <pitch>
@@ -579,14 +571,6 @@
     <measure number="13">
       <print new-system="yes"/>
       <attributes/>
-      <barline location="left">
-        <bar-style>light-light</bar-style>
-      </barline>
-      <direction placement="above">
-        <direction-type>
-          <rehearsal>A</rehearsal>
-        </direction-type>
-      </direction>
       <harmony print-frame="no" default-y="25" relative-x="10">
         <root>
           <root-step>C</root-step>
@@ -712,7 +696,7 @@
           <root-step>E</root-step>
           <root-alter>-1</root-alter>
         </root>
-        <kind text="6">major-sixth</kind>
+        <kind text="">major</kind>
       </harmony>
       <note>
         <pitch>
